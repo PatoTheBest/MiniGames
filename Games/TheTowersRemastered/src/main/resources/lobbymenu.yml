@@ -1,0 +1,51 @@
+Title: '&l&nTest'
+Size: 9
+Items:
+  kits:
+    Item: wood_sword,1
+    Name: "&6Kits"
+    Lore:
+      - "&eClick to open the kits menu"
+    Slot: 2
+    Actions:
+      action1:
+        type: command
+        command: "/tt kit"
+  projectile-trails:
+    Item: arrow,1
+    Name: "&6Projectile Trails"
+    Lore:
+      - "&eClick to open the projectile trails menu"
+    Slot: 6
+    Actions:
+      action1:
+        type: command
+        command: "/tt shop open projectile-trails"
+  placeholder0:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 0
+  placeholder1:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 1
+  placeholder3:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 3
+  placeholder4:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 4
+  placeholder5:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 5
+  placeholder7:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 7
+  placeholder8:
+    Item: stained_glass_pane:7,1
+    Name: ""
+    Slot: 8

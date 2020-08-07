@@ -1,0 +1,99 @@
+normal:
+  permission-example:
+    type: permission
+    permission: foo.bar
+    chance: 50
+    hologram-message: Foo.bar
+    display-item: wool
+  multiple-permission-example:
+    type: permission
+    permissions:
+    - foo.bar
+    - xy.z
+    chance: 50
+    hologram-message: 420 blze it
+    display-item: blaze_powder
+rare:
+  helmet-example:
+    type: item
+    material: diamond_helmet
+    chance: 25
+  chestplate-example:
+    type: item
+    material: diamond_chestplate
+    chance: 25
+  boots-example:
+    type: item
+    material: diamond_boots
+    chance: 25
+  leggings-example:
+    type: item
+    material: diamond_leggings
+    chance: 25
+epic:
+  random-amount:
+    type: item
+    material: bread
+    min-amount: 8
+    max-amount: 16
+    chance: 100
+    hologram-message: "%amount% French Baguette"
+legendary:
+  command-example:
+    type: command
+    command: "say %player% won nothing!"
+    display-item: DIRT
+    hologram-message: Nothing, hahaha
+    chance: 50
+  mutliple-commands-example:
+    type: command
+    commands:
+    - say %player% won a piece of bread!
+    - give %player% bread 1
+    display-item: bread
+    hologram-message: 1 French Baguette
+    chance: 50
+vote:
+  normal-kit-example:
+    type: kit
+    kit: Archer
+    chance: 25
+    # Min and max amount used only if kit is a one-time-kit (not permanent)
+    min-amount: 1
+    max-amount: 10
+  random-kit-example:
+    type: kit
+    # A random kit will be selected from the list
+    kits:
+    - Knight
+    - Farmer
+    chance: 25
+    # Min and max amount used only if kit is a one-time-kit (not permanent)
+    min-amount: 1
+    max-amount: 10
+  normal-shop-item-example:
+    type: shop-item
+    shop-type: projectile-trails
+    shop-item: Droplets
+    chance: 25
+    # Min and max amount used only if kit is a one-time-kit (not permanent)
+    min-amount: 1
+    max-amount: 10
+  random-shop-item-example:
+    type: shop-item
+    shop-type: cage
+    # A random kit will be selected from the list
+    shop-items:
+    - Yellow
+    - Green
+    - Slime
+    chance: 25
+    # Min and max amount used only if kit is a one-time-kit (not permanent)
+    min-amount: 1
+    max-amount: 10
+  money-example:
+    type: money
+    hologram-message: '+%amount% Coins'
+    chance: 25
+    min-amount: 10
+    max-amount: 20

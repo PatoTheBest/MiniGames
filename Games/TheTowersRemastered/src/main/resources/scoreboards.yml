@@ -1,0 +1,120 @@
+lobby-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lTheTowers'
+  content:
+    line1:
+      interval: 100
+      text:
+      - '&c> &6Statistics'
+    line2:
+      interval: 100
+      text:
+      - ''
+    line3:
+      interval: 20
+      text:
+      - '&aMoney: {money}'
+    line4:
+      interval: 20
+      text:
+      - '&aGames Won: {stats:wins}'
+    line5:
+      interval: 20
+      text:
+      - '&aGames Lost: {stats:loses}'
+    line6:
+      interval: 20
+      text:
+      - '&aPoints Scored: {stats:points}'
+    line7:
+      interval: 20
+      text:
+      - '&aKills: {stats:kills}'
+    line8:
+      interval: 20
+      text:
+      - '&aDeaths: {stats:deaths}'
+    line9:
+      interval: 100
+      text:
+      - ''
+    line10:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'
+waiting-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lTheTowers'
+  content:
+    line1:
+      interval: 10
+      text:
+      - ''
+    line2:
+      interval: 10
+      text:
+      - '&fPlayers: &e{players}'
+    line3:
+      interval: 10
+      text:
+      - '<decision whentrue="&fStarting: &c{countdown}" whenfalse="&fWaiting...">{is_counting}</decision>'
+    line4:
+      interval: 100
+      text:
+      - ''
+    line5:
+      interval: 100
+      text:
+      - '&7Map: &f{arena}'
+    line6:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'
+game-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lTheTowers'
+  content:
+    line3:
+      interval: 100
+      text:
+      - '<forteam></forteam>'
+    line4:
+      interval: 100
+      text:
+      - '-1| '
+    line5:
+      interval: 20
+      text:
+      - '-2|&aGame kills: &f{game_total_kills}'
+    line6:
+      interval: 20
+      text:
+      - '-3|&aPoints scored: &f{game_scored_points}'
+    line7:
+      interval: 100
+      text:
+      - '-4| '
+    line8:
+      interval: 100
+      text:
+      - '-5|&6Map: &f{arena}'
+    line9:
+      interval: 1
+      text:
+      - '-6|&7Time elapsed: &f{time_elapsed}'
+    line10:
+      interval: 1
+      text:
+      - '-7|<glow>myserver.com</glow>'
+      - '-7|<delay times=60>&fmyserver.com</delay>'

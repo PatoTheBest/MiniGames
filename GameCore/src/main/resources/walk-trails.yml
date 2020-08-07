@@ -1,0 +1,191 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                     walk-trails                      | #
+# +------------------------------------------------------+ #
+############################################################
+walk-trails:
+  default_vip:
+    name: '&6Default VIP'
+    description: []
+    effect: CLOUD
+    display-item: grass
+    price: 0
+    interval: 2
+    permission: 'my.permission.vip'
+  drip_water:
+    name: '&6Waterfall'
+    description: []
+    effect: DRIP_WATER
+    display-item: water_bucket
+    price: 2000
+    interval: 1
+    amount: 3
+  suspended_depth:
+    name: '&6Bedrock particles'
+    description: []
+    effect: SUSPENDED_DEPTH
+    display-item: firework_star
+    price: 2000
+    interval: 2
+    amount: 20
+  falling_dust:
+    name: '&6Fall'
+    description: []
+    effect: FALLING_DUST
+    display-item: firework_star
+    price: 2000
+    interval: 2
+  crit:
+    name: '&6Crit'
+    description: []
+    effect: CRIT
+    display-item: nether_star
+    price: 2000
+    interval: 1
+    amount: 5
+  crit_magic:
+    name: '&6Magic crit'
+    description: []
+    effect: CRIT_MAGIC
+    display-item: nether_star
+    price: 2000
+    interval: 1
+    amount: 5
+  flame:
+    name: '&6Fire'
+    description: []
+    effect: FLAME
+    display-item: blaze_powder
+    price: 2000
+    interval: 1
+    amount: 5
+  lava:
+    name: '&6Fire sparks'
+    description: []
+    effect: LAVA
+    permanent: true
+    display-item: blaze_powder
+    price: 2000
+    interval: 1
+    amount: 2
+  spell_instant:
+    name: '&6Magic'
+    description: []
+    effect: SPELL_INSTANT
+    display-item: experience_bottle
+    price: 2000
+    interval: 1
+    amount: 5
+  spell:
+    name: '&6Circular magic'
+    description: []
+    effect: SPELL
+    display-item: experience_bottle
+    price: 2000
+    interval: 1
+    amount: 5
+  spell_mob:
+    name: '&6Circular black magic'
+    description: []
+    effect: SPELL_MOB
+    display-item: experience_bottle
+    price: 2000
+    interval: 1
+    amount: 5
+  spell_witch:
+    name: '&6Witch Magic'
+    description: []
+    effect: SPELL_WITCH
+    display-item: experience_bottle
+    price: 2000
+    interval: 1
+    amount: 5
+  snowball:
+    name: '&6Snow'
+    description: []
+    effect: SNOWBALL
+    display-item: snowball
+    price: 2000
+    interval: 1
+    amount: 10
+  snow_shovel:
+    name: '&6Snowing'
+    description: []
+    effect: SNOW_SHOVEL
+    display-item: snowball
+    price: 2000
+    interval: 1
+    amount: 5
+  heart:
+    name: '&6Hearts'
+    description: []
+    effect: HEART
+    display-item: poppy
+    price: 2000
+    interval: 1
+    amount: 5
+  villager_happy:
+    name: '&6Happy Villager'
+    description: []
+    effect: VILLAGER_HAPPY
+    display-item: emerald
+    price: 2000
+    interval: 1
+    amount: 5
+  villager_angry:
+    name: '&6Angry Villager'
+    description: []
+    effect: VILLAGER_ANGRY
+    display-item: diamond_sword
+    price: 2000
+    interval: 1
+    amount: 2
+  enchantment_table:
+    name: '&6Enchantment Gylph'
+    description: []
+    effect: ENCHANTMENT_TABLE
+    display-item: enchanting_table
+    price: 2000
+    interval: 1
+    amount: 10
+  redstone:
+    name: '&6Redstone'
+    description: []
+    effect: REDSTONE
+    display-item: redstone
+    price: 2000
+    interval: 1
+    amount: 5
+  slime:
+    name: '&6Slime'
+    description: []
+    effect: SLIME
+    display-item: slime_block
+    price: 2000
+    interval: 1
+    amount: 5
+  fireworks_spark:
+    name: '&6Firework Spark'
+    description: []
+    effect: FIREWORKS_SPARK
+    display-item: firework_rocket
+    price: 2000
+    interval: 1
+    amount: 5
+  drip_lava:
+    name: '&6Lava Drip'
+    description: []
+    effect: DRIP_LAVA
+    display-item: lava_bucket
+    price: 2000
+    interval: 1
+    amount: 5
+  note:
+    name: '&6Note'
+    description: []
+    effect: NOTE
+    permanent: true
+    display-item: jukebox
+    price: 2000
+    interval: 1
+    amount: 5

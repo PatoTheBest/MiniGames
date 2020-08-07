@@ -1,0 +1,38 @@
+# Victory Effects file
+# Here you can edit all the settings per victory effect
+# If you set no default victory effect, no victory effect will be displayed when a player wins
+victory-effects:
+  firework:
+    name: Firworks
+    # This effect is the default effect for all players
+    default: true
+    effect: FIREWORK
+    display-item: firework_rocket
+    description:
+    - "&7The default victory effect"
+    price: 0
+    permission: ''
+  lava-pop:
+    name: Lava pop
+    description:
+    - "&7Release particles like you're lava"
+    effect: LAVA_POP
+    display-item: lava_bucket
+    price: 1000
+    permission: ''
+  rain-wool:
+    name: Rain Wool
+    description:
+    - "&7&oIt's raining wool"
+    effect: RAIN_WOOL
+    display-item: pink_wool
+    price: 1000
+    permission: ''
+  rain-disco:
+    name: Rain Disco
+    description:
+    - "&7&oIt's raining clay"
+    effect: RAIN_DISCO
+    display-item: light_blue_terracotta
+    price: 1000
+    permission: ''

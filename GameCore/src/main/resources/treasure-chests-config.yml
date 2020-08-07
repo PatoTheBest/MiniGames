@@ -1,0 +1,75 @@
+# These are the 5 types of treasure chests
+# You can only disable the voting chest
+# All other chests you can configure if they can be bought or not, meaning that if they
+# are only obtainable via command or if the player can buy them with in-game money
+# The price only applies if the treasure chest can be bough
+types:
+  normal:
+    name: Normal
+    description:
+    - '&7The usual typical items.'
+    - '&7Nothing special'
+    - ''
+    - '&7Price: &a1000'
+    - '&7Owned: &a%owned%'
+    - ''
+    - '%open_message%'
+    can-be-bought: true
+    price: 1000
+
+  rare:
+    name: Rare
+    description:
+    - '&7Not found in large numbers. '
+    - '&7Valuable items'
+    - ''
+    - '&7Price: &a1000'
+    - '&7Owned: &a%owned%'
+    - ''
+    - '%open_message%'
+    can-be-bought: true
+    price: 2000
+
+  epic:
+    name: Epic
+    description:
+    - '&7Not many people have these'
+    - '&7Impressive or remarkable items'
+    - ''
+    - '&7Price: &a1000'
+    - '&7Owned: &a%owned%'
+    - ''
+    - '%open_message%'
+    can-be-bought: true
+    price: 3000
+
+  legendary:
+    name: Legendary
+    description:
+    - '&7Items you can brag about'
+    - '&7You will not see these every day'
+    - ''
+    - '&7Price: &a1000'
+    - '&7Owned: &a%owned%'
+    - ''
+    - '%open_message%'
+    can-be-bought: true
+    price: 4000
+
+  vote:
+    name: Vote
+    enabled: false
+    description:
+    - '&7Thanks for voting!'
+    - ''
+    - '&7Price: &a1000'
+    - '&7Owned: &a%owned%'
+    - ''
+    - '%open_message%'
+    can-be-bought: false
+    price: 0
+
+messages:
+  can-open-chest: '&aClick to open a chest'
+  must-buy-to-open: '&aClick to buy a chest'
+  not-obtainable: '&cYou do not have any owned'

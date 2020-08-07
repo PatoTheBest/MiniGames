@@ -1,0 +1,66 @@
+
+# Chest regeneration
+chest-regeneration:
+  # Here you can specify if the chests should be regenerated or not
+  enabled: true
+  # You can also specify the interval at which the chests will be regenerated (in minutes)
+  interval: 5
+
+# XP when killing players
+# When a player kills another player on TheTowers
+# You can set how many levels to give to the player
+levels-on-kill: 1
+
+# Economy
+# Here you can specify the amount of money to give a player when the player performs one of these actions
+# WARNING: Needs vault and a compatible economy plugin
+money:
+  # Should we give player money on score, win or kill?
+  enabled: true
+  # How much money do we give the player when he scores a point
+  score: 5.0
+  # How much money do we give the player when he kills a player
+  kill: 2.0
+  # How much money do we give each player on the team when they win
+  win: 25.0
+
+# Potion Effects
+# Here you can specify the potion effects
+# The template for adding a potion effect is
+# PotionEffects:
+#   DAMAGE_RESISTANCE:
+#     modifier: 127
+#     time: 8
+potion-effects:
+  SPEED:
+    modifier: 1
+    time: 4
+  DAMAGE_RESISTANCE:
+    modifier: 127
+    time: 4
+  FAST_DIGGING:
+    modifier: 127
+    time: 4
+  INCREASE_DAMAGE:
+    modifier: 15
+    time: 4
+
+# Teleportation
+# You can specify two locations where you want the player to be teleported back to
+# MainLobby - You can set a main lobby with the command /tt setup setmainlobby
+# WorldSpawn - Will teleport to the spawn location of the main world
+teleport:
+  location: WorldSpawn
+  teleport-on-join: true
+
+# Pets
+# Here you can set a limit for pets per group
+pets:
+  enabled: true
+  limit:
+    enabled: true
+    groups:
+      default: 3
+      vip: 5
+
+# End of config, mainlobby should be stored below

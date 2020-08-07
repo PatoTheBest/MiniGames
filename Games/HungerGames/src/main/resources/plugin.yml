@@ -1,0 +1,7 @@
+name: HungerGames
+version: ${hungergames.version}
+main: ${main.class}
+author: PatoTheBest
+description: A fully customizable and automated HungerGames Plugin.
+api-version: ${gamecore.apiversion}
+softdepend: [${gamecore.softdependencies}]

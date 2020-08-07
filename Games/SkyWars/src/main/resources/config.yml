@@ -1,0 +1,91 @@
+
+# Game phases
+# The name doesn't matter, what matters is the type and time
+# The type can either be:
+# - Refill (chest refill event)
+# - 'Border Shrink' (Border shrinks)
+# - End (end game)
+# The time MUST be a number that represents the seconds before
+# changing the phase
+solo-phases:
+  phase1:
+    time: 180
+    type: Refill
+  phase2:
+    time: 120
+    type: Refill
+  phase3:
+    time: 60
+    type: 'Border Shrink'
+    start-size: 100
+    end-size: 75
+    shrink-time: 30
+  phase4:
+    time: 60
+    type: Refill
+  phase5:
+    time: 120
+    type: 'Border Shrink'
+    start-size: 75
+    end-size: 50
+    shrink-time: 30
+  phase6:
+    time: 180
+    type: 'Border Shrink'
+    start-size: 50
+    end-size: 25
+    shrink-time: 30
+  phase8:
+    time: 120
+    type: End
+
+team-phases:
+  phase1:
+    time: 180
+    type: Refill
+  phase2:
+    time: 120
+    type: Refill
+  phase3:
+    time: 120
+    type: Refill
+  phase4:
+    time: 60
+    type: 'Border Shrink'
+    start-size: 100
+    end-size: 75
+    shrink-time: 30
+  phase5:
+    time: 60
+    type: Refill
+  phase6:
+    time: 180
+    type: 'Border Shrink'
+    start-size: 75
+    end-size: 50
+    shrink-time: 30
+  phase7:
+    time: 180
+    type: 'Border Shrink'
+    start-size: 50
+    end-size: 25
+    shrink-time: 30
+  phase9:
+    time: 120
+    type: End
+
+# Teleportation
+# You can specify two locations where you want the player to be teleported back to
+# MainLobby - You can set a main lobby with the command /skywars setup setmainlobby
+# WorldSpawn - Will teleport to the spawn location of the main world
+teleport:
+  location: WorldSpawn
+  teleport-on-join: true
+
+# Chests configuration
+# You can set a minimum amount of items as well as a maximum amount of items per chest
+chests:
+  min-items-amount: -1
+  max-items-amount: -1
+
+# End of config, mainlobby should be stored below

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>MiniGames</artifactId>
+        <groupId>me.patothebest</groupId>
+        <version>parent</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>GameCore</artifactId>
+    <version>${gamecore.version}</version>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <!-- Vault Repo -->
+        <repository>
+            <id>vault-repo</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
+        <!-- MaximVDW repo -->
+        <repository>
+            <id>mvdw-software</id>
+            <name>MVdW Public Repositories</name>
+            <url>https://repo.mvdw-software.com/content/groups/public/</url>
+        </repository>
+        <!-- WorldEdit repo -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.sk89q.com/artifactory/repo/</url>
+        </repository>
+        <!-- Clip's repo -->
+        <repository>
+            <id>clip-repo</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <!-- Jitpack, used for FastParticles atm -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <!-- glaremasters, used for Slime worlds -->
+        <repository>
+            <id>glaremasters</id>
+            <url>https://repo.glaremasters.me/repository/concuncan/</url>
+        </repository>
+        <!-- Filghost's repo for HolographicDisplays -->
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
+        </repository>
+        <!-- ProtocolLib -->
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
+        </repository>
+        <!-- Citizens2 repo -->
+        <repository>
+            <id>citizens-2</id>
+            <url>https://repo.citizensnpcs.co/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- Guice -->
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-grapher</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <!-- Spigot -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.15.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- HikariCP -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- fastutil -->
+        <dependency>
+            <groupId>it.unimi.dsi</groupId>
+            <artifactId>fastutil</artifactId>
+            <version>8.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- fast particles -->
+        <dependency>
+            <groupId>fr.mrmicky</groupId>
+            <artifactId>FastParticles</artifactId>
+            <version>1.2.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.26.0-GA</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- PluginHooks -->
+        <!-- MVdWPlaceholderAPI -->
+        <dependency>
+            <groupId>be.maximvdw</groupId>
+            <artifactId>MVdWPlaceholderAPI</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- PlaceHolderAPI -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.10.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- WorldEdit -->
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit-7</artifactId>
+            <version>7.1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../.lib/FastAsyncWorldEdit-1.15-135.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>6.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>7.1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Vault -->
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- FeatherBoardAPI -->
+        <dependency>
+            <groupId>be.maximvdw</groupId>
+            <artifactId>FeatherBoard-API</artifactId>
+            <version>3.12.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../.lib/FeatherBoard-API.jar</systemPath>
+        </dependency>
+        <!-- MultiArenaBungeeMode -->
+        <dependency>
+            <groupId>me.patothebest</groupId>
+            <artifactId>MultiArenaBungeeMode</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../.lib/MultiArenaBungeeMode-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <!-- SlimeWorldManager -->
+        <dependency>
+            <groupId>com.grinderwolf</groupId>
+            <artifactId>slimeworldmanager-api</artifactId>
+            <version>2.2.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/../.lib/slimeworldmanager-plugin-2.2.0.jar</systemPath>
+        </dependency>
+        <!-- HolographicDisplays -->
+        <dependency>
+            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+            <artifactId>holographicdisplays-api</artifactId>
+            <version>2.4.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Citizens2 -->
+        <dependency>
+            <groupId>net.citizensnpcs</groupId>
+            <artifactId>citizens</artifactId>
+            <version>2.0.27-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Tests -->
+        <!-- Mockito -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>2.0.2</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+        <!-- PowerMockito -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito2</artifactId>
+            <version>2.0.2</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- versions after this appear to be broken -->
+                <version>3.8.1</version>
+                <configuration>
+                    <!-- we use the Eclipse compiler as it doesn't need a JDK -->
+                    <compilerId>eclipse</compilerId>
+                    <!-- source and target are ignored if this isn't true -->
+                    <optimize>true</optimize>
+                </configuration>
+                <dependencies>
+                    <!-- we need our custom version as it fixes some bugs on case sensitive file systems -->
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-eclipse</artifactId>
+                        <version>2.8.5-spigotmc</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <!-- when downloading via Maven we can pull depends individually -->
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <phase>process-classes</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>me.patothebest.gamecore.bytecode.DevTransformer</mainClass>
+                            <arguments>
+                                <argument>${project.build.outputDirectory}</argument>
+                            </arguments>
+                            <includePluginDependencies>true</includePluginDependencies>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.javassist</groupId>
+                                <artifactId>javassist</artifactId>
+                                <version>3.26.0-GA</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>crowdin</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <phase>process-classes</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>me.patothebest.gamecore.lang.LocaleGenerator</mainClass>
+                            <arguments>
+                                <argument>me.patothebest.gamecore.lang.CoreLang</argument>
+                                <argument>${project.basedir}/../locale/GameCore.yml</argument>
+                            </arguments>
+                            <includePluginDependencies>true</includePluginDependencies>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.spigotmc</groupId>
+                                <artifactId>spigot-api</artifactId>
+                                <version>1.15.1-R0.1-SNAPSHOT</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,5 @@
+"commit_message": "[CI SKIP] New translations %original_file_name% from Crowdin"
+"append_commit_message": false
+files:
+  - source: /locale/*yml
+    translation: /locale/%file_name%/%locale_with_underscore%.yml

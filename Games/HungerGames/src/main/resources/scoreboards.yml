@@ -1,0 +1,136 @@
+lobby-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lHungerGames'
+  content:
+    line1:
+      interval: 100
+      text:
+      - '&c> &6Statistics'
+    line2:
+      interval: 100
+      text:
+      - ''
+    line3:
+      interval: 20
+      text:
+      - '&aMoney: {money}'
+    line4:
+      interval: 20
+      text:
+      - '&aGames Won: {stats:wins}'
+    line5:
+      interval: 20
+      text:
+      - '&aGames Lost: {stats:loses}'
+    line6:
+      interval: 20
+      text:
+      - '&aKills: {stats:kills}'
+    line7:
+      interval: 20
+      text:
+      - '&aDeaths: {stats:deaths}'
+    line8:
+      interval: 100
+      text:
+      - ''
+    line9:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'
+waiting-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lHungerGames'
+  content:
+    line1:
+      interval: 10
+      text:
+      - ''
+    line2:
+      interval: 10
+      text:
+      - '&fPlayers: &e{players}'
+    line3:
+      interval: 10
+      text:
+      - '<decision whentrue="&fStarting: &c{countdown}" whenfalse="&fWaiting...">{is_counting}</decision>'
+    line4:
+      interval: 100
+      text:
+      - ''
+    line5:
+      interval: 100
+      text:
+      - '&7Map: &f{arena}'
+    line6:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'
+game-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lHungerGames'
+  content:
+    line1:
+      interval: 100
+      text:
+      - '&7{type} {date}'
+    line2:
+      interval: 100
+      text:
+      - ''
+    line3:
+      interval: 20
+      text:
+      - '&fNext Event:'
+    line4:
+      interval: 10
+      text:
+      - '&a{next_event} {next_event_countdown}'
+    line5:
+      interval: 100
+      text:
+      - ''
+    line6:
+      interval: 20
+      text:
+      - '&fPlayers left: &a{players}'
+    line7:
+      interval: 100
+      text:
+      - ''
+    line8:
+      interval: 20
+      text:
+      - '&fKills: &a{game_kills}'
+    line9:
+      interval: 100
+      text:
+      - ''
+    line10:
+      interval: 100
+      text:
+      - '&fMap: &a{arena}'
+    line11:
+      interval: 100
+      text:
+      - '&fMode: {mode}'
+    line12:
+      interval: 100
+      text:
+      - ''
+    line13:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'

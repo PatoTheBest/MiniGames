@@ -1,0 +1,105 @@
+# Here you can customize the blocks to use for the structure
+# Normal chest
+normal:
+  # The lamp block
+  lamp: redstone_lamp_on
+  # The base block where the player will be standing
+  base: glass
+  # The inner ring surrounding the base block
+  inner: wood
+  # The outer ring surrounding the inner ring excluding the blocks below the chest
+  outer: wood
+  # The blocks below the chests
+  below-chests: cobblestone
+  # The blocks enclosing the chests
+  walls: leaves
+  # The pillars from the sides
+  pillars: log
+  # The stairs
+  stairs: wood_stairs
+  # The block that goes on top of the stairs that is on top of the pillars
+  top: cobblestone
+
+# Rare chest
+rare:
+  # The lamp block
+  lamp: sea_lantern
+  # The base block where the player will be standing
+  base: stained_glass:9
+  # The inner ring surrounding the base block
+  inner: prismarine
+  # The outer ring surrounding the inner ring excluding the blocks below the chest
+  outer: prismarine:1
+  # The blocks below the chests
+  below-chests: prismarine:1
+  # The blocks enclosing the chests
+  walls: cobble_wall:1
+  # The pillars from the sides
+  pillars: prismarine:2
+  # The stairs
+  stairs: sandstone_stairs
+  # The block that goes on top of the stairs that is on top of the pillars
+  top: sea_lantern
+
+# Epic chest
+epic:
+  # The lamp block
+  lamp: redstone_lamp_on
+  # The base block where the player will be standing
+  base: stained_glass:15
+  # The inner ring surrounding the base block
+  inner: ender_stone
+  # The outer ring surrounding the inner ring excluding the blocks below the chest
+  outer: ender_stone
+  # The blocks below the chests
+  below-chests: stone
+  # The blocks enclosing the chests
+  walls: iron_fence
+  # The pillars from the sides
+  pillars: stone
+  # The stairs
+  stairs: cobblestone_stairs
+  # The block that goes on top of the stairs that is on top of the pillars
+  top: stone:4
+
+# Legendary chest
+legendary:
+  # The lamp block
+  lamp: redstone_lamp_on
+  # The base block where the player will be standing
+  base: stained_glass:15
+  # The inner ring surrounding the base block
+  inner: quartz_block
+  # The outer ring surrounding the inner ring excluding the blocks below the chest
+  outer: quartz_block:2
+  # The blocks below the chests
+  below-chests: quartz_block:1
+  # The blocks enclosing the chests
+  walls: stained_glass_pane
+  # The pillars from the sides
+  pillars: quartz_block:2
+  # The stairs
+  stairs: quartz_stairs
+  # The block that goes on top of the stairs that is on top of the pillars
+  top: emerald_block
+
+# Vote chest
+vote:
+  # The lamp block
+  lamp: glowstone
+  # The base block where the player will be standing
+  base: stained_glass:15
+  # The inner ring surrounding the base block
+  inner: nether_brick
+  # The outer ring surrounding the inner ring excluding the blocks below the chest
+  outer: soul_sand
+  # The blocks below the chests
+  below-chests: obsidian
+  # The blocks enclosing the chests
+  walls: nether_warts
+  # The pillars from the sides
+  pillars: obsidian
+  # The stairs
+  stairs: nether_brick_stairs
+  # The block that goes on top of the stairs that is on top of the pillars
+  top: quartz_ore

@@ -1,0 +1,174 @@
+# Cages file
+# Here you can edit how much a cage costs, the structure of them, name, description, and permission!
+cages:
+  default:
+    name: Default
+    # This cage is the default cage for all players
+    default: true
+    description: []
+    outer-material: GLASS
+    inner-material: GLASS
+    price: 0
+    permission: ''
+  white:
+    name: White
+    description: []
+    outer-material: STAINED_GLASS
+    inner-material: STAINED_GLASS
+    price: 100
+    permission: ''
+  orange:
+    name: Orange
+    description: []
+    outer-material: STAINED_GLASS:1
+    inner-material: STAINED_GLASS:1
+    price: 100
+    permission: ''
+  magenta:
+    name: Magenta
+    description: []
+    outer-material: STAINED_GLASS:2
+    inner-material: STAINED_GLASS:2
+    price: 100
+    permission: ''
+  light_blue:
+    name: Light Blue
+    description: []
+    outer-material: STAINED_GLASS:3
+    inner-material: STAINED_GLASS:3
+    price: 100
+    permission: ''
+  yellow:
+    name: Yellow
+    description: []
+    outer-material: STAINED_GLASS:4
+    inner-material: STAINED_GLASS:4
+    price: 100
+    permission: ''
+  lime:
+    name: Lime
+    description: []
+    outer-material: STAINED_GLASS:5
+    inner-material: STAINED_GLASS:5
+    price: 100
+    permission: ''
+  pink:
+    name: Pink
+    description: []
+    outer-material: STAINED_GLASS:6
+    inner-material: STAINED_GLASS:6
+    price: 100
+    permission: ''
+  gray:
+    name: Gray
+    description: []
+    outer-material: STAINED_GLASS:7
+    inner-material: STAINED_GLASS:7
+    price: 100
+    permission: ''
+  light_gray:
+    name: Light Gray
+    description: []
+    outer-material: STAINED_GLASS:8
+    inner-material: STAINED_GLASS:8
+    price: 100
+    permission: ''
+  cyan:
+    name: Cyan
+    description: []
+    outer-material: STAINED_GLASS:9
+    inner-material: STAINED_GLASS:9
+    price: 100
+    permission: ''
+  purple:
+    name: Purple
+    description: []
+    outer-material: STAINED_GLASS:10
+    inner-material: STAINED_GLASS:10
+    price: 100
+    permission: ''
+  blue:
+    name: Blue
+    description: []
+    outer-material: STAINED_GLASS:11
+    inner-material: LAPIS_BLOCK
+    price: 100
+    permission: ''
+  brown:
+    name: Brown
+    description: []
+    outer-material: STAINED_GLASS:12
+    inner-material: STAINED_GLASS:12
+    price: 100
+    permission: ''
+  green:
+    name: Green
+    description: []
+    outer-material: STAINED_GLASS:13
+    inner-material: STAINED_GLASS:13
+    price: 100
+    permission: ''
+  red:
+    name: Red
+    description: []
+    outer-material: STAINED_GLASS:14
+    inner-material: REDSTONE_BLOCK
+    price: 100
+    permission: ''
+  black:
+    name: Black
+    description: []
+    outer-material: STAINED_GLASS:15
+    inner-material: STAINED_GLASS:15
+    price: 100
+    permission: ''
+  spawner:
+    name: Spawner
+    description: []
+    outer-material: MOB_SPAWNER
+    inner-material: MOB_SPAWNER
+    price: 100
+    permission: ''
+  jail:
+    name: Jail
+    description: []
+    outer-material: IRON_FENCE
+    inner-material: IRON_BLOCK
+    price: 100
+    permission: ''
+  nether:
+    name: Nether
+    description: []
+    outer-material: NETHER_FENCE
+    inner-material: NETHER_BRICK
+    price: 100
+    permission: ''
+  slime:
+    name: Slime
+    description: []
+    outer-material: SLIME_BLOCK
+    inner-material: SLIME_BLOCK
+    price: 100
+    permission: ''
+  leaves:
+    name: Leaves
+    description: []
+    outer-material: LEAVES
+    inner-material: LEAVES
+    price: 100
+    permission: ''
+  farmer:
+    name: Farmer
+    description: []
+    outer-material: FENCE
+    inner-material: WOOD
+    price: 500
+    permission: ''
+  rainbow:
+    name: Rainbow
+    description: []
+    # Special type, will be replaced with random stained glass
+    outer-material: RAINBOW
+    inner-material: RAINBOW
+    price: 500
+    permission: ''

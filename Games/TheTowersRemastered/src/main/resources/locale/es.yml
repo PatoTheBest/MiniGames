@@ -1,0 +1,397 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                 The Towers Messages                  | #
+# +------------------------------------------------------+ #
+############################################################
+# General Messages
+name: "Español"
+skin: "eyJ0aW1lc3RhbXAiOjE0ODUxMjYwMzkyNjUsInByb2ZpbGVJZCI6ImRhNzQ2NWVkMjljYjRkZTA5MzRkOTIwMTc0NDkxMzU1IiwicHJvZmlsZU5hbWUiOiJJc2F5bGEiLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzQyNWU4NTYzOTlhZDM0MjE0MDQ2YjJhOTQwM2E4NzM4OWMzMGE4YTc0OTk4ODhlNGIyMWRlY2FlYmExNGM0NmUifX19"
+prefix: "&8[&cTheTowers&8]: &7"
+page: "(Pagina %page% de %pages%)"
+no-permission: "&cNo tienes permisos para realizar este comando"
+command-correction: "&7Te refieres a &6%correction%&7?"
+not-enough-arguments: "&cUso: %usage%"
+not-a-number: "&c'%string%' no es un numero"
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                    User Commands                     | #
+# +------------------------------------------------------+ #
+############################################################
+# Command Descriptions
+join-arena: "Unirse a una arena"
+leave-arena: "Salir de la arena"
+list-arenas: "Lista de todas las arenas"
+kit-command: "Abre el menu de seleccion del kit"
+locale-command: "Abre el menu para cambiar tu lenguajes"
+
+
+# Errors in command arguments
+arena-is-not-playable: "&cLa arena que intentas unirte no esta disponible"
+arena-is-restarting: "&cLa arena se esta reiniciando. Intentalo mas tarde"
+already-in-arena: "&cYa estas en una arena!"
+not-in-an-arena: "&cNo estas en una arena!"
+arena-is-full: "&cLa arena que intentas unirte ya esta llena."
+
+
+# Successful Messages
+arena-enabled-short: "Habilitado"
+arena-disabled-short: "Deshabilitado"
+arenas: "Arenas: "
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                    Setup Commands                    | #
+# +------------------------------------------------------+ #
+############################################################
+# Command Descriptions
+new-arena: "Crear una nueva arena"
+new-team: "Crear un nuevo equipo para la arena"
+new-dropper: "Crear un spawner de items en tu localizacion"
+new-team-spawn: "Establecer el spawn para el equipo especificado"
+protected-areas-list: "Protects an area on the arena"
+protect-area: "Protects an area on the arena"
+set-lobby-location: "Establece la ubicacion del lobby de la arena"
+enable-arena: "Permite que una arena sea jugable"
+disable-arena: "Desactiva una arena para permitir que sea modificada"
+teleport-to-arena: "Teletransportarse a la arena"
+set-arena-area: "Establece el area jugable de la arena"
+set-main-lobby: "Establece el lobby principal"
+set-min-players: "Establece la cantidad minima de jugadores para la arena"
+set-max-players: "Establece la cantidad maxima de jugadores para la arena"
+open-gui: "Abre la interfaz grafica del usuario"
+create-sign: "Crear un cartel"
+
+
+# Errors in command arguments
+team-color-not-found: "&cColor del equipo no encontrado"
+no-permission-arena: "&cTu no tienes permisos para entrar en esta arena!"
+team-color-already-exists: "&cEl color del equipo ya existe!"
+team-color-does-not-exist: "&cEl color del equipo no existe!"
+team-does-not-exist: "&cEl equipo no existe"
+arena-already-disabled: "&cLa arena esta deshabilitada!"
+arena-already-enabled: "&cLa arena esta habilitada!"
+select-an-area: "&cPor favor, seleccione un area de forma cubica con un hueso"
+select-an-area-worldedit: "&cPor favor selecciona un area cubica utilizando el world edit"
+disable-arena-first: "&cPara modificar una arena debe desactivarla primero usando /tt setup disablearena <arena>"
+enable-arena-first: "&cPara usar este comando tienes que habilitar la arena antes"
+wrong-itemstack-format: "&cNo se pudo analizar el elemento. Por favor use el formato material: ID,cantidad,data  (35:14,32 = 32 lana roja)"
+arena-already-exists: "&cEsta arena ya existe!"
+arena-does-not-exist: "&cEsta arena no existe!"
+area-does-not-exist: "&cArea doesn't exist!"
+
+
+# Successful Messages
+team-created: "&aEquipo creado satisfactoriamente!"
+team-spawn-set: "&aEl spawn del equipo se ha establecido!"
+team-point-area-set: "&aSe ha establecido el area del punto del equipo!"
+area-protected: "&aArea protected!"
+area-removed: "&aArea removed!"
+lobby-location-set: "&aSe ha establecido el lobby!"
+dropper-added: "&aSe ha añadido un dropper!"
+min-players-set: "&aSe ha establecido la cantidad minima de jugadores para la arena!"
+max-players-set: "&aSe ha establecido la cantidad maxima de jugadores para la arena!"
+arena-enabled: "&aLa arena ha sido habilitada!"
+arena-disabled: "&aLa arena ha sido desabilitada!"
+arena-area-set: "&aLa arena ha sido establecida!"
+teleported-to-arena: "&aHas sido teletransportado a la arena"
+arena-created: "&aArena creada satisfactoriamente!"
+point1-selected: "&bPrimera posicion establecida a (%location%)"
+point2-selected: "&bSegunda posicion establecida a (%location%)"
+select-sign: "&aSeleccionar un cartel"
+sign-created: "&cCartel creado"
+sign-removed: "&cCartel eliminado"
+main-lobby-set: "&aEl Lobby principal ha sido establecido!"
+list-header: "&9Protected Areas of %arena%"
+cuboid-to-string: "&7* &6%index%. &e%name% &6Cords: %cords%"
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                     Kit Commands                     | #
+# +------------------------------------------------------+ #
+############################################################
+# Command Descriptions
+kit-create: "Crear un kit"
+kit-gui: "Opens the menu to edit kits"
+
+
+# Errors in command arguments
+kit-already-exists: "&cEl kit ya existe!"
+no-permission-kit: "&cTu no tienes permisos para elegir este kit!"
+
+
+# Successful Messages
+kit-created: "&aKit creado satisfactoriamente!"
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                    Admin Commands                    | #
+# +------------------------------------------------------+ #
+############################################################
+# Command Descriptions
+force-start: "Forzar el comienzo de la arena"
+force-end: "Forzar el final de la arena"
+version: "Mostrar la informacion del .jar (java)"
+debug: "Comando Debug"
+reload: "Recarga el plugin entero"
+
+
+# Errors in command arguments
+arena-already-started: "&cLa arena ya ha comenzado!"
+arena-not-started: "&cLa arena no esta en juego!"
+arena-is-empty: "&cLa arena esta vacia!"
+
+
+# Successful Messages
+arena-force-started: "&aLa arena fue forzada para que empiece"
+arena-force-ended: "&aLa arena fue forzada para que finalice"
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                        Errors                        | #
+# +------------------------------------------------------+ #
+############################################################
+# Setup errors
+setup-error-set-area: "&cFalta el area! Utiliza &e/tt setup setarenaarea &cpara configurarlo"
+setup-error-lobby-location: "&cFalta la localizacion del lobby! Utiliza &e/tt setup setlobby"
+setup-error-team-min: "&cLa minima cantidad de equipos para jugar son 2"
+setup-error-team-spawn-null: "%teamcolor%%teamname% &cFalta añadir el spawn"
+setup-error-team-point-area-null: "%teamcolor%%teamname% &cDebe tener al menos un punto en el area"
+setup-error-min-players: "&cLa cantidad minima de jugadores debe ser de 2 o superior!"
+setup-error-min-max: "&cLa cantidad minima de jugadores es mayor que la cantidad maxima de jugadores!"
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                    Game Messages                     | #
+# +------------------------------------------------------+ #
+############################################################
+
+
+# General game messages
+game-starting-title: "&cThe Towers"
+game-starting-subtitle: "&7Empezando en &6%seconds% &7{secondlang}."
+game-starting-chat: "&eEl juego empezara en &c%seconds% &e{secondlang}."
+seconds: "segundos"
+second: "segundo"
+return-playable-area: "&4&lPRECAUCION: &cRegresa a la zona de juego"
+you-are-in-team: "&6Tu estas en el equipo %teamcolor%%teamname%"
+player-joined: "%player% &e entro a jugar (&d%players%&e/&d%max_players%&e)"
+you-are-in-team-title: "&7Estas en el equipo %teamcolor%%teamname%"
+you-cannot-place-outside: "&cNo tienes permitido poner bloques fuera de la area de juego"
+player-scored: "%teamcolor%%player% &eha marcado punto!"
+team-won: "%teamcolor%%teamname% ha ganado el juego!"
+cannot-place-chest-adjacent: "&cNo puedes poner un cofre al lado de un cofre del mapa."
+
+
+# Item messages
+lobby-choose-kit: "&6Escoger kit"
+lobby-choose-team: "&6Escoger equipo"
+lobby-admin-menu: "&cMenu de administrador"
+lobby-leave: "&cSalir"
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |          Graphical User Interface Messages           | #
+# +------------------------------------------------------+ #
+############################################################
+# General GUI messages
+gui-error-init: "&cError al inicializar la pagina"
+gui-next-page: "&eClick para ir a la pagina siguiente (pagina %pagenumber%)"
+gui-previous-page: "&eClick para ir a la pagina anterior (pagina %pagenumber%)"
+gui-you-are-on: "&eEstas en la pagina %pagenumber%"
+gui-enabled: "&aHabilitado"
+gui-disabled: "&cDeshabilitado"
+gui-back: "&cAtras"
+
+
+# Main menu messages
+gui-main-title: "Menu principal"
+gui-main-create-arena: "&aCrear una arena"
+gui-main-edit-arena: "&aEditar una arena"
+
+
+# Choose arena menu messages
+gui-choose-arena-title: "Elegir una arena para editar"
+gui-choose-arena-edit-item: "&aEditar arena %arena%"
+
+
+# Locale menu messages
+gui-choose-locale-title: "Escoge un lenguaje"
+gui-choose-locale-selected: "&aSeleccionado"
+gui-choose-locale-changed: "&aLenguaje cambiado!"
+gui-choose-locale-not-changed: "&cYa has seleccionado este mensaje!"
+
+
+# Choose kit menu messages
+gui-user-choose-title: "Elige un kit"
+gui-user-choose-already-bought: "&cYa tienes seleccionado este mismo kit!"
+gui-user-choose-you-chose-kit: "&aHas elegido el: %kit%"
+gui-user-choose-economy-plugin-error: "&cEl kit no es gratis pero no hay nada que puedas usar para pagarlo. Porfavor contacta al administrador del servidor."
+gui-user-choose-not-enough-money: "&cNo tienes suficiente dinero para comprar este kit."
+gui-user-choose-error-occured: "&cHa sucedido un error mientras comprabas este kit."
+gui-user-choose-price: "&7Precio: &a%price%"
+gui-user-choose-free: "Gratis"
+gui-user-choose-selected: "&aSeleccionado"
+gui-user-choose-click-to-select: "&aClick para seleccionar"
+gui-user-choose-click-to-buy: "&aClick para comprar"
+gui-user-choose-no-permission: "&cTu necesitas ser %group% para acceder a este kit!"
+
+
+# Choose team menu messages
+gui-user-choose-team-title: "Elige equipo"
+gui-user-choose-team-you-are-already-in: "&cActualmente tu ya estas en el equipo %teamcolor%%teamname%"
+gui-user-choose-team-you-joined: "&aHas entrado en el equipo %teamcolor%%teamname%"
+gui-user-choose-team-no-permission: "You must purchase a rank to open the team selector"
+
+
+# Edit arena menu messages
+gui-edit-arena-title: "Editar arena %arena%"
+gui-edit-arena-game-teams: "&eEquipos de juego"
+gui-edit-arena-players: "&eJugadores"
+gui-edit-arena-teleport: "&bTeletransportarse"
+gui-edit-arena-droppers: "&7Droppers (Item Spawners)"
+gui-edit-arena-set-lobby: "&eEstablecer Lobby"
+gui-edit-arena-set-permission: "&eEstablecer permisos"
+gui-edit-arena-delete: "&cEliminar arena"
+gui-edit-arena-disable-to-access: "&cDeshabilitar arena para acceder al menú de edición"
+
+
+# Choose team menu messages
+gui-choose-team-title: "Elegir equipo"
+gui-choose-team-create-team: "%teamcolor%Crear equipo"
+gui-choose-team-edit-team: "%teamcolor%Editar %teamname%"
+
+
+# Choose team menu messages
+gui-edit-team-title: "Eliminar equipo"
+gui-edit-team-set-spawn: "&eEstablecer el Spawn"
+gui-edit-team-point-areaas: "&6Areas de marcaje de puntos"
+gui-edit-team-delete: "&cEliminar equipo"
+gui-edit-team-deleted: "&cEquipo eliminado"
+
+
+# Choose point area menu messages
+gui-choose-point-area-title: "Elegir area de marcar puntos"
+gui-choose-point-area-create: "&aAñadir area de marcar puntos"
+
+
+# Edit point area menu messages
+gui-edit-point-area-title: "Editar el area de marcar puntos"
+gui-edit-point-area-delete: "&cEliminar el area de marcar puntos"
+
+
+# Choose dropper menu messages
+gui-choose-dropper-title: "Elegir dropper"
+gui-choose-dropper-create: "Crear un dropper"
+
+
+# Edit dropper menu messages
+gui-edit-dropper-title: "Editar dropper"
+gui-edit-dropper-change-interval: "&aCambia el intervalo de reaparicion del item"
+gui-edit-dropper-change-item-name: "&a%name% item"
+gui-edit-dropper-change-item-lore: "&7Intervalo: &f%interval%%newline%&7Click para cambiar el item"
+gui-edit-dropper-delete: "&cEliminar"
+
+
+# Edit interval menu messages
+gui-edit-interval-title: "Editar intervalo"
+gui-edit-interval-item-name: "&a%name%"
+gui-edit-interval-item-lore: "&7Intervalo: &f%interval%"
+gui-edit-interval-reset: "&cResetear a cantidad de 1"
+
+
+# Edit players menu messages
+gui-edit-players-title: "Editar jugadores"
+gui-edit-players-min-players-name: "&eJugadores minimo"
+gui-edit-players-max-players-name: "&eJugadores maximo"
+gui-edit-players-lore: "&7Cantidad: &f%amount%"
+
+
+# Edit item menu messages
+gui-edit-item-title: "Editar items"
+gui-edit-item-change-item: "&aCambiar items"
+gui-edit-item-change-data: "&aCambiar datos"
+gui-edit-item-change-amount: "&aCambiar cantidad"
+
+
+# Change item amount menu messages
+gui-change-amount-title: "Cambiar cantidad de items"
+gui-change-amount-reset: "&cReiniciar datos"
+
+
+# Change item data menu messages
+gui-change-data-title: "Cambiar los datos del item"
+gui-change-data-reset: "&cReiniciar datos"
+
+
+# Choose kit to edit menu messages
+gui-choose-kit-title: "Elija el kit para editar"
+gui-choose-kit-edit-item: "&aEditar el kit %kit%"
+gui-choose-kit-create-item: "&aCrear un kit"
+
+
+# Choose potion effects menu messages
+gui-choose-potion-effect-title: "Elegir el efecto de las pociones"
+gui-choose-potion-effect-add: "&aClick para añadir"
+gui-choose-potion-effect-lore: "&7Duracionn: &f%duration%%newline%&7Amplificador: &f%amplifier"
+
+
+# Edit kit menu messages
+gui-edit-kit-title: "Edita el kit %kit%"
+gui-edit-kit-rename: "&6Renombrar"
+gui-edit-kit-price: "&aPrecio"
+gui-edit-kit-preview: "&6Muestra"
+gui-edit-kit-change-items: "&bCambiar items"
+gui-edit-kit-potion-effects: "&dEfectos de pocion"
+gui-edit-kit-description: "&7Descripcion"
+gui-edit-kit-display-item: "&6Cambiar el elemento de visualizacion"
+gui-edit-kit-delete: "&cKit eliminado"
+gui-edit-kit-set-permission: "&eEstablecer permiso"
+gui-edit-kit-one-time: "&fKit de un solo uso"
+gui-edit-kit-items-updated: "&aItems de los kits actualizados!"
+gui-edit-kit-kit-deleted: "&cKit eliminado!"
+gui-edit-kit-kit-renamed: "&aKit renombrado!"
+
+
+# Edit price menu messages
+gui-edit-price-title: "Editar el precio de los kits"
+gui-edit-price-kit-item: "Kit %kit%"
+gui-edit-price-lore: "&7Precio: &f%price%"
+gui-edit-price-reset: "&cResetear el precio a 0 (Gratis)"
+
+
+# Preview kit menu messages
+gui-preview-kit-title: "%kit& de muestra"
+gui-preview-kit-copy: "&aKit de recepcion"
+
+
+# Edit potion effect menu messages
+gui-edit-potion-effect-title: "Editar el efecto de pociones"
+gui-edit-potion-effect-amplifier-item: "&aCambia el amplificador"
+gui-edit-potion-effect-amplifier-lore: "&7Amplificador: &f%amplifier%"
+gui-edit-potion-effect-duration-item: "&aCambia la duracion"
+gui-edit-potion-effect-duration-lore: "&7Duracion: &f%duration%"
+
+
+# Description editor line menu messages
+gui-description-editor-title: "Edita la linea"
+gui-description-editor-rename: "&aRenombrar"
+gui-description-editor-delete: "&cElimina la linea"
+
+
+# Description editor main page menu messages
+gui-description-editor-main-title: "Edita la descripcion"
+gui-description-editor-main-new: "&aAñade una nueva linea"
+
+
+# Admin menu messages
+gui-admin-title: "Menu admin de arena"
+gui-admin-start-countdown: "&aIniciar la cuenta atras"
+gui-admin-stop-countdown: "&cDetener la cuenta atras"

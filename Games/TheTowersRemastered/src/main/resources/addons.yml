@@ -1,0 +1,164 @@
+# Addons version
+# DO NOT CHANGE, SERIOUSLY
+file-version: 0.3
+
+# Command Section
+command-blocker:
+  # Whether or not you want the addon to be enabled
+  enabled: true
+  # These are the commands that players are going to be allowed to execute while playing
+  allowed-commands:
+  - tell
+  - reply
+  - t
+  - r
+  - message
+  - m
+  - whisper
+  - w
+  - tt
+  - thetowers
+
+# Chat Section
+# This is the format on how the chat for teams would be shown
+# There are a few variables you can use in the chat
+# This variables will only apply in-game (not in lobby)
+# VARIABLES REQUIRE VAULT
+# {group} - Players group name pulled from your permissions plugin
+# {permprefix} - Permission group prefix
+# {permsuffix} - Permission group suffix
+# {playername} - Default player name.
+# {modplayername} - Modified player name (enable this for nickanames to show)
+# {msg} - The message sent.
+chat:
+  # Whether or not you want the addon to be enabled
+  enabled: true
+  # Useful for when the player has no rank prefix and there is an empty space showing
+  remove-double-whitespaces: true
+  # This is the format on how the chat will appear on the lobby
+  lobby: '{permprefix} &6{modplayername}: &7{msg}'
+  # This is the format on how the chat will appear on waiting lobby of the game
+  pre-game: '{permprefix} &6{modplayername}: &7{msg}'
+  # This is the format on how the team chat will appear
+  team: '&8[%teamcolor%%teamname%&8] {permprefix} &6{modplayername}: &7{msg}'
+  # This is the format on how the global chat would be shown
+  global: '&8[&aGlobal&8] {permprefix} &6{modplayername}: &7{msg}'
+  # This is the format on how the global chat would be shown with teams
+  global-team: '&8[&aGlobal&8] [%teamcolor%%teamname%&8] {permprefix} &6{modplayername}: &7{msg}'
+  # This is the format on how the spectator chat would be shown
+  spectator: '&8[&7Spectator&8] {permprefix} &6{modplayername}: &7{msg}'
+
+# NameTags
+# This will only be effective on a multiworld setup
+# When this is enabled, players inside the arena cannot see players
+# that are not in the same arena
+separate-nametags:
+  # Whether or not you want the addon to be enabled
+  enabled: true
+
+# NameTags part 2
+# When this is enabled, the nametags will have the team name before
+team-nametags:
+  # Whether or not you want the addon to be enabled
+  enabled: true
+  # Spectator prefix
+  spectator-prefix: 'Spectator'
+
+
+# Custom death messages
+# All the messages are located on the file death-messages.yml
+death-messages:
+  # Whether or not you want the addon to be enabled
+  enabled: true
+
+# Join Items
+# Here you can set which items give to the player when the arena ends
+# or the player joins the game. You can add/remove as many items as the
+# inventory limits you. You can have placeholder items and even items
+# that execute a specified command.
+# Example:
+# Item1:
+#   Name: '&aGame selector'
+#   Slot: 1
+#   Item: compass
+#   Lore:
+#   - '&eRight click to open the join menu'
+#   command: 'tt j'
+join-items:
+  # Whether or not you want the addon to be enabled
+  enabled: true
+  items:
+    game-selector:
+      name: '&aGame selector'
+      slot: 0
+      item: compass
+      lore:
+      - '&eRight-click to open menu'
+      command: 'tt j'
+    kits:
+      name: '&7Kit selector'
+      slot: 4
+      item: bow
+      lore:
+      - '&eRight-click to open menu'
+      command: 'tt kit'
+    arrow-trails:
+      name: '&Projectile Trail Selector'
+      slot: 4
+      item: bow
+      lore:
+        - '&eRight-click to open menu'
+      command: 'tt kit'
+
+# Money
+# Here you can specify the amount of money to give a player when the player performs one of these actions
+# WARNING: Needs vault and a compatible economy plugin
+money:
+  # Should we give player money on score, win or kill?
+  enabled: true
+  # How much money do we give the player when he kills a player
+  kill: 2.0
+  # How much money do we give each player on the team when they win
+  win: 25.0
+  # Here you can set money multipliers for groups
+  money-multiplier:
+    enabled: true
+    # You can add as much groups as you want
+    multipliers:
+      vip: 2
+
+# Join and Quit Messages
+# Here you can enable or disable join and quit messages from the server (not the arena)
+join-quit-messages:
+  # Should we enable this addon at all?
+  enabled: false
+  # Disable server join messages?
+  hide-join-messages: true
+  # Disable server quit messages?
+  hide-quit-messages: true
+
+# KillStreaks
+# Here you can configure different kill streaks and weather to give money to players when they reach certain kill streaks
+killstreaks:
+  # Should we enable this addon at all?
+  enabled: true
+  team-color: true
+  shutdown: "&e%player_name% &cwas shut down"
+  shutdown-player: "&e%player_name% &cwas shut down by &b%killer%"
+  streaks:
+    '5':
+      message: "&e%player_name% &cis on a roll! &l&o(5 killstreak)"
+      # Money reward, set 0 to disable
+      money: 4
+    '10':
+      message: "&e%player_name% &cis on a rampage! &l&o(10 killstreak)"
+      money: 8
+    '15':
+      message: "&e%player_name% &cis destroying! &l&o(15 killstreak)"
+      money: 12
+    '20':
+      message: "&e%player_name% &cis annihilating! &l&o(20 killstreak)"
+      money: 16
+    '25':
+      message: "&e%player_name% &cis unstoppable! &l&o(25 killstreak)"
+      money: 20

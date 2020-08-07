@@ -1,0 +1,241 @@
+file-version: 1.1
+lobby-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lArcade'
+  content:
+    line1:
+      interval: 100
+      text:
+      - '&c> &6Statistics'
+    line2:
+      interval: 100
+      text:
+      - ''
+    line3:
+      interval: 20
+      text:
+      - '&aMoney: {money}'
+    line4:
+      interval: 20
+      text:
+      - '&aGames Won: {stats:wins}'
+    line5:
+      interval: 20
+      text:
+      - '&aGames Lost: {stats:loses}'
+    line6:
+      interval: 20
+      text:
+      - '&aKills: {stats:kills}'
+    line7:
+      interval: 20
+      text:
+      - '&aDeaths: {stats:deaths}'
+    line8:
+      interval: 100
+      text:
+      - ''
+    line9:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'
+waiting-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+    - '&e&lArcade'
+  content:
+    line1:
+      interval: 10
+      text:
+      - ''
+    line2:
+      interval: 10
+      text:
+      - '&fPlayers: &e{players}'
+    line3:
+      interval: 10
+      text:
+      - '<decision whentrue="&fStarting: &c{countdown}" whenfalse="&fWaiting...">{is_counting}</decision>'
+    line4:
+      interval: 100
+      text:
+      - ''
+    line5:
+      interval: 100
+      text:
+      - '&7Map: &f{arena}'
+    line6:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'
+game-scoreboard:
+  enabled: true
+  title:
+    interval: 20
+    text:
+      - '&e&lArcade'
+  content:
+    line1:
+      interval: 100
+      text:
+        - '&b&lGame {game_count}/{total_games}: &f{game_name}'
+    line2:
+      interval: 20
+      text:
+        - '&a&lYour stars: {stars}⭑'
+    line3:
+      interval: 10
+      text:
+        - ''
+    line4:
+      interval: 1
+      text:
+        - '<glow>myserver.com</glow>'
+        - '<delay times=60>&fmyserver.com</delay>'
+points-game:
+  enabled: true
+  title:
+    interval: 20
+    text:
+      - '&e&lArcade'
+  content:
+    line1:
+      interval: 100
+      text:
+        - '&b&lGame {game_count}/{total_games}: &f{game_name}'
+    line2:
+      interval: 5
+      text:
+        - '&a&lPlayers: &f{total_players}'
+    line3:
+      interval: 5
+      text:
+        - '&e&lGoal: &fGet {point_goal} {point_goal_name}'
+    line4:
+      interval: 5
+      text:
+        - '&a&l{point_goal_name}'
+    line5:
+      interval: 20
+      text:
+        - '&f 1. &a{game_points_name:1_16}   {game_points_count:1}'
+    line6:
+      interval: 20
+      text:
+        - '&f 2. &a{game_points_name:2_16}   {game_points_count:2}'
+    line7:
+      interval: 20
+      text:
+        - '&f 3. &a{game_points_name:3_16}   {game_points_count:3}'
+    line8:
+      interval: 20
+      text:
+        - '<decision whentrue="&f 4. &a{game_points_name:4_16}   {game_points_count:4}" whenfalse="&f...">{is_top_points:5}</decision>'
+    line9:
+      interval: 20
+      text:
+        - '<decision whentrue="&f 5. &a{game_points_name:5_16}   {game_points_count:5} " whenfalse="&f {player_place_points}. &a{player_name#16}   {game_points}">{is_top_stars:5}</decision>'
+    line10:
+      interval: 10
+      text:
+        - ''
+    line11:
+      interval: 20
+      text:
+        - '&a&lYour stars: {stars}⭑'
+    line12:
+      interval: 10
+      text:
+        - ''
+    line13:
+      interval: 1
+      text:
+        - '<glow>myserver.com</glow>'
+        - '<delay times=60>&fmyserver.com</delay>'
+last-alive-game:
+  enabled: true
+  title:
+    interval: 20
+    text:
+      - '&e&lArcade'
+  content:
+    line1:
+      interval: 100
+      text:
+        - '&b&lGame {game_count}/{total_games}: &f{game_name}'
+    line2:
+      interval: 5
+      text:
+        - '&a&lPlayers Alive: &f{players}/{total_players}'
+    line3:
+      interval: 20
+      text:
+        - '&a&lYour stars: {stars}⭑'
+    line4:
+      interval: 10
+      text:
+        - ''
+    line5:
+      interval: 1
+      text:
+        - '<glow>myserver.com</glow>'
+        - '<delay times=60>&fmyserver.com</delay>'
+star-summary:
+  enabled: true
+  title:
+    interval: 20
+    text:
+      - '&e&lArcade'
+  content:
+    line1:
+      interval: 100
+      text:
+      - '&b&lGame {game_count}/{total_games}: &f{game_name}'
+    line2:
+      interval: 5
+      text:
+      - '&a&lGame Summary'
+    line3:
+      interval: 20
+      text:
+      - '&f 1. &a{game_stars_name:1_16}   {game_stars_count:1}⭑'
+    line4:
+      interval: 20
+      text:
+      - '&f 2. &a{game_stars_name:2_16}   {game_stars_count:2}⭑'
+    line5:
+      interval: 20
+      text:
+      - '&f 3. &a{game_stars_name:3_16}   {game_stars_count:3}⭑'
+    line6:
+      interval: 20
+      text:
+      - '<decision whentrue="&f 4. &a{game_stars_name:4_16}   {game_stars_count:4}⭑" whenfalse="&f...">{is_top_stars:5}</decision>'
+    line7:
+      interval: 20
+      text:
+      - '<decision whentrue="&f 5. &a{game_stars_name:5_16}   {game_stars_count:5}⭑" whenfalse="&f {player_place}. &a{player_name#16}   {stars}⭑">{is_top_stars:5}</decision>'
+    line8:
+      interval: 10
+      text:
+      - ''
+    line9:
+      interval: 20
+      text:
+      - '&a&lYour stars: {stars}⭑'
+    line10:
+      interval: 10
+      text:
+      - ''
+    line11:
+      interval: 1
+      text:
+      - '<glow>myserver.com</glow>'
+      - '<delay times=60>&fmyserver.com</delay>'

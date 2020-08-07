@@ -1,0 +1,75 @@
+
+# Plugin Hooks version
+# DO NOT CHANGE, SERIOUSLY
+file-version: 0.25
+
+# In this file you can enable, disable, and configure
+# to which plugins will TheTowersRemastered hook in
+
+# Vault (https://dev.bukkit.org/projects/vault)
+Vault:
+  # Here you can enable or disable if the plugin will hook into vault
+  enabled: true
+  # You can configure certain things of Vault below
+  configuration:
+    # The economy is used for win rewards, point rewards, and kits
+    economy: true
+    # The permissions will be used for the {group} placeholder for the chat
+    permissions: true
+    # The chat will be used for the following chat placeholders
+    # {permprefix} - Permission group prefix
+    # {permsuffix} - Permission group suffix
+    # {playername} - Default player name.
+    chat: true
+
+# PlaceHolderAPI by Maximvdw (https://www.spigotmc.org/resources/mvdwplaceholderapi.11182/)
+MVdWPlaceholderAPI:
+  # Here you can enable or disable if you want to enable thetowers placeholders
+  # to be able to use by any of Maximvdw's plugins, such as FeatherBoard
+  # The current placeholders available to use are
+  # For in-game or pre-game lobby ONLY
+  # {thetowers_arena} - The arena the player is in
+  # {thetowers_players} - The amount of players the arena the player is in has
+  # {thetowers_max_players} - The maximum amount of players the arena can hold
+  # {thetowers_min_players} - The amount of players needed for the arena to start
+  # For anywhere
+  # {thetowers_wins} - The amount of wins the player has
+  # {thetowers_loses} - The amount of loses the player has
+  # {thetowers_points} - The amount of points the player has
+  # {thetowers_kills} - The amount of kills the player has
+  # {thetowers_deaths} - The amount of deaths the player has
+  enabled: true
+
+# FeatherBoard (https://www.spigotmc.org/resources/featherboard.2691/)
+FeatherBoard:
+  # Here you can enable or disable the FeatherBoard addon
+  enabled: true
+  # You can configure certain aspects of FeatherBoard below
+  configuration:
+    # The scoreboard name the player will have when he joins the lobby
+    pre-game: 'pre-game'
+    # The scoreboard name the player will have when he exits the game
+    lobby: 'default'
+
+# WorldEdit (https://dev.bukkit.org/projects/worldedit)
+WorldEdit:
+  # Here you can enable or disable the WorldEdit addon
+  # This addon allows you to select the cuboid areas with worldedit
+  enabled: true
+
+# Clip's PlaceholderAPI (https://www.spigotmc.org/resources/placeholderapi.6245/)
+PlaceholderAPI:
+  # Here you can enable or disable the PlaceHolderAPI addon
+  # This addon allows you to use clip's placeholders on the custom scoreboard (if there is no FeatherBoard)
+  # Here is the list of placeholders https://www.spigotmc.org/wiki/placeholderapi-placeholders/
+  # You can also use the placeholders provided by thetowers
+  enabled: true
+
+SlimeWorldManager:
+  enabled: true
+
+HolographicDisplays:
+  enabled: true
+
+Citizens:
+  enabled: true

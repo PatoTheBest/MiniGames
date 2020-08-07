@@ -1,0 +1,40 @@
+package me.patothebest.gamecore.combat;
+
+public enum DeathCause {
+
+    ANVIL,
+    ARROW,
+    BORDER,
+    CACTUS,
+    CRAMMING,
+    DRAGON_BREATH,
+    DROWN,
+    EXPLOSION,
+    FALL,
+    FALLING_BLOCK,
+    FIREBALL,
+    FIREWORKS,
+    FLY_INTO_WALL,
+    GENERIC,
+    HOT_FLOOR,
+    INDIRECT_MAGIC,
+    IN_FIRE,
+    IN_WALL,
+    LAVA,
+    LIGHTNING_BOLT,
+    MAGIC,
+    MOB,
+    NETHER_BED,
+    ON_FIRE,
+    OUT_OF_WORLD,
+    PLAYER,
+    STARVE,
+    STING,
+    SWEET_BERRY_BUSH,
+    THORNS,
+    THROWN,
+    TRIDENT,
+    WITHER,
+
+
+}

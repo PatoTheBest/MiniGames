@@ -1,0 +1,10 @@
+
+# Teleportation
+# You can specify two locations where you want the player to be teleported back to
+# MainLobby - You can set a main lobby with the command /arcade setup setmainlobby
+# WorldSpawn - Will teleport to the spawn location of the main world
+teleport:
+  location: WorldSpawn
+  teleport-on-join: true
+
+# End of config, mainlobby should be stored below

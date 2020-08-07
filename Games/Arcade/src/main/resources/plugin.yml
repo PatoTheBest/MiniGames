@@ -1,0 +1,7 @@
+name: Arcade
+version: ${arcade.version}
+main: ${main.class}
+author: PatoTheBest
+description: A fully customizable and automated SkyWars Plugin.
+api-version: ${gamecore.apiversion}
+softdepend: [${gamecore.softdependencies}]

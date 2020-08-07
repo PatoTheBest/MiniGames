@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.patothebest</groupId>
+    <artifactId>MiniGames</artifactId>
+    <packaging>pom</packaging>
+    <version>parent</version>
+
+    <modules>
+        <module>GameCore</module>
+        <module>NMSImpl</module>
+        <module>Games</module>
+    </modules>
+
+    <properties>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <gamecore.version>2.0-SNAPSHOT</gamecore.version>
+        <thetowers.version>2.0-SNAPSHOT</thetowers.version>
+        <skywars.version>1.0-SNAPSHOT</skywars.version>
+        <arcade.version>1.0-SNAPSHOT</arcade.version>
+        <hungergames.version>1.0-SNAPSHOT</hungergames.version>
+
+        <!-- Dependencies -->
+        <gamecore.softdependencies>MVdWPlaceholderAPI, Vault, WorldEdit, PlaceholderAPI, LuckPerms, LeaderHeads, Citizens, HolographicDisplays</gamecore.softdependencies>
+        <!-- Spigot api version -->
+        <gamecore.apiversion>1.15</gamecore.apiversion>
+    </properties>
+
+    <repositories>
+        <!-- Maven Central -->
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <!-- Spigot Repo -->
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <!-- required until fixed plexus-compiler-eclipse is deployed -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spigotmc-public</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <!-- we use the Eclipse compiler as it doesn't need a JDK -->
+                    <compilerId>eclipse</compilerId>
+                    <!-- source and target are ignored if this isn't true -->
+                    <optimize>true</optimize>
+                </configuration>
+                <dependencies>
+                    <!-- we need our custom version as it fixes some bugs on case sensitive file systems -->
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-eclipse</artifactId>
+                        <version>2.8.5-spigotmc</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

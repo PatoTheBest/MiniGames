@@ -1,0 +1,266 @@
+# Config version
+# DO NOT CHANGE, SERIOUSLY
+file-version: 0.74
+
+# Plugin logging
+# How much logging do you want for this plugin
+# Levels:
+# OFF - no logging at all
+# SEVERE - only errors
+# WARNING - only errors and warnings
+# INFO - generic information (loaded x signs, etc)
+# CONFIG - what configurations are being loaded
+# FINE - provides tracing information.
+# FINER - fairly detailed tracing message
+# FINEST - highly detailed tracing message.
+# ALL - Everything the plugin is doing
+log-level: INFO
+
+# Player Storage Section
+# Here you can specify where the player profiles will be saves
+# There are three options: MYSQL, FLATFILE, or none
+# MYSQL - will save the profile to the specified database
+# FLATFILE - will save each other profile to the plugin folder
+# SPLIT - will split the storage types, see below
+# NONE - will disable saving
+storage:
+  type: FLATFILE
+  # Disable if running an offline server
+  use-uuids: true
+  # MySQL details (will be used only if the storage type is set to MYSQL)
+  # The MySQL user
+  username: root
+  # The MySQL password
+  password: ''
+  # The MySQL host
+  host: localhost
+  # The MySQL port
+  port: 3306
+  # The MySQL database
+  database: minigames
+
+# Encouragement messages
+# This messages will encourage players to join arenas by sending them
+# a clickable chat message to join an arena
+encouragement:
+  death: true
+  starting: true
+
+# Inventory management
+# Restore inventory when the player leaves an arena
+restore-inventory: true
+
+# Split Storage
+# Here you can split the storage
+# NOTE: In order to split the storage you must specify the storage type to be SPLIT
+# MYSQL - will save the profile to the specified database
+# FLATFILE - will save each other profile to the plugin folder
+# NONE - will disable saving
+split-storage:
+  players: MYSQL
+  kits: FLATFILE
+
+# Locale
+# Default locale for players
+default-locale: en
+
+# Countdown
+# Here you can specify the countdown time for the game to start
+# The time is in seconds.
+countdown: 30
+
+# Min players
+# Here you can set a percentage of how many players the arena needs in order to start
+# You can set this to -1 to use the minimum amount set on the arena itself
+# This overrides any minimum amount set per arena
+# NOTE: VALUE MUST BE A PERCENTAGE (eg. 25%)
+min-players: -1
+
+# Points
+# This is a cosmetic thing, is just a statistic for players to grind on
+points:
+  # Should we enable the points?
+  enabled: true
+  # How many points do we give the player when he kills a player
+  kill: 2
+  # How many points do we give the player when they win
+  win: 25
+  # How many points do we deduct when the player loses
+  lose: 0
+  # How many points do we deduct when the player dies
+  death: 0
+  # How many points do we deduct when the player leaves the game
+  leave-game: -10
+
+# Points Multiplier
+# Here you can set multipliers for groups
+points-multiplier:
+  enabled: true
+  multipliers:
+    vip: 2
+
+# Stats
+# Enable or disable tracked stats
+stats:
+  kills: true
+  deaths: true
+  wins: true
+  loses: true
+  points: true
+  blocks_placed: false
+
+# BungeeMode
+# Here you can enable or disable bungee mode and customize
+# Many options
+bungee-mode:
+  enabled: false
+  # The arena to choose
+  # You can specify a specific arena or a RANDOM arena
+  arena: RANDOM
+  # You can specify after how many arena restarts will the server restart
+  # Put -1 to never restart the server
+  restart-after: 5
+  # Repo for map content
+  # leave as '' to disable
+  repo: 'https://raw.githubusercontent.com/PatoTheBest/maps/master/Games/SkyWars'
+  # MOTD
+  motd:
+    preparing: Preparing|{players}|{max_players}|{map}
+    waiting: Waiting|{players}|{max_players}|{map}
+    starting: Starting|{players}|{max_players}|{map}
+    in-game: In-Game|{players}|{max_players}|{map}
+    ending: Ending|{players}|{max_players}|{map}
+    restarting: Restarting|{players}|{max_players}|{map}
+    error: Error|{players}|{max_players}|{map}
+    other: Unknown|{players}|{max_players}|{map}
+  # Server to send the player to when player exits the arena
+  leave-server: lobby
+
+
+# BungeeMode
+# Here you can enable or disable bungee mode and customize
+# Many options
+advanced-bungee-mode:
+  enabled: false
+  # The amount of concurrent arenas there'll be
+  concurrent-arenas: 3
+  # You can specify after how many arena restarts will the server restart
+  # Put -1 to never restart the server
+  restart-after: 30
+  # Repo for map content
+  # leave as '' to disable
+  repo: 'https://raw.githubusercontent.com/PatoTheBest/maps/master/Games/SkyWars'
+  # MOTD
+  motd:
+    preparing: Preparing|{players}|{max_players}|{map}|{world_name}
+    waiting: Waiting|{players}|{max_players}|{map}|{world_name}
+    starting: Starting|{players}|{max_players}|{map}|{world_name}
+    in-game: In-Game|{players}|{max_players}|{map}|{world_name}
+    ending: Ending|{players}|{max_players}|{map}|{world_name}
+    restarting: Restarting|{players}|{max_players}|{map}|{world_name}
+    error: Error|{players}|{max_players}|{map}|{world_name}
+    other: Unknown|{players}|{max_players}|{map}|{world_name}
+  # Server to send the player to when player exits the arena
+  leave-server: lobby
+
+# Random arena mode
+# Random arena mode consists of not having all arenas loaded, but having
+# x amount of arenas loaded to reduce memory usage and cpu usage by having
+# less worlds loaded
+# Signs for this group can be added like /sw signs add group1 -c
+random-arena-mode:
+  enabled: false
+  arena-groups:
+    group1:
+      arenas:
+      - Arena1
+      - Arena2
+      - Arena3
+      concurrent-arenas: 1
+    group2:
+      arenas:
+      - Arena4
+      - Arena5
+      - Arena6
+      concurrent-arenas: 2
+
+# Private Arenas
+# People with permission can create private arenas for tournaments or to play with friends
+private-arenas:
+  enabled: true
+
+# Signs
+# Here you can edit the sign format
+# This format applies to every single sign that has been created with the command
+# /%base_command% signs add <arena>
+# You can use color codes and placeholders as well as utf-8 characters
+# There are a few placeholders you can use for the sign
+# {arena} - The arena the sign is bound to
+# {players} - The amount of players in the arena
+# {min_players} - The minimum amount of players the arena needs to start
+# {max_players} - The maximum players the arena can hold
+signs:
+  OTHER:
+    - ''
+    - '&7&lWaiting for'
+    - '&7&lan arena'
+    - ''
+  ERROR:
+    - ''
+    - '&7&lWaiting for'
+    - '&7&lan arena'
+    - ''
+  IN_GAME:
+    - '&dJoin'
+    - '{arena}'
+    - '&7&l{players}/{max_players}'
+    - '&5&lIn-Game'
+  WAITING:
+    - '&dJoin'
+    - '{arena}'
+    - '&7&l{players}/{max_players}'
+    - '&5&lStarting soon'
+  RESTARTING:
+    - ''
+    - '&c&lRestarting'
+    - 'Please wait'
+    - ''
+
+# Leaderboards
+# This queries the database every x minutes
+# This is done asynchronously and updates any signs/holograms
+# Should only be used on lobbies where you display stats
+leaderboard:
+  enabled: false
+  # Interval in minutes
+  interval: 10
+
+# Leaderboard signs
+leaderboard-signs:
+- '&0#%place%'
+- '&b&l%player_name%'
+- '&8%stat_name%'
+- '&4&l%amount%'
+leaderboard-signs-fallback:
+- ''
+- '&onone yet'
+- ''
+- ''
+
+# Stat Holograms
+stat-holograms:
+  style: '&e%place%. &b%player_name% &f- &b%amount%'
+  none: '&e%place. &7none'
+  change: '&6&lClick to toggle!'
+
+# Sign Block Colors
+# Here you can enable or disable and/or change if you want the blocks behind the
+# sign to change automatically base on the arena state
+sign-block-color:
+  enabled: true
+  status:
+    OTHER: 'stained_clay:7'
+    ERROR: 'stained_clay:7'
+    IN_GAME: 'stained_clay:14'
+    WAITING: 'stained_clay:5'
+    RESTARTING: 'stained_clay:14'
