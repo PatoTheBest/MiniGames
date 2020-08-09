@@ -60,6 +60,7 @@ public enum Lang implements ILang {
     SETUP_ERRORS(CommentType.SUBHEADER_SPACED, "Error messages"),
     ARENA_MUST_BE_SOLO(true, "&cArena must be solo arena"),
     ARENA_MUST_BE_TEAM(true, "&cArena must be team arena"),
+    ARENA_NOT_ENOUGH_SPAWNS(true,"&cArena needs enough spawns! Use &e/%base_command% setup spawns"),
 
 ;
 
@@ -103,7 +104,11 @@ public enum Lang implements ILang {
 
     @Override
     public void setMessage(Locale locale, String message) {
-        this.message.put(locale, ChatColor.translateAlternateColorCodes('&', message).replace("%newline%", "\n").replace("%plugin_prefix%", PluginConfig.LANG_PREFIX).replace("%game_title%", PluginConfig.GAME_TITLE));
+        this.message.put(locale, ChatColor.translateAlternateColorCodes('&', message)
+                .replace("%newline%", "\n")
+                .replace("%plugin_prefix%", PluginConfig.LANG_PREFIX)
+                .replace("%game_title%", PluginConfig.GAME_TITLE)
+                .replace("%base_command%", PluginConfig.BASE_COMMAND));
         this.rawMessage.put(locale, message);
     }
 

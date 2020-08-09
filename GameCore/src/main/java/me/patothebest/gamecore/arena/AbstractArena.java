@@ -889,7 +889,7 @@ public abstract class AbstractArena implements GroupPermissible, ConfigurationSe
 
         objectMap.put("permission-group", permissionGroup.getName());
         objectMap.put("minplayers", minPlayers);
-        objectMap.put("maxplayers", getMaxPlayers());
+        objectMap.put("maxplayers", maxPlayers);
 
         objectMap.put("server-version", ServerVersion.getVersion());
 
@@ -936,7 +936,7 @@ public abstract class AbstractArena implements GroupPermissible, ConfigurationSe
         }
 
         // check if the minimum amount of players does not surpass the maximum amount
-        if (getMaxPlayers() < minPlayers) {
+        if (maxPlayers < minPlayers) {
             canBeEnabled = false;
             sender.sendMessage(CoreLang.SETUP_ERROR_MIN_MAX.getMessage(sender));
         }
@@ -1102,7 +1102,7 @@ public abstract class AbstractArena implements GroupPermissible, ConfigurationSe
     }
 
     public boolean isFull() {
-        return players.size() >= getMaxPlayers();
+        return players.size() >= maxPlayers;
     }
 
     public ArenaFile getArenaFile() {

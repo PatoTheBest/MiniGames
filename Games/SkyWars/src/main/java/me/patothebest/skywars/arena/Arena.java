@@ -20,6 +20,7 @@ import me.patothebest.gamecore.feature.features.gameoptions.individual.WalkTrail
 import me.patothebest.gamecore.feature.features.gameoptions.time.TimeSelectorGameOption;
 import me.patothebest.gamecore.feature.features.gameoptions.weather.WeatherSelectorGameOption;
 import me.patothebest.gamecore.itemstack.Material;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.phase.phases.CagePhase;
 import me.patothebest.gamecore.phase.phases.CelebrationPhase;
 import me.patothebest.gamecore.phase.phases.EndPhase;
@@ -28,6 +29,7 @@ import me.patothebest.gamecore.phase.phases.TeamAssignPhase;
 import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.util.Utils;
 import me.patothebest.gamecore.vector.ArenaLocation;
+import me.patothebest.skywars.lang.Lang;
 import me.patothebest.skywars.phase.PhaseType;
 import me.patothebest.skywars.phase.SkyWarsGameBasePhase;
 import me.patothebest.skywars.phase.SkyWarsPhase;
@@ -211,7 +213,15 @@ public class Arena extends AbstractArena implements SpawneableArena, ChestArena,
 
     @Override
     public boolean canArenaBeEnabled(CommandSender commandSender) {
-        return super.canArenaBeEnabled(commandSender);
+
+        if (!super.canArenaBeEnabled(commandSender)) return false;
+
+        if (spawns.size() < maxPlayers){
+            commandSender.sendMessage(Lang.ARENA_NOT_ENOUGH_SPAWNS.getMessage(commandSender));
+            return false;
+        }
+
+        return true;
     }
 
     @Override

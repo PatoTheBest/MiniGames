@@ -151,7 +151,7 @@ public class ArenaSetupCommands {
 
         // change the max player amount
         arena.setMinPlayers(args.getInteger(1));
-        player.sendMessage(CoreLang.MAX_PLAYERS_SET.getMessage(player));
+        player.sendMessage(CoreLang.MIN_PLAYERS_SET.getMessage(player));
         arena.save();
         return null;
     }
