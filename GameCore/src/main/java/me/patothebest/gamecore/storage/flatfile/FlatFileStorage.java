@@ -1,15 +1,15 @@
 package me.patothebest.gamecore.storage.flatfile;
 
 import me.patothebest.gamecore.CorePlugin;
-import me.patothebest.gamecore.lang.CoreLocaleManager;
-import me.patothebest.gamecore.permission.PermissionGroupManager;
-import me.patothebest.gamecore.util.Utils;
 import me.patothebest.gamecore.kit.Kit;
+import me.patothebest.gamecore.lang.CoreLocaleManager;
 import me.patothebest.gamecore.logger.InjectParentLogger;
+import me.patothebest.gamecore.permission.PermissionGroupManager;
 import me.patothebest.gamecore.player.CorePlayer;
 import me.patothebest.gamecore.storage.StorageException;
 import me.patothebest.gamecore.storage.StorageManager;
 import me.patothebest.gamecore.util.Callback;
+import me.patothebest.gamecore.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -81,7 +81,7 @@ public final class FlatFileStorage implements IFlatFileStorage {
         }
 
         PlayerProfileFile file = playerfiles.get(player.getName());
-        file.set("locale", player.getLocale());
+        file.set("locale", player.getLocale().getName());
         file.set("name", player.getName());
 
         try {
