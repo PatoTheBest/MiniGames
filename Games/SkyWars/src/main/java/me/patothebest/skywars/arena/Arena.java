@@ -216,9 +216,11 @@ public class Arena extends AbstractArena implements SpawneableArena, ChestArena,
 
         if (!super.canArenaBeEnabled(commandSender)) return false;
 
-        if (spawns.size() < maxPlayers){
-            commandSender.sendMessage(Lang.ARENA_NOT_ENOUGH_SPAWNS.getMessage(commandSender));
-            return false;
+        if(arenaGroup == ArenaType.SOLO) {
+            if (spawns.size() < maxPlayers){
+                commandSender.sendMessage(Lang.ARENA_NOT_ENOUGH_SPAWNS.getMessage(commandSender));
+                return false;
+            }
         }
 
         return true;

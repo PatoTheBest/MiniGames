@@ -27,6 +27,7 @@ import me.patothebest.gamecore.phase.phases.WaitingPhase;
 import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.util.Utils;
 import me.patothebest.gamecore.vector.ArenaLocation;
+import me.patothebest.hungergames.lang.Lang;
 import me.patothebest.hungergames.phase.HungerGamesGameBasePhase;
 import me.patothebest.hungergames.phase.HungerGamesPhase;
 import me.patothebest.hungergames.phase.PhaseType;
@@ -215,7 +216,16 @@ public class Arena extends AbstractArena implements ChestArena, CentrableArena, 
 
     @Override
     public boolean canArenaBeEnabled(CommandSender commandSender) {
-        return super.canArenaBeEnabled(commandSender);
+        if (!super.canArenaBeEnabled(commandSender)) return false;
+
+        if(arenaGroup == ArenaType.SOLO) {
+            if (spawns.size() < maxPlayers){
+                commandSender.sendMessage(Lang.ARENA_NOT_ENOUGH_SPAWNS.getMessage(commandSender));
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
