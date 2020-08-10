@@ -4,11 +4,11 @@ import com.google.inject.Inject;
 import fr.mrmicky.fastparticle.FastParticle;
 import fr.mrmicky.fastparticle.ParticleType;
 import me.patothebest.gamecore.CorePlugin;
-import me.patothebest.gamecore.combat.DamageCause;
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.combat.CombatManager;
-import me.patothebest.gamecore.event.EventRegistry;
+import me.patothebest.gamecore.combat.DamageCause;
 import me.patothebest.gamecore.feature.AbstractRunnableFeature;
+import me.patothebest.gamecore.file.CoreConfig;
+import me.patothebest.gamecore.lang.CoreLang;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,16 +24,21 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
     private final List<Player> players = new CopyOnWriteArrayList<>();
     private final CombatManager combatManager;
     private final CorePlugin plugin;
-    private final EventRegistry eventRegistry;
+    private final CoreConfig config;
 
-    @Inject private NoBorderTrespassingFeature(CombatManager combatManager, CorePlugin plugin, EventRegistry eventRegistry) {
+    private double damage;
+    private boolean showParticles;
+
+    @Inject private NoBorderTrespassingFeature(CombatManager combatManager, CorePlugin plugin, CoreConfig config) {
         this.combatManager = combatManager;
         this.plugin = plugin;
-        this.eventRegistry = eventRegistry;
+        this.config = config;
     }
 
     @Override
     public void initializeFeature() {
+        this.damage = config.getDouble("border.damage");
+        this.showParticles = config.getBoolean("border.show-particles");
         runTaskTimer(plugin, 20L, 20L);
     }
 
@@ -52,7 +57,9 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
                     return;
                 }
 
-                combatManager.damagePlayer(player, DamageCause.MELTING, 2);
+                if (damage > 0) {
+                    combatManager.damagePlayer(player, DamageCause.MELTING, damage);
+                }
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2 * 20, 2));
                 player.sendMessage(CoreLang.RETURN_PLAYABLE_AREA.getMessage(player));
             } else {
@@ -94,6 +101,10 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
             return;
         }
 
+        if (!showParticles) {
+            return;
+        }
+
         double x = event.getTo().getBlockX() + 0.5;
         double y = event.getTo().getBlockY();
         double z = event.getTo().getBlockZ() + 0.5;
@@ -117,7 +128,7 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
         }
 
         if (y < lY) {
-            FastParticle.spawnParticle(player, ParticleType.BARRIER, x, lY, z, 1);
+            FastParticle.spawnParticle(player, ParticleType.BARRIER, x, lY - 2.5, z, 1);
         } else if (y > uY) {
             FastParticle.spawnParticle(player, ParticleType.BARRIER, x, uY + 4, z, 1);
         }
