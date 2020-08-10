@@ -1,6 +1,6 @@
 # Config version
 # DO NOT CHANGE, SERIOUSLY
-file-version: 0.74
+file-version: 0.75
 
 # Plugin logging
 # How much logging do you want for this plugin
@@ -68,6 +68,17 @@ default-locale: en
 # Here you can specify the countdown time for the game to start
 # The time is in seconds.
 countdown: 30
+
+# Border
+# The arenas are limited by an area you set.
+# Players cannot build/place outside the area and also they cannot go outside of it,
+# otherwise they are going to be blinded and will slowly start taking damage
+border:
+  # They also see some barrier particles when they get close to the border.
+  show-particles: true
+  # You can disable the barrier particles and change the damage (0 to disable damage)
+  # Default damage is 2 health (1 heart)
+  damage: 2
 
 # Min players
 # Here you can set a percentage of how many players the arena needs in order to start
