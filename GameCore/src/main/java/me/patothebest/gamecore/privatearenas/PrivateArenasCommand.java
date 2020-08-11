@@ -1,6 +1,5 @@
 package me.patothebest.gamecore.privatearenas;
 
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.command.BaseCommand;
 import me.patothebest.gamecore.command.ChildOf;
 import me.patothebest.gamecore.command.Command;
@@ -8,6 +7,7 @@ import me.patothebest.gamecore.command.CommandContext;
 import me.patothebest.gamecore.command.CommandException;
 import me.patothebest.gamecore.command.CommandPermissions;
 import me.patothebest.gamecore.command.LangDescription;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.modules.RegisteredCommandModule;
 import me.patothebest.gamecore.permission.Permission;
 import me.patothebest.gamecore.privatearenas.ui.PrivateArenaUIFactory;
@@ -61,6 +61,4 @@ public class PrivateArenasCommand implements RegisteredCommandModule {
         }
         privateArenaUIFactory.createPrivateArenaMenu(player, privateArena);
     }
-
-
 }

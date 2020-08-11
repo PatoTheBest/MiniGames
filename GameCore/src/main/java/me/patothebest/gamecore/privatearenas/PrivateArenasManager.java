@@ -1,27 +1,34 @@
 package me.patothebest.gamecore.privatearenas;
 
-import me.patothebest.gamecore.lang.CoreLang;
-import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.arena.AbstractArena;
 import me.patothebest.gamecore.arena.ArenaManager;
 import me.patothebest.gamecore.event.arena.ArenaPreRegenEvent;
 import me.patothebest.gamecore.event.player.ArenaPreLeaveEvent;
 import me.patothebest.gamecore.feature.features.other.CountdownFeature;
+import me.patothebest.gamecore.lang.CoreLang;
+import me.patothebest.gamecore.logger.InjectLogger;
+import me.patothebest.gamecore.logger.Logger;
 import me.patothebest.gamecore.modules.ActivableModule;
 import me.patothebest.gamecore.modules.ListenerModule;
+import me.patothebest.gamecore.modules.ModuleName;
 import me.patothebest.gamecore.modules.ReloadableModule;
 import me.patothebest.gamecore.player.PlayerManager;
+import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.util.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
+@Singleton
+@ModuleName("Private Arenas Manager")
 public class PrivateArenasManager implements ReloadableModule, ActivableModule, ListenerModule {
 
     private final Map<String, PrivateArena> privateArenaMap = new HashMap<>();
@@ -29,6 +36,8 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
     private final ArenaManager arenaManager;
     private final PlayerManager playerManager;
     private final List<String> enabledArenas = new ArrayList<>();
+    private final AtomicInteger id = new AtomicInteger(1);
+    @InjectLogger private Logger logger;
 
     @Inject private PrivateArenasManager(ArenaManager arenaManager, PlayerManager playerManager) {
         this.arenaManager = arenaManager;
@@ -49,6 +58,7 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
             String contents = Utils.readFileAsString(file);
             if (contents.contains("enabled: true")) {
                 enabledArenas.add(name);
+                logger.config("Adding arena {0} as an option", name);
             }
         }
     }
@@ -56,6 +66,7 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
     @Override
     public void onReload() {
         onDisable();
+        onPreEnable();
     }
 
     @Override
@@ -101,6 +112,7 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
             oldArena.removePlayer(player);
             newArena.addPlayer(player);
         }
+
         for (Player player : spectatorsToMove) {
             boolean canPlay = oldArena.canJoin(player);
             oldArena.removePlayer(player);
@@ -110,10 +122,13 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
                 newArena.addSpectator(player);
             }
         }
+
         changingArenas.remove(oldArena);
         newArena.getWhitelistedPlayers().addAll(oldArena.getWhitelistedPlayers());
 
         arenaManager.getArenas().values().remove(oldArena);
+        oldArena.getArenaWorld().unloadWorld(false);
+        oldArena.getArenaWorld().deleteWorld();
         oldArena.destroy();
     }
 
@@ -148,7 +163,9 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
     }
 
     private AbstractArena loadArena(String playerName, String arenaName) {
-        AbstractArena arena = arenaManager.loadArena(arenaName, "private_" + playerName + "_" + arenaName, false);
+        String worldName = "private_" + playerName + "_" + arenaName + "_" + id.getAndIncrement();
+        logger.fine("Loading arena {0} for player {1}. WorldName: {2}", arenaName, playerName, worldName);
+        AbstractArena arena = arenaManager.loadArena(arenaName, worldName, false);
         arena.setDisableSaving(true);
         arena.setDisableStats(true);
         arena.setWhitelist(true);
@@ -167,6 +184,7 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
     }
 
     public void removePrivateArena(PrivateArena privateArena) {
+        logger.fine("Removing private arena of {0}", privateArena.getOwnerName());
         AbstractArena arena = privateArena.getArena();
         arena.getArenaWorld().deleteWorld();
         arena.destroy();
@@ -178,7 +196,7 @@ public class PrivateArenasManager implements ReloadableModule, ActivableModule, 
         return enabledArenas;
     }
 
-    public PrivateArena getCurrentarena(Player player) {
+    public PrivateArena getCurrentArena(Player player) {
         AbstractArena currentArena = playerManager.getPlayer(player).getCurrentArena();
 
         if (currentArena == null) {
