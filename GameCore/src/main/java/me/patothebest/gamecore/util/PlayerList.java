@@ -1,18 +1,19 @@
 package me.patothebest.gamecore.util;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
-import it.unimi.dsi.fastutil.objects.ObjectSet;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class PlayerList implements ObjectSet<Player> {
+public class PlayerList implements Set<Player> {
 
-    private final Int2ObjectMap<Player> players = new Int2ObjectAVLTreeMap<>();
+    private final Map<Integer, Player> players = new HashMap<>();
 
     @Override
     public int size() {
@@ -33,8 +34,9 @@ public class PlayerList implements ObjectSet<Player> {
         return players.containsKey(((Player)o).getEntityId());
     }
 
+    @NotNull
     @Override
-    public ObjectIterator<Player> iterator() {
+    public Iterator<Player> iterator() {
         return players.values().iterator();
     }
 

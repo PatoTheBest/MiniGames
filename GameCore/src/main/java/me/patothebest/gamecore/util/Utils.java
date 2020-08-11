@@ -1,12 +1,12 @@
 package me.patothebest.gamecore.util;
 
 import com.google.common.io.ByteStreams;
-import me.patothebest.gamecore.itemstack.ItemStackBuilder;
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.PluginConfig;
 import me.patothebest.gamecore.actionbar.ActionBar;
 import me.patothebest.gamecore.chat.DefaultFontInfo;
+import me.patothebest.gamecore.itemstack.ItemStackBuilder;
 import me.patothebest.gamecore.kit.WrappedPotionEffect;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.vector.ArenaLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -54,6 +54,7 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
@@ -1532,6 +1533,27 @@ public class Utils {
         }
 
         throw new UnsupportedOperationException("Cannot list files for URL " + dirURL);
+    }
+
+    /**
+     * Returns the url contents as as string
+     *
+     * @param url the url to query
+     * @param charset the charset
+     * @return the url contents
+     * @throws IOException if anything fails
+     */
+    public static String urlToString(URL url, Charset charset) throws IOException{
+        try (InputStream in = url.openStream()) {
+            InputStreamReader inR = new InputStreamReader(in, charset);
+            BufferedReader buf = new BufferedReader(inR);
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = buf.readLine()) != null) {
+                stringBuilder.append(line).append('\n');
+            }
+            return stringBuilder.toString();
+        }
     }
 
     /**

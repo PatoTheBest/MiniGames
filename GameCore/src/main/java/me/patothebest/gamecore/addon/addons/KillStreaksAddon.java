@@ -1,10 +1,6 @@
 package me.patothebest.gamecore.addon.addons;
 
 import com.google.inject.Inject;
-import it.unimi.dsi.fastutil.ints.Int2IntAVLTreeMap;
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import me.patothebest.gamecore.addon.Addon;
 import me.patothebest.gamecore.addon.AddonManager;
 import me.patothebest.gamecore.arena.AbstractArena;
@@ -19,13 +15,15 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class KillStreaksAddon extends Addon {
 
-    private final Int2IntMap playerStreaks = new Int2IntAVLTreeMap();
-    private final Int2ObjectMap<KillStreak> killStreaks = new Int2ObjectAVLTreeMap<>();
+    private final Map<Integer, Integer> playerStreaks = new HashMap<>();
+    private final Map<Integer, KillStreak> killStreaks = new HashMap<>();
     private final PlayerManager playerManager;
     @InjectParentLogger(parent = AddonManager.class) private Logger logger;
     private int smallestStreak = 1000;
@@ -35,8 +33,6 @@ public class KillStreaksAddon extends Addon {
 
     @Inject private KillStreaksAddon(PlayerManager playerManager) {
         this.playerManager = playerManager;
-        playerStreaks.defaultReturnValue(-1);
-        killStreaks.defaultReturnValue(null);
     }
 
     @Override
@@ -88,7 +84,7 @@ public class KillStreaksAddon extends Addon {
             killerColor = Utils.getColorFromDye(killerPlayer.getGameTeam().getColor()).toString();
         }
 
-        int i = playerStreaks.get(event.getPlayer().getEntityId());
+        int i = playerStreaks.getOrDefault(event.getPlayer().getEntityId(), -1);
         if (i >= smallestStreak) {
             if (killerPlayer == null) {
                 String message = ChatColor.translateAlternateColorCodes('&', shutdownMessage.replace("%player_name%", teamColor + player.getName()));

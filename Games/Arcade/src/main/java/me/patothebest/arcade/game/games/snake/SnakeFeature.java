@@ -1,8 +1,6 @@
 package me.patothebest.arcade.game.games.snake;
 
 import com.google.inject.Inject;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
 import me.patothebest.arcade.Arcade;
 import me.patothebest.arcade.arena.Arena;
 import me.patothebest.arcade.game.components.floor.FloorComponent;
@@ -27,13 +25,14 @@ import org.bukkit.event.EventHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class SnakeFeature extends AbstractRunnableFeature {
 
     private final Map<Player, SnakeNode> tails = new HashMap<>();
-    private final Map<Player, IntList> headBits = new HashMap<>(); // Map of player and List of entity ids
+    private final Map<Player, List<Integer>> headBits = new HashMap<>(); // Map of player and List of entity ids
     private final List<Location> spawnableSlimeLocations = new ArrayList<>();
 
     private final Arcade plugin;
@@ -62,7 +61,7 @@ public class SnakeFeature extends AbstractRunnableFeature {
         runTaskTimer(plugin, 1L, 1L);
         for (Player player : arena.getPlayers()) {
             tails.put(player, new SnakeNode(player, null, DyeColor.values()[colorIndex++ % DyeColor.values().length]));
-            headBits.put(player, new IntArrayList());
+            headBits.put(player, new LinkedList<>());
             for (int i = 0; i <= 3; i++) {
                 addTailPart(player);
             }
@@ -126,7 +125,7 @@ public class SnakeFeature extends AbstractRunnableFeature {
 
         // check collisions
         for (Player player : arena.getPlayers()) {
-            IntList snakeHead = headBits.get(player);
+            List<Integer> snakeHead = headBits.get(player);
             for (Entity nearbyEntity : player.getNearbyEntities(0.5, 0.5, 0.5)) {
                 if (snakeHead.contains(nearbyEntity.getEntityId())) {
                     continue;

@@ -1,7 +1,5 @@
 package me.patothebest.gamecore.scoreboard;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +10,9 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PlayerScoreboard {
 
     private final static String[] scoreTeams = new String[16];
@@ -21,11 +22,11 @@ public class PlayerScoreboard {
     private final Scoreboard scoreboard;
     private boolean update;
     private final Objective obj;
-    private final Int2ObjectMap<ScoreboardTeam> teams;
+    private final Map<Integer, ScoreboardTeam> teams;
 
     public PlayerScoreboard(Player player) {
         this.player = player;
-        this.teams = new Int2ObjectAVLTreeMap<>();
+        this.teams = new HashMap<>();
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.obj = scoreboard.registerNewObjective("TT-" + SCOREBOARD_INDEX++, "dummy");
         this.obj.setDisplaySlot(DisplaySlot.SIDEBAR);

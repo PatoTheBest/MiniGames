@@ -4,7 +4,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import me.patothebest.gamecore.api.BungeeStateUpdate;
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.arena.AbstractArena;
 import me.patothebest.gamecore.arena.ArenaManager;
 import me.patothebest.gamecore.event.EventRegistry;
@@ -15,6 +14,7 @@ import me.patothebest.gamecore.event.player.GameJoinEvent;
 import me.patothebest.gamecore.event.player.LobbyJoinEvent;
 import me.patothebest.gamecore.event.player.PlayerLoginPrepareEvent;
 import me.patothebest.gamecore.file.CoreConfig;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.modules.ActivableModule;
 import me.patothebest.gamecore.modules.ListenerModule;
 import me.patothebest.gamecore.modules.ModuleName;
@@ -25,7 +25,6 @@ import me.patothebest.gamecore.scheduler.PluginScheduler;
 import me.patothebest.gamecore.scoreboard.CoreScoreboardType;
 import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.util.Utils;
-import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -128,7 +127,7 @@ public class AdvancedBungeeMode implements ActivableModule, ListenerModule {
     private AbstractArena loadRandomArena() {
         if(repo != null && !repo.isEmpty()) {
             try {
-                String list = IOUtils.toString(new URL(repo), StandardCharsets.UTF_8);
+                String list = Utils.urlToString(new URL(repo), StandardCharsets.UTF_8);
                 String[] split = list.split("\n");
                 ArrayList<String> arenaList = new ArrayList<>(enabledArenas);
                 arenaList.retainAll(Arrays.asList(split));

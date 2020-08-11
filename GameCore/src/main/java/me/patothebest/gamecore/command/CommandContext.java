@@ -20,18 +20,14 @@
 package me.patothebest.gamecore.command;
 
 
-import it.unimi.dsi.fastutil.chars.Char2ObjectArrayMap;
-import it.unimi.dsi.fastutil.chars.Char2ObjectMap;
-import it.unimi.dsi.fastutil.chars.CharArraySet;
-import it.unimi.dsi.fastutil.chars.CharSet;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
-
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -50,14 +46,14 @@ public class CommandContext {
     protected final List<String> parsedArgs = new ArrayList<>();
 
     // Starting index in originalArgs of each respective element of parsedArgs
-    protected final IntList originalArgIndices = new IntArrayList();
+    protected final List<Integer> originalArgIndices = new ArrayList<>();
 
     // Boolean flags present
-    protected final CharSet booleanFlags = new CharArraySet();
+    protected final Set<Character> booleanFlags = new HashSet<>();
 
     // Value flags present, and their values
     // One flag may have a blank value if its being completed
-    protected final Char2ObjectMap<String> valueFlags = new Char2ObjectArrayMap<>();
+    protected final Map<Character, String> valueFlags = new HashMap<>();
 
     protected final @Nullable
     SuggestionContext suggestionContext;
@@ -500,11 +496,11 @@ public class CommandContext {
         return booleanFlags.contains(ch) || valueFlags.containsKey(ch);
     }
 
-    public CharSet getFlags() {
+    public Set<Character> getFlags() {
         return booleanFlags;
     }
 
-    public Char2ObjectMap<String> getValueFlags() {
+    public Map<Character, String> getValueFlags() {
         return valueFlags;
     }
 

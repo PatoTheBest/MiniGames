@@ -3,11 +3,6 @@ package me.patothebest.gamecore;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import me.patothebest.gamecore.lang.CoreLang;
-import me.patothebest.gamecore.modules.ModuleName;
-import me.patothebest.gamecore.util.Utils;
-import me.patothebest.gamecore.world.DefaultWorldHandler;
-import me.patothebest.gamecore.world.WorldHandler;
 import me.patothebest.gamecore.command.CommandException;
 import me.patothebest.gamecore.command.CommandNumberFormatException;
 import me.patothebest.gamecore.command.CommandPermissionsException;
@@ -15,14 +10,14 @@ import me.patothebest.gamecore.command.CommandUsageException;
 import me.patothebest.gamecore.command.MissingNestedCommandException;
 import me.patothebest.gamecore.command.WrappedCommandException;
 import me.patothebest.gamecore.command.impl.CommandManager;
-import me.patothebest.gamecore.dependencies.Dependency;
-import me.patothebest.gamecore.dependencies.DependencyManager;
 import me.patothebest.gamecore.injector.BukkitInjector;
 import me.patothebest.gamecore.injector.GuiceInjectorAdapter;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.logger.InjectLogger;
 import me.patothebest.gamecore.modules.ActivableModule;
 import me.patothebest.gamecore.modules.ListenerModule;
 import me.patothebest.gamecore.modules.Module;
+import me.patothebest.gamecore.modules.ModuleName;
 import me.patothebest.gamecore.modules.ModulePriority;
 import me.patothebest.gamecore.modules.ParentCommandModule;
 import me.patothebest.gamecore.modules.RegisteredCommandModule;
@@ -32,6 +27,9 @@ import me.patothebest.gamecore.timings.TimingsData;
 import me.patothebest.gamecore.timings.TimingsManager;
 import me.patothebest.gamecore.util.Priority;
 import me.patothebest.gamecore.util.StringUtil;
+import me.patothebest.gamecore.util.Utils;
+import me.patothebest.gamecore.world.DefaultWorldHandler;
+import me.patothebest.gamecore.world.WorldHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -41,7 +39,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.net.URLClassLoader;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,11 +76,6 @@ public abstract class CorePlugin extends JavaPlugin {
     @Override
     public void onLoad() {
         PluginConfig.parse(getClass().getAnnotation(PluginInfo.class));
-        DependencyManager.DEPENDENCIES_TO_LOAD.add(Dependency.HIKARICP);
-        DependencyManager.DEPENDENCIES_TO_LOAD.add(Dependency.SLF4J_SIMPLE);
-        DependencyManager.DEPENDENCIES_TO_LOAD.add(Dependency.SLF4J_API);
-        DependencyManager.DEPENDENCIES_TO_LOAD.add(Dependency.COMMONS_IO);
-        DependencyManager.DEPENDENCIES_TO_LOAD.add(Dependency.FASTUTIL);
     }
 
     @Override
@@ -113,8 +105,6 @@ public abstract class CorePlugin extends JavaPlugin {
                 getLogger().log(Level.INFO, "Logging level set to: " + loggingLevelName);
             }
         }
-
-        DependencyManager.loadDependencies((URLClassLoader) getClassLoader());
 
         try {
             new BukkitInjector<>(this);
