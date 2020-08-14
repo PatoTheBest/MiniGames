@@ -3,11 +3,11 @@ package me.patothebest.gamecore.feature.features.other;
 import com.google.inject.Inject;
 import me.patothebest.gamecore.cosmetics.cage.Cage;
 import me.patothebest.gamecore.event.player.ArenaLeaveEvent;
-import me.patothebest.gamecore.scheduler.PluginScheduler;
 import me.patothebest.gamecore.event.player.LobbyJoinEvent;
 import me.patothebest.gamecore.event.player.PlayerSelectItemEvent;
 import me.patothebest.gamecore.feature.AbstractFeature;
 import me.patothebest.gamecore.phase.phases.CagePhase;
+import me.patothebest.gamecore.scheduler.PluginScheduler;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class WaitingPhaseFeature extends AbstractFeature {
 
-    private final Map<Player, Location>  playerLocationMap = new HashMap<>();
+    private final Map<Player, Location> playerLocationMap = new HashMap<>();
     private final PluginScheduler pluginScheduler;
 
     @Inject private WaitingPhaseFeature(PluginScheduler pluginScheduler) {
@@ -65,6 +65,12 @@ public class WaitingPhaseFeature extends AbstractFeature {
                 playerLocationMap.put(player, player.getLocation());
             }
         }, 1L);
+    }
+
+    @Override
+    public void stopFeature() {
+        super.stopFeature();
+        playerLocationMap.clear();
     }
 
     @EventHandler
