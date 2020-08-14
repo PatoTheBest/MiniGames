@@ -3,5 +3,5 @@ version: ${thetowers.version}
 main: me.patothebest.thetowers.TheTowersRemastered
 author: PatoTheBest
 description: A fully customizable and automated TheTowers Plugin.
-api-version: ${gamecore.apiversion}.
+api-version: ${gamecore.apiversion}
 softdepend: [${gamecore.softdependencies}]
