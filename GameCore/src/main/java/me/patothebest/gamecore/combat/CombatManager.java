@@ -67,8 +67,19 @@ public class CombatManager extends WrappedBukkitRunnable implements ActivableMod
         combatTrackers.get(player).trackDamage(event, false);
 
         if (event.getFinalDamage() >= (player).getHealth()) {
-            killPlayer(player, true);
-            event.setDamage(0);
+            Location playerLocation = player.getLocation();
+            CombatDeathEvent combatDeathEvent = callDeathEvent(player);
+
+            if (!combatDeathEvent.isCancelled()) {
+                deathEvents.put(player, combatDeathEvent);
+            } else {
+                event.setDamage(0);
+                for (ItemStack drop : combatDeathEvent.getDrops()) {
+                    if(drop != null) {
+                        player.getWorld().dropItemNaturally(playerLocation, drop);
+                    }
+                }
+            }
         }
     }
 
@@ -94,12 +105,24 @@ public class CombatManager extends WrappedBukkitRunnable implements ActivableMod
         }
     }
 
+    /**
+     * Kills a player
+     * <p>
+     * This will call {@link CombatDeathEvent}.
+     * If the event is cancelled, the items will drop (if any) on the player's
+     * death location.
+     * If the event is not cancelled, the player's health will be set to 0,
+     * triggering spigot's {@link PlayerDeathEvent} and shows the death screen.
+     * <p>
+     * The delegateEvent boolean is to override the isCancelled and never call
+     * spigot's death event, regardless of the event state.
+     *
+     * @param player the player
+     * @param delegateEvent whether to delegate the event to spigot
+     */
     public void killPlayer(Player player, boolean delegateEvent) {
         Location playerLocation = player.getLocation();
-        CombatTracker combatTracker = combatTrackers.get(player);
-        CombatDeathEvent combatDeathEvent = combatTracker.onDeath(player);
-        eventRegistry.callEvent(combatDeathEvent);
-        combatTracker.reset();
+        CombatDeathEvent combatDeathEvent = callDeathEvent(player);
 
         if (!combatDeathEvent.isCancelled() && delegateEvent) {
             deathEvents.put(player, combatDeathEvent);
@@ -111,5 +134,13 @@ public class CombatManager extends WrappedBukkitRunnable implements ActivableMod
                 }
             }
         }
+    }
+
+    private CombatDeathEvent callDeathEvent(Player player) {
+        CombatTracker combatTracker = combatTrackers.get(player);
+        CombatDeathEvent combatDeathEvent = combatTracker.onDeath(player);
+        eventRegistry.callEvent(combatDeathEvent);
+        combatTracker.reset();
+        return combatDeathEvent;
     }
 }
