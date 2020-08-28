@@ -15,12 +15,12 @@ import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.util.Utils;
 import me.patothebest.gamecore.vector.Cuboid;
 import me.patothebest.thetowers.TheTowersRemastered;
+import me.patothebest.thetowers.player.TheTowersPlayer;
 import net.megaplanet.thetowers.api.IArena;
 import net.megaplanet.thetowers.api.IGameTeam;
 import net.megaplanet.thetowers.api.events.ArenaEndEvent;
 import net.megaplanet.thetowers.api.events.PlayerJoinLobbyEvent;
 import net.megaplanet.thetowers.api.events.PlayerLeaveArenaEvent;
-import me.patothebest.thetowers.player.TheTowersPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.command.CommandSender;
@@ -71,6 +71,7 @@ public class Arena extends AbstractArena implements IArena {
         Scoreboard bukkitScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective dummy = bukkitScoreboard.registerNewObjective("team-prefix", "dummy");
         dummy.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        arenaGroup = ArenaGroup.DEFAULT_GROUP;
     }
 
     @Override
