@@ -3,9 +3,13 @@ package me.patothebest.skywars.placeholder.placeholders.all;
 import me.patothebest.gamecore.arena.AbstractArena;
 import me.patothebest.gamecore.placeholder.PlaceHolder;
 import me.patothebest.gamecore.player.PlayerManager;
+import me.patothebest.skywars.arena.Arena;
+import me.patothebest.skywars.lang.Lang;
 import me.patothebest.skywars.phase.SkyWarsPhase;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 public class NextEventPlaceholder implements PlaceHolder {
@@ -23,11 +27,22 @@ public class NextEventPlaceholder implements PlaceHolder {
 
     @Override
     public String replace(Player player, String args) {
-        return replace(playerManager.getPlayer(player).getCurrentArena());
+        return getTranslatedMessage(player, (Arena) playerManager.getPlayer(player).getCurrentArena());
     }
 
     @Override
     public String replace(AbstractArena arena) {
-        return arena == null || arena.getPhase().getNextPhase() == null || !(arena.getPhase().getNextPhase() instanceof SkyWarsPhase) ? "None" : ((SkyWarsPhase) arena.getPhase().getNextPhase()).getPhaseType().getConfigName();
+        return getTranslatedMessage(null, (Arena) arena);
+    }
+
+    private String getTranslatedMessage(@Nullable CommandSender sender, Arena arena) {
+        Lang message;
+        if (arena == null || arena.getPhase().getNextPhase() == null || !(arena.getPhase().getNextPhase() instanceof SkyWarsPhase)) {
+            message = Lang.PHASE_NONE;
+        } else {
+            message = ((SkyWarsPhase) arena.getPhase().getNextPhase()).getPhaseType().getMessage();
+        }
+
+        return message.getMessage(sender);
     }
 }

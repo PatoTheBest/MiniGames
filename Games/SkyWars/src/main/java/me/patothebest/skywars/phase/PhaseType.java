@@ -1,5 +1,6 @@
 package me.patothebest.skywars.phase;
 
+import me.patothebest.skywars.lang.Lang;
 import me.patothebest.skywars.phase.phases.BorderShrinkSkyWarsPhase;
 import me.patothebest.skywars.phase.phases.DoomSkyWarsPhase;
 import me.patothebest.skywars.phase.phases.EndSkyWarsPhase;
@@ -7,20 +8,22 @@ import me.patothebest.skywars.phase.phases.RefillSkyWarsPhase;
 
 public enum PhaseType {
 
-    NONE("null", null),
-    REFILL("Refill", RefillSkyWarsPhase.class),
-    DOOM("Doom", DoomSkyWarsPhase.class),
-    BORDER_SHRINK("Border Shrink", BorderShrinkSkyWarsPhase.class),
-    END("End", EndSkyWarsPhase.class),
+    NONE("null", null, Lang.PHASE_NONE),
+    REFILL("Refill", RefillSkyWarsPhase.class, Lang.PHASE_REFILL),
+    DOOM("Doom", DoomSkyWarsPhase.class, Lang.PHASE_DOOM),
+    BORDER_SHRINK("Border Shrink", BorderShrinkSkyWarsPhase.class, Lang.PHASE_BORDER_SHRINK),
+    END("End", EndSkyWarsPhase.class, Lang.PHASE_END),
 
     ;
 
     private final String configName;
     private final Class<? extends SkyWarsPhase> phaseClass;
+    private final Lang message;
 
-    PhaseType(String configName, Class<? extends SkyWarsPhase> phaseClass) {
+    PhaseType(String configName, Class<? extends SkyWarsPhase> phaseClass, Lang message) {
         this.configName = configName;
         this.phaseClass = phaseClass;
+        this.message = message;
     }
 
     public static PhaseType getPhaseType(String name) {
@@ -51,5 +54,14 @@ public enum PhaseType {
      */
     public Class<? extends SkyWarsPhase> getPhaseClass() {
         return phaseClass;
+    }
+
+    /**
+     * Gets the translatable message
+     *
+     * @return the translatable message
+     */
+    public Lang getMessage() {
+        return message;
     }
 }
