@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -2487,5 +2489,31 @@ public class Utils {
 
     public static SplittableRandom getRandom() {
         return RANDOM;
+    }
+
+    /**
+     * Resets a player completely.
+     * Health, food level, inventory, gamemode survival
+     *
+     * @param player the player to clear
+     */
+    public static void clearPlayer(Player player) {
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        player.setMaxHealth(20.0);
+        player.setHealth(20.0);
+        player.setFoodLevel(20);
+        player.getInventory().setArmorContents(null);
+        player.getInventory().clear();
+        player.updateInventory();
+        player.setLevel(0);
+        player.setExp(0.0f);
+        player.setGameMode(GameMode.SURVIVAL);
+//        player.setVelocity(new org.bukkit.util.Vector(0, 0, 0));
+        player.setFallDistance(0);
+
+        for (final PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
     }
 }
