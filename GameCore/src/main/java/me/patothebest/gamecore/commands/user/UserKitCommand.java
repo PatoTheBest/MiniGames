@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ChildOf(BaseCommand.class)
 public class UserKitCommand implements RegisteredCommandModule {
@@ -54,7 +55,6 @@ public class UserKitCommand implements RegisteredCommandModule {
     @Command(
             aliases = {"layout"},
             min = 1,
-            max = 1,
             langDescription = @LangDescription(
                     langClass = CoreLang.class,
                     element = "KIT_COMMAND"
@@ -68,8 +68,9 @@ public class UserKitCommand implements RegisteredCommandModule {
 
             return null;
         }
+
         Player player = CommandUtils.getPlayer(sender);
-        Kit kit = kitManager.getKits().get(args.getString(0));
+        Kit kit = kitManager.getKits().get(args.remainingString(0));
         CommandUtils.validateNotNull(kit, CoreLang.SHOP_ITEM_NOT_FOUND);
         IPlayer player1 = playerManager.getPlayer(player);
         userGUIFactory.openKitLayoutEditor(player1, kit);

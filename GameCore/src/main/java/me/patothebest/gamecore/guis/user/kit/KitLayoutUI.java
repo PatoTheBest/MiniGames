@@ -14,6 +14,8 @@ import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.player.IPlayer;
 import me.patothebest.gamecore.scheduler.PluginScheduler;
 import org.bukkit.ChatColor;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -110,6 +112,7 @@ public class KitLayoutUI extends GUIPage {
 
     @Override
     public void destroy() {
+        getPlayer().setItemOnCursor(null);
         getPlayer().getInventory().clear();
         getPlayer().getInventory().setContents(playerInvItems);
         pluginScheduler.runTaskLater(()-> getPlayer().updateInventory(), 3L);
