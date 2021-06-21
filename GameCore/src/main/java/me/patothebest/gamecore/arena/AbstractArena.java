@@ -53,6 +53,7 @@ import me.patothebest.gamecore.util.Utils;
 import me.patothebest.gamecore.vector.ArenaLocation;
 import me.patothebest.gamecore.vector.Cuboid;
 import me.patothebest.gamecore.world.ArenaWorld;
+import me.patothebest.gamecore.world.DefaultWorldHandler;
 import me.patothebest.gamecore.world.WorldHandler;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -65,6 +66,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -219,20 +221,38 @@ public abstract class AbstractArena implements GroupPermissible, ConfigurationSe
 
         if (enabled) {
             // unzip, load, and prepare the world
-            if(!world.decompressWorld()) {
-                arenaManager.getArenas().remove(name);
-                throw new RuntimeException("Could not unzip world for arena " + name + "!");
-            }
-
             if (!map.containsKey("server-version") || !map.get("server-version").equals(ServerVersion.getVersion())) {
                 arenaManager.getLogger().log(Level.INFO, "Detected arena was saved with an older server version.");
                 arenaManager.getLogger().log(Level.INFO, "Starting arena upgrade...");
+
                 ArenaWorld conversion = new ArenaWorld(this, worldName + "-temp");
-                conversion.loadWorld(true);
+                WorldHandler defaultWorldHandler = new DefaultWorldHandler();
+
+                // load world zip into temp world directory
+                if (!defaultWorldHandler.decompressWorld(this, world.getWorldZipFile(), conversion.getTempWorld())) {
+                    arenaManager.getArenas().remove(name);
+                    throw new RuntimeException("Could not unzip world for arena " + name + "!");
+                }
+
+                // convert
+                conversion.loadWorld(true, defaultWorldHandler);
                 conversion.unloadWorld(true);
-                conversion.getWorldZipFile().delete();
+
+                // backup old world
+                String zipName = conversion.getWorldZipFile().getPath();
+                zipName = zipName.substring(0, zipName.lastIndexOf('.')); // strip file ext
+                zipName = zipName + "_backup_" + Utils.getCurrentTimeStamp("yyyy-MM-dd_HH-mm-ss") + ".zip";
+                conversion.getWorldZipFile().renameTo(new File(zipName));
+
+                // zip new world and delete old world
                 Utils.zipIt(conversion.getTempWorld(), conversion.getWorldZipFile());
+                Utils.deleteFolder(conversion.getTempWorld());
                 arenaManager.getLogger().log(Level.INFO, "Done upgrading");
+            }
+
+            if(!world.decompressWorld()) {
+                arenaManager.getArenas().remove(name);
+                throw new RuntimeException("Could not unzip world for arena " + name + "!");
             }
 
             world.loadWorld(false);
