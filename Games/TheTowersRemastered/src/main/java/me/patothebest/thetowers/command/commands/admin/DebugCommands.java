@@ -1,6 +1,5 @@
 package me.patothebest.thetowers.command.commands.admin;
 
-import me.patothebest.thetowers.arena.Arena;
 import me.patothebest.gamecore.command.ChildOf;
 import me.patothebest.gamecore.command.Command;
 import me.patothebest.gamecore.command.CommandContext;
@@ -13,6 +12,7 @@ import me.patothebest.gamecore.modules.RegisteredCommandModule;
 import me.patothebest.gamecore.player.IPlayer;
 import me.patothebest.gamecore.player.PlayerManager;
 import me.patothebest.gamecore.util.CommandUtils;
+import me.patothebest.thetowers.arena.Arena;
 import me.patothebest.thetowers.arena.GameTeam;
 import me.patothebest.thetowers.language.Lang;
 import org.bukkit.command.CommandSender;
@@ -46,7 +46,7 @@ public class DebugCommands implements RegisteredCommandModule {
         CommandUtils.validateTrue(player.isInArena(), CoreLang.NOT_IN_AN_ARENA);
         CommandUtils.validateNotNull(gameTeam, CoreLang.ARENA_NOT_STARTED);
         int times = args.getInteger(0, 1);
-        times = Math.max(times, 10 - gameTeam.getPoints());
+        times = Math.min(times, 10 - gameTeam.getPoints());
         for (int i = times; i > 0; i--) {
             gameTeam.scorePoint(bukkitPlayer);
         }
