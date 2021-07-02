@@ -63,4 +63,29 @@ pets:
       default: 3
       vip: 5
 
+# Experience system
+game-experience:
+  enabled: false
+  experience-stats:
+    wins: 100
+    scored_points: 25
+    kills: 5
+  display-symbol: '✮'
+  display-colors:
+    0: '&f'
+    5: '&7'
+    10: '&d'
+    15: '&b'
+    20: '&a'
+    25: '&e'
+    30: '&3'
+    35: '&6'
+    40: '&5'
+    45: '&2'
+    50: '&c'
+    55: '&4'
+    60: '&0'
+  experience-base: 500
+  experience-factor: 250
+
 # End of config, mainlobby should be stored below

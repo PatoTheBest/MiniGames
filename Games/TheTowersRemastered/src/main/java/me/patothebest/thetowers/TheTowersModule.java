@@ -3,6 +3,14 @@ package me.patothebest.thetowers;
 import com.google.inject.Singleton;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
+import me.patothebest.gamecore.commands.setup.CreateArenaCommand;
+import me.patothebest.gamecore.commands.setup.TeamSetupCommands;
+import me.patothebest.gamecore.file.CoreConfig;
+import me.patothebest.gamecore.injector.AbstractBukkitModule;
+import me.patothebest.gamecore.kit.Kit;
+import me.patothebest.gamecore.kit.defaults.KitDefault;
+import me.patothebest.gamecore.player.CorePlayer;
+import me.patothebest.gamecore.player.PlayerFactory;
 import me.patothebest.thetowers.animation.AnimationModule;
 import me.patothebest.thetowers.arena.ArenaModule;
 import me.patothebest.thetowers.command.CommandManager;
@@ -17,14 +25,6 @@ import me.patothebest.thetowers.listener.VaultHandler;
 import me.patothebest.thetowers.placeholder.TheTowersPlaceholderModule;
 import me.patothebest.thetowers.player.TheTowersPlayer;
 import me.patothebest.thetowers.stats.TheTowersStatsModule;
-import me.patothebest.gamecore.commands.setup.CreateArenaCommand;
-import me.patothebest.gamecore.commands.setup.TeamSetupCommands;
-import me.patothebest.gamecore.file.CoreConfig;
-import me.patothebest.gamecore.injector.AbstractBukkitModule;
-import me.patothebest.gamecore.kit.Kit;
-import me.patothebest.gamecore.kit.defaults.KitDefault;
-import me.patothebest.gamecore.player.CorePlayer;
-import me.patothebest.gamecore.player.PlayerFactory;
 
 public class TheTowersModule extends AbstractBukkitModule<TheTowersRemastered> {
 
@@ -43,6 +43,7 @@ public class TheTowersModule extends AbstractBukkitModule<TheTowersRemastered> {
         install(new TheTowersPlaceholderModule(plugin));
 
         bind(CoreConfig.class).to(Config.class).in(Singleton.class);
+        plugin.registerModule(Config.class); // for having the ability to reload config
         bind(Kit.class).annotatedWith(Names.named("DefaultKit")).to(KitDefault.class);
 
         registerModule(VaultHandler.class);

@@ -150,15 +150,20 @@ killstreaks:
       message: "&e%player_name% &cis on a roll! &l&o(5 killstreak)"
       # Money reward, set 0 to disable
       money: 4
+      game-experience: 4
     '10':
       message: "&e%player_name% &cis on a rampage! &l&o(10 killstreak)"
       money: 8
+      game-experience: 8
     '15':
       message: "&e%player_name% &cis destroying! &l&o(15 killstreak)"
       money: 12
+      game-experience: 12
     '20':
       message: "&e%player_name% &cis annihilating! &l&o(20 killstreak)"
       money: 16
+      game-experience: 16
     '25':
       message: "&e%player_name% &cis unstoppable! &l&o(25 killstreak)"
       money: 20
+      game-experience: 20

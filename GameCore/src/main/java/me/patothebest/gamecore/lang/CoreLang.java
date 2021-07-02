@@ -1,9 +1,9 @@
 package me.patothebest.gamecore.lang;
 
-import me.patothebest.gamecore.lang.interfaces.IComment;
-import me.patothebest.gamecore.lang.interfaces.ILang;
 import me.patothebest.gamecore.PluginConfig;
 import me.patothebest.gamecore.chat.ChatColorEscaper;
+import me.patothebest.gamecore.lang.interfaces.IComment;
+import me.patothebest.gamecore.lang.interfaces.ILang;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
@@ -37,6 +37,7 @@ public enum CoreLang implements ILang {
     MONEY_GIVEN("&6+%amount% coins", "amount"),
     SPECTATOR("Spectator"),
     LOADING("Loading..."),
+    DATABASE_REQUIREMENT("This requires a running database!"),
     LINE_SEPARATOR("&a&m" + StringUtils.repeat(" ", 80)),
 
 
@@ -509,6 +510,20 @@ public enum CoreLang implements ILang {
     LEADERBOARD_ATTACHMENTS_ADDED("&aAttachment added!"),
     LEADERBOARD_ATTACHMENTS_COULD_NOT_ADD("&cCould not find a suitable place for this attachment."),
 
+
+    // -------------------------------------------- //
+    // EXPERIENCE AND LEVELS
+    // -------------------------------------------- //
+
+
+    EXPERIENCE_SYSTEM(CommentType.SUBHEADER_SPACED, "Experience/Levels"),
+    EXPERIENCE_COMMAND_DESC("Command for experience"),
+    EXPERIENCE_POPULATE_DESC("Create and populate experience table from stats."),
+    EXPERIENCE_POPULATE_TABLE_EXISTS("Table already exists! Please drop the table before continuing"),
+    EXPERIENCE_POPULATE_DONE("&aDone populating!"),
+    EXPERIENCE_POPULATE_CONFIRM("&cYou are about to populate the database with experience. Please confirm the following settings from the config are correct then run &6/%base_command% experience populate -c"),
+    EXPERIENCE_POPULATE_CONFIG("&e&l%element%: &b%value%", "element", "value"),
+    EXPERIENCE_EARNED("&b+%amount% experience", "amount"),
 
     // -----------------------------------
     // GUI messages

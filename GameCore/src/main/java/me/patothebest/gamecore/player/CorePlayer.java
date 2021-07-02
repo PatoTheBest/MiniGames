@@ -6,28 +6,30 @@ import com.google.inject.Provider;
 import com.google.inject.assistedinject.Assisted;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.arena.AbstractArena;
+import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.cosmetics.shop.ShopItem;
 import me.patothebest.gamecore.event.player.PlayerDeSelectItemEvent;
+import me.patothebest.gamecore.event.player.PlayerJoinPrepareEvent;
+import me.patothebest.gamecore.event.player.PlayerLoginPrepareEvent;
+import me.patothebest.gamecore.event.player.PlayerSelectItemEvent;
 import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.lang.Locale;
+import me.patothebest.gamecore.player.modifiers.ExperienceModifier;
 import me.patothebest.gamecore.player.modifiers.GeneralModifier;
 import me.patothebest.gamecore.player.modifiers.KitModifier;
 import me.patothebest.gamecore.player.modifiers.PointsModifier;
 import me.patothebest.gamecore.player.modifiers.ShopModifier;
 import me.patothebest.gamecore.player.modifiers.TreasureModifier;
+import me.patothebest.gamecore.quests.ActiveQuest;
 import me.patothebest.gamecore.scoreboard.CoreScoreboardType;
 import me.patothebest.gamecore.scoreboard.CustomScoreboard;
 import me.patothebest.gamecore.scoreboard.ScoreboardFile;
 import me.patothebest.gamecore.scoreboard.ScoreboardType;
-import me.patothebest.gamecore.treasure.type.TreasureType;
-import me.patothebest.gamecore.arena.AbstractGameTeam;
-import me.patothebest.gamecore.event.player.PlayerJoinPrepareEvent;
-import me.patothebest.gamecore.event.player.PlayerLoginPrepareEvent;
-import me.patothebest.gamecore.event.player.PlayerSelectItemEvent;
 import me.patothebest.gamecore.stats.Statistic;
 import me.patothebest.gamecore.stats.TrackedStatistic;
+import me.patothebest.gamecore.treasure.type.TreasureType;
 import me.patothebest.gamecore.util.Callback;
 import me.patothebest.gamecore.util.ObservablePlayerImpl;
 import me.patothebest.gamecore.util.Sounds;
@@ -37,6 +39,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +80,11 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
     private final Map<Class<? extends ShopItem>, Map<ShopItem, Integer>> ownedItems = new HashMap<>();
     private final Map<Class<? extends ShopItem>, ShopItem> selectedShopItems = new HashMap<>();
 
+    /**
+     * The experience from our internal system
+     */
+    private long experience;
+
     private int points;
 
     private int gameKills;
@@ -102,6 +110,11 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
      * not, it will be loaded into memory
      */
     private final Map<TreasureType, Integer> treasureKeys = new HashMap<>();
+
+    /**
+     * Map of all the current quests
+     */
+    private final Map<String, ActiveQuest> quests = new HashMap<>();
 
     /**
      * Scoreboard to show on prepare, used in case storage is being reloaded
@@ -622,6 +635,40 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
     public void setKeys(TreasureType treasureType, int amount) {
         treasureKeys.put(treasureType, amount);
         notifyObservers(TreasureModifier.MODIFY, treasureType);
+    }
+
+    public @Nullable ActiveQuest getQuest(String name) {
+        return quests.get(name);
+    }
+
+    public void activateQuest(ActiveQuest quest) {
+        this.quests.put(quest.getQuest().getName(), quest);
+
+    }
+
+    @Override
+    public long getExperience() {
+        return experience;
+    }
+
+    @Override
+    public void setExperience(long experience) {
+        this.experience = experience;
+        notifyObservers(ExperienceModifier.SET_EXPERIENCE, experience);
+    }
+
+    @Override
+    public void addExperience(long experience) {
+        this.experience += experience;
+        notifyObservers(ExperienceModifier.ADD_EXPERIENCE, experience);
+
+        CoreLang.EXPERIENCE_EARNED.replaceAndSend(player, experience);
+    }
+
+    @Override
+    public void removeExperience(long experience) {
+        this.experience -= experience;
+        notifyObservers(ExperienceModifier.REMOVE_EXPERIENCE, experience);
     }
 
     @Override

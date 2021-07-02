@@ -70,8 +70,10 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 import java.util.SplittableRandom;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -79,6 +81,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -104,6 +108,19 @@ public class Utils {
     private static Constructor<?> gameProfileConstructor;
     private static Constructor<?> propertyConstructor;
     private static Logger logger = Logger.getLogger("Minecraft"); // will be replaced
+
+    private static final Pattern DATE_VALIDATION = Pattern.compile("^(?:\\d+[dhms])+$");
+    private static final Pattern DATE_PART = Pattern.compile("(\\d+)([dhms])");
+
+    private static final NavigableMap<Long, String> SUFFIXES = new TreeMap<>();
+    static {
+        SUFFIXES.put(1_000L, "k");
+        SUFFIXES.put(1_000_000L, "M");
+        SUFFIXES.put(1_000_000_000L, "G");
+        SUFFIXES.put(1_000_000_000_000L, "T");
+        SUFFIXES.put(1_000_000_000_000_000L, "P");
+        SUFFIXES.put(1_000_000_000_000_000_000L, "E");
+    }
 
     public static void setLogger(Logger logger) {
         Utils.logger = logger;
@@ -1802,23 +1819,37 @@ public class Utils {
      * @param players the players to send the progress bar to
      */
     public static void displayProgress(String prefix, double amount, String suffix, Player... players) {
-        int bars = 24;
-        StringBuilder progressBar = new StringBuilder(ChatColor.GREEN + "");
-        boolean colorChange = false;
-        for (int i = 0; i < bars; i++) {
-            if (!colorChange && (float) i / (float) bars >= amount) {
-                progressBar.append(ChatColor.WHITE);
-                colorChange = true;
-            }
-
-            progressBar.append("#");
-        }
+        String progressBar = makeProgress(amount, 24, '#', ChatColor.GREEN, ChatColor.WHITE);
 
         for (Player player : players) {
             ActionBar.sendActionBar(player, (prefix == null ? "" : prefix + ChatColor.RESET + " ") + progressBar + (suffix == null ? "" : ChatColor.RESET + " " + suffix));
         }
     }
 
+    /**
+     * Generates a progress bar
+     *
+     * @param completion the percentage completed (0-1)
+     * @param bars the amount of bars to display
+     * @param barChar the char to use as the bar
+     * @param completeColor the color of the completed portion
+     * @param incompleteColor the color of the incompleted protion
+     * @return the generated progress bar
+     */
+    public static String makeProgress(double completion, double bars, char barChar, ChatColor completeColor, ChatColor incompleteColor) {
+        StringBuilder progressBar = new StringBuilder(completeColor.toString());
+        boolean colorChange = false;
+        for (int i = 0; i < bars; i++) {
+            if (!colorChange && i / bars >= completion) {
+                progressBar.append(incompleteColor);
+                colorChange = true;
+            }
+
+            progressBar.append(barChar);
+        }
+
+        return progressBar.toString();
+    }
     /**
      * Formats a decimal to one decimal places
      * 2.34567 will become 2.3
@@ -2515,5 +2546,68 @@ public class Utils {
         for (final PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
         }
+    }
+
+    /**
+     * Converts a configuration date string to millis
+     * The format of the string is <time><unit>
+     * Ex:
+     * 1d = 1 day
+     * 1h = 1 hour
+     * 1m1s = 1 minute and 1 second
+     *
+     * @param date the date string
+     * @return the date string converted to millis or -1 if no match
+     */
+    public static long dateStringToMillis(String date) {
+        if (!DATE_VALIDATION.matcher(date).matches()) {
+            return -1;
+        }
+
+        int millis = 0;
+        Matcher matcher = DATE_PART.matcher(date);
+        while (matcher.find()) {
+            int number = Integer.parseInt(matcher.group(1));
+            String unit = matcher.group(2);
+
+            if (unit.equalsIgnoreCase("s")) {
+                millis += number * 1_000;
+            } else if (unit.equalsIgnoreCase("m")) {
+                millis += number * 60_000;
+            } else if (unit.equalsIgnoreCase("h")) {
+                millis += number * 3_600_000;
+            } else if (unit.equalsIgnoreCase("d")) {
+                millis += number * 84_400_000;
+            } else {
+                throw new IllegalStateException("Got unknown unit " + unit);
+            }
+        }
+
+        return millis;
+    }
+
+    /**
+     * Formats a big value to a small value
+     * 1,000 = 1K
+     * 1,000,000 = 1M
+     * etc
+     *
+     * @param value the value to format
+     * @return the formatted value
+     */
+    public static String formatLong(long value) {
+        //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
+        if (value == Long.MIN_VALUE) return formatLong(Long.MIN_VALUE + 1);
+        if (value < 0) return "-" + formatLong(-value);
+        if (value < 1000) return Long.toString(value); //deal with easy case
+
+        Map.Entry<Long, String> e = SUFFIXES.floorEntry(value);
+        Long divideBy = e.getKey();
+        String suffix = e.getValue();
+
+        long truncated = value / (divideBy / 10); //the number part of the output times 10
+        @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
+        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
     }
 }
