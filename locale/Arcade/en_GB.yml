@@ -1,9 +1,9 @@
 ---
 command-desc: "Command for general arcade commands"
-add-spawn: "Adds a spawnpoint to a game"
-remove-spawn: "Remove a spawnpoint from a game"
-list-spawn: "Lists all of an game's spawnpoints"
-clear-spawns: "Clears all set spawnpoints from a game"
+add-spawn: "Adds a spawn to a game"
+remove-spawn: "Removes a spawn from a game"
+list-spawn: "List all the spawns from a game"
+clear-spawns: "Clears all the spawns from a game"
 enable-game: "Enables a game for the arena"
 disable-game: "Disables a game for the arena"
 teleport-to-game: "Teleports to the game's spawn"
