@@ -636,16 +636,16 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
     }
 
     @Override
-    public void activateQuest(ActiveQuest quest) {
-        ActiveQuest oldQues = quests.remove(quest.getQuest());
+    public void activateQuest(ActiveQuest activeQuest) {
+        ActiveQuest oldQues = quests.remove(activeQuest.getQuest());
         if (oldQues != null) {
-            removeQuest(quest);
+            removeQuest(activeQuest);
         }
 
-        this.quests.put(quest.getQuest(), quest);
-        this.questsTypeLookup.computeIfAbsent(quest.getQuest().getQuestType(), k -> new HashSet<>());
-        this.questsTypeLookup.get(quest.getQuest().getQuestType()).add(quest);
-        notifyObservers(QuestModifier.START_QUEST, quest);
+        this.quests.put(activeQuest.getQuest(), activeQuest);
+        this.questsTypeLookup.computeIfAbsent(activeQuest.getQuest().getQuestType(), k -> new HashSet<>());
+        this.questsTypeLookup.get(activeQuest.getQuest().getQuestType()).add(activeQuest);
+        notifyObservers(QuestModifier.START_QUEST, activeQuest);
     }
 
     @Override

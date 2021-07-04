@@ -18,8 +18,8 @@ public class Quest {
     private final int xpReward;
     private final int moneyReward;
 
-    public Quest(QuestManager questManager, Map<String, Object> questData) {
-        this.name = (String) questData.get("name");
+    public Quest(QuestManager questManager, String name, Map<String, Object> questData) {
+        this.name = name;
         this.displayName = (String) questData.get("display-name");
         this.goal = (int) questData.get("goal");
         this.questType = questManager.getQuestType((String) questData.get("type"));

@@ -109,7 +109,7 @@ public class Utils {
     private static Constructor<?> propertyConstructor;
     private static Logger logger = Logger.getLogger("Minecraft"); // will be replaced
 
-    private static final Pattern DATE_VALIDATION = Pattern.compile("^(?:\\d+[dhms])+$");
+    private static final Pattern DATE_VALIDATION = Pattern.compile("^(?:\\d+[dhmsw])+$");
     private static final Pattern DATE_PART = Pattern.compile("(\\d+)([dhmsw])");
 
     private static final NavigableMap<Long, String> SUFFIXES = new TreeMap<>();
@@ -2625,9 +2625,9 @@ public class Utils {
         time /= 1000;
         long seconds = time % 60;
         long minutes = time / 60 % 60;
-        long hours = time / 3600 % 60;
-        long days = time / 86_400 % 24;
-        long weeks = time / 604_800 % 7;
+        long hours = time / 3600 % 24;
+        long days = time / 86_400 % 7;
+        long weeks = time / 604_800;
         StringBuilder timeStr = new StringBuilder();
         if (weeks > 0) {
             timeStr.append(" ").append(weeks).append(" ").append((weeks == 1 ? CoreLang.TIME_WEEK : CoreLang.TIME_WEEKS).getMessage(player));

@@ -11,10 +11,7 @@ import me.patothebest.gamecore.quests.QuestsStatus;
 import me.patothebest.gamecore.storage.mysql.MySQLEntity;
 import me.patothebest.gamecore.util.Utils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class QuestsSQLEntity implements MySQLEntity {
 
@@ -87,7 +84,7 @@ public class QuestsSQLEntity implements MySQLEntity {
         QuestModifier modifier = (QuestModifier) updatedType;
         ActiveQuest activeQuest = (ActiveQuest) args[0];
         if (modifier == QuestModifier.START_QUEST) {
-            PreparedStatement statement = connection.prepareStatement(QuestQueries.INSERT_RECORD);
+            PreparedStatement statement = connection.prepareStatement(QuestQueries.INSERT_RECORD, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, player.getPlayerId());
             statement.setString(2, activeQuest.getQuest().getName());
             statement.setLong(3, activeQuest.getStartDate());

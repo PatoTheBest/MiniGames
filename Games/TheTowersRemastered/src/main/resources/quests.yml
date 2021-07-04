@@ -8,7 +8,7 @@ quests:
     xp-reward: 250
     money-reward: 25
   daily_points:
-    display-name: '3 Daily scored points'
+    display-name: '5 Daily scored points'
     duration: 1d
     cooldown: 1d
     type: SCORE_POINTS

@@ -44,14 +44,14 @@ public class QuestManager implements ActivableModule, ReloadableModule {
         }
 
         Set<String> questKeys = questSection.getKeys(false);
-        for (String questKey : questKeys) {
+        for (String questConfigName : questKeys) {
             try {
-                Map<String, Object> data = Objects.requireNonNull(questSection.getConfigurationSection(questKey)).getValues(true);
-                Quest quest = new Quest(this, data);
-                this.questMap.put(questKey, quest);
-                logger.config("Loaded quest {0} ({1})", quest.getDisplayName(), questKey);
+                Map<String, Object> data = Objects.requireNonNull(questSection.getConfigurationSection(questConfigName)).getValues(true);
+                Quest quest = new Quest(this, questConfigName, data);
+                this.questMap.put(questConfigName, quest);
+                logger.config("Loaded quest {0} ({1})", quest.getDisplayName(), questConfigName);
             } catch (ParserException e) {
-                logger.severe("Could not parse quest " + questKey);
+                logger.severe("Could not parse quest " + questConfigName);
                 logger.severe(e.getMessage());
             }
         }

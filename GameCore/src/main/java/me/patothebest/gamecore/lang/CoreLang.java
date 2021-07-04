@@ -549,13 +549,13 @@ public enum CoreLang implements ILang {
     GUI_QUEST_STARTED("&aStarted Quest: &6%quest%", "quest"),
     GUI_QUEST_STATUS_START("&aClick to start quest!"),
     GUI_QUEST_STATUS_STARTED("&aStarted"),
-    GUI_QUEST_STATUS_PROGRESS("&bProgress &7(&6%amount&7/&6%goal%&7)", "amount", "goal"),
-    GUI_QUEST_STATUS_DEADLINE("&7Deadline: &6%time", "time"),
+    GUI_QUEST_STATUS_PROGRESS("&bProgress &7(&6%amount%&7/&6%goal%&7)", "amount", "goal"),
+    GUI_QUEST_STATUS_DEADLINE("&7Deadline: &6%time%", "time"),
     GUI_QUEST_STATUS_COMPLETED("&aYou have completed this quest!"),
     GUI_QUEST_STATUS_COOLDOWN("&cThis quest is on cooldown!"),
     GUI_QUEST_STATUS_COOLDOWN_2("&cYou can start it again in %time%", "time"),
-    GUI_QUEST_STATUS_EXP("&b+%amount% experience"),
-    GUI_QUEST_STATUS_COINS("&6+%amount% coins"),
+    GUI_QUEST_STATUS_EXP("&b+%amount% experience", "amount"),
+    GUI_QUEST_STATUS_COINS("&6+%amount% coins", "amount"),
 
     // -----------------------------------
     // GUI messages

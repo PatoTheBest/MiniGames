@@ -71,4 +71,16 @@ public class ActiveQuest {
     public boolean hasExpired() {
         return getDeadline() <= System.currentTimeMillis();
     }
+
+    @Override
+    public String toString() {
+        return "ActiveQuest{" +
+                "player=" + player +
+                ", quest=" + quest +
+                ", startDate=" + startDate +
+                ", entryId=" + entryId +
+                ", progress=" + progress +
+                ", questsStatus=" + questsStatus +
+                '}';
+    }
 }
