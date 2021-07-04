@@ -1,5 +1,6 @@
 package me.patothebest.gamecore.quests;
 
+import me.patothebest.gamecore.file.ParserException;
 import me.patothebest.gamecore.util.Utils;
 
 import java.util.Map;
@@ -7,29 +8,29 @@ import java.util.Map;
 public class Quest {
 
     private final String name;
+    private final String displayName;
     private final QuestType questType;
     private final int goal;
-    private int duration;
-    private int cooldown;
+    private final long duration;
+    private final long cooldown;
 
     // only two types of rewards
-    private int xpReward;
-    private int moneyReward;
+    private final int xpReward;
+    private final int moneyReward;
 
-    public Quest(String name, QuestType questType, int goal) {
-        this.name = name;
-        this.questType = questType;
-        this.goal = goal;
-    }
-
-    public Quest(Map<String, Object> questData) {
+    public Quest(QuestManager questManager, Map<String, Object> questData) {
         this.name = (String) questData.get("name");
+        this.displayName = (String) questData.get("display-name");
         this.goal = (int) questData.get("goal");
-        this.questType = Utils.getEnumValueFromString(QuestType.class, (String) questData.get("type"));
-        this.duration = (int) questData.get("duration");
-        this.cooldown = (int) questData.get("cooldown");
+        this.questType = questManager.getQuestType((String) questData.get("type"));
+        this.duration = Utils.dateStringToMillis((String) questData.get("duration"));
+        this.cooldown = Utils.dateStringToMillis((String) questData.get("cooldown"));
         this.xpReward = (int) questData.getOrDefault("xp-reward", 0);
         this.moneyReward = (int) questData.getOrDefault("money-reward", 0);
+
+        if (this.questType == null) {
+            throw new ParserException("Invalid quest-type: " + questData.get("type"));
+        }
     }
 
     public String getName() {
@@ -44,11 +45,11 @@ public class Quest {
         return goal;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public int getCooldown() {
+    public long getCooldown() {
         return cooldown;
     }
 
@@ -58,5 +59,9 @@ public class Quest {
 
     public int getMoneyReward() {
         return moneyReward;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

@@ -1,0 +1,49 @@
+quests:
+  daily_kills:
+    display-name: '20 Daily kills'
+    duration: 1d
+    cooldown: 1d
+    type: KILL_PLAYERS
+    goal: 20
+    xp-reward: 250
+    money-reward: 25
+  daily_points:
+    display-name: '3 Daily scored points'
+    duration: 1d
+    cooldown: 1d
+    type: SCORE_POINTS
+    goal: 5
+    xp-reward: 250
+    money-reward: 25
+  daily_win:
+    display-name: '1 Daily win'
+    duration: 1d
+    cooldown: 1d
+    type: WIN_GAMES
+    goal: 1
+    xp-reward: 250
+    money-reward: 25
+  weekly_kills:
+    display-name: '150 Weekly kills'
+    duration: 1w
+    cooldown: 1w
+    type: KILL_PLAYERS
+    goal: 150
+    xp-reward: 2000
+    money-reward: 200
+  weekly_wins:
+    display-name: '1 Weekly wins'
+    duration: 1w
+    cooldown: 1w
+    type: WIN_GAMES
+    goal: 10
+    xp-reward: 2000
+    money-reward: 200
+  weekly_points:
+    display-name: '50 Weekly scored points'
+    duration: 1w
+    cooldown: 1w
+    type: SCORE_POINTS
+    goal: 50
+    xp-reward: 2000
+    money-reward: 200

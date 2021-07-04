@@ -39,6 +39,18 @@ public enum CoreLang implements ILang {
     LOADING("Loading..."),
     DATABASE_REQUIREMENT("This requires a running database!"),
     LINE_SEPARATOR("&a&m" + StringUtils.repeat(" ", 80)),
+    TIME_MONTHS("months"),
+    TIME_MONTH("month"),
+    TIME_WEEKS("weeks"),
+    TIME_WEEK("week"),
+    TIME_DAYS("days"),
+    TIME_DAY("day"),
+    TIME_HOURS("hours"),
+    TIME_HOUR("hour"),
+    TIME_MINUTES("minutes"),
+    TIME_MINUTE("minute"),
+    TIME_SECONDS("seconds"),
+    TIME_SECOND("second"),
 
 
     // -----------------------------------
@@ -524,6 +536,26 @@ public enum CoreLang implements ILang {
     EXPERIENCE_POPULATE_CONFIRM("&cYou are about to populate the database with experience. Please confirm the following settings from the config are correct then run &6/%base_command% experience populate -c"),
     EXPERIENCE_POPULATE_CONFIG("&e&l%element%: &b%value%", "element", "value"),
     EXPERIENCE_EARNED("&b+%amount% experience", "amount"),
+
+    // -----------------------------------
+    // Quests Messages
+    // -----------------------------------
+
+    QUESTS_HEADER(CommentType.SUBHEADER_SPACED, "Quests"),
+    QUEST_COMPLETED("&aQuest %quest% completed!", "quest"),
+    QUESTS_COMMAND("Opens the quest menu"),
+    GUI_QUEST_TITLE("&7Choose a quest"),
+    GUI_QUEST_ITEM_NAME("&aQuest %quest%", "quest"),
+    GUI_QUEST_STARTED("&aStarted Quest: &6%quest%", "quest"),
+    GUI_QUEST_STATUS_START("&aClick to start quest!"),
+    GUI_QUEST_STATUS_STARTED("&aStarted"),
+    GUI_QUEST_STATUS_PROGRESS("&bProgress &7(&6%amount&7/&6%goal%&7)", "amount", "goal"),
+    GUI_QUEST_STATUS_DEADLINE("&7Deadline: &6%time", "time"),
+    GUI_QUEST_STATUS_COMPLETED("&aYou have completed this quest!"),
+    GUI_QUEST_STATUS_COOLDOWN("&cThis quest is on cooldown!"),
+    GUI_QUEST_STATUS_COOLDOWN_2("&cYou can start it again in %time%", "time"),
+    GUI_QUEST_STATUS_EXP("&b+%amount% experience"),
+    GUI_QUEST_STATUS_COINS("&6+%amount% coins"),
 
     // -----------------------------------
     // GUI messages

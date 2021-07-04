@@ -110,7 +110,7 @@ public class Utils {
     private static Logger logger = Logger.getLogger("Minecraft"); // will be replaced
 
     private static final Pattern DATE_VALIDATION = Pattern.compile("^(?:\\d+[dhms])+$");
-    private static final Pattern DATE_PART = Pattern.compile("(\\d+)([dhms])");
+    private static final Pattern DATE_PART = Pattern.compile("(\\d+)([dhmsw])");
 
     private static final NavigableMap<Long, String> SUFFIXES = new TreeMap<>();
     static {
@@ -2564,10 +2564,10 @@ public class Utils {
             return -1;
         }
 
-        int millis = 0;
+        long millis = 0;
         Matcher matcher = DATE_PART.matcher(date);
         while (matcher.find()) {
-            int number = Integer.parseInt(matcher.group(1));
+            long number = Long.parseLong(matcher.group(1));
             String unit = matcher.group(2);
 
             if (unit.equalsIgnoreCase("s")) {
@@ -2578,6 +2578,8 @@ public class Utils {
                 millis += number * 3_600_000;
             } else if (unit.equalsIgnoreCase("d")) {
                 millis += number * 84_400_000;
+            } else if (unit.equalsIgnoreCase("w")) {
+                millis += number * 590_800_000;
             } else {
                 throw new IllegalStateException("Got unknown unit " + unit);
             }
@@ -2609,5 +2611,40 @@ public class Utils {
         @SuppressWarnings("IntegerDivisionInFloatingPointContext")
         boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+    }
+
+    /**
+     * Formats a millis time into a typed time
+     * eg. 3 hours 4 minutes 3 seconds
+     *
+     * @param player the player to get the translations from
+     * @param time the time in millis
+     * @return the formatted time
+     */
+    public static String createTime(Player player, long time) {
+        time /= 1000;
+        long seconds = time % 60;
+        long minutes = time / 60 % 60;
+        long hours = time / 3600 % 60;
+        long days = time / 86_400 % 24;
+        long weeks = time / 604_800 % 7;
+        StringBuilder timeStr = new StringBuilder();
+        if (weeks > 0) {
+            timeStr.append(" ").append(weeks).append(" ").append((weeks == 1 ? CoreLang.TIME_WEEK : CoreLang.TIME_WEEKS).getMessage(player));
+        }
+        if (days > 0) {
+            timeStr.append(" ").append(days).append(" ").append((days == 1 ? CoreLang.TIME_DAYS : CoreLang.TIME_DAYS).getMessage(player));
+        }
+        if (hours > 0) {
+            timeStr.append(" ").append(hours).append(" ").append((hours == 1 ? CoreLang.TIME_HOUR : CoreLang.TIME_HOURS).getMessage(player));
+        }
+        if (minutes > 0) {
+            timeStr.append(" ").append(minutes).append(" ").append((minutes == 1 ? CoreLang.TIME_MINUTE : CoreLang.TIME_MINUTES).getMessage(player));
+        }
+        if (seconds > 0) {
+            timeStr.append(" ").append(seconds).append(" ").append((seconds == 1 ? CoreLang.TIME_SECOND : CoreLang.TIME_SECONDS).getMessage(player));
+        }
+
+        return timeStr.substring(1);
     }
 }

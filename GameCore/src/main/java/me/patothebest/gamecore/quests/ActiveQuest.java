@@ -1,21 +1,28 @@
 package me.patothebest.gamecore.quests;
 
 import me.patothebest.gamecore.player.IPlayer;
-
-import java.util.Date;
+import me.patothebest.gamecore.player.modifiers.QuestModifier;
 
 public class ActiveQuest {
 
     private final IPlayer player;
     private final Quest quest;
-    private final Date startDate;
-    private double progress;
-    private boolean completed;
+    private final long startDate;
+    private int entryId;
+    private int progress;
+    private QuestsStatus questsStatus;
 
-    public ActiveQuest(IPlayer player, Quest quest, Date startDate) {
+    public ActiveQuest(IPlayer player, Quest quest, int entryId, long startDate, int progress, QuestsStatus questsStatus) {
         this.player = player;
         this.quest = quest;
+        this.entryId = entryId;
         this.startDate = startDate;
+        this.progress = progress;
+        this.questsStatus = questsStatus;
+    }
+
+    public void setEntryId(int entryId) {
+        this.entryId = entryId;
     }
 
     public IPlayer getPlayer() {
@@ -26,15 +33,42 @@ public class ActiveQuest {
         return quest;
     }
 
-    public Date getStartDate() {
+    public long getStartDate() {
         return startDate;
     }
 
-    public double getProgress() {
+    public int getProgress() {
         return progress;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public QuestsStatus getQuestsStatus() {
+        return questsStatus;
+    }
+
+    public int getEntryId() {
+        return entryId;
+    }
+
+    public void addProgress(int progress) {
+        this.progress += progress;
+        player.notifyObservers(QuestModifier.UPDATE_PROGRESS, this, progress);
+    }
+
+    public void setCompleted() {
+        this.questsStatus = QuestsStatus.COMPLETED;
+        player.notifyObservers(QuestModifier.UPDATE_STATUS, this);
+    }
+
+    public void setFailed() {
+        this.questsStatus = QuestsStatus.FAILED;
+        player.notifyObservers(QuestModifier.UPDATE_STATUS, this);
+    }
+
+    public long getDeadline() {
+        return this.startDate + quest.getCooldown();
+    }
+
+    public boolean hasExpired() {
+        return getDeadline() <= System.currentTimeMillis();
     }
 }

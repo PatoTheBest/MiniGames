@@ -7,6 +7,9 @@ import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.lang.Locale;
 import me.patothebest.gamecore.lang.interfaces.ILang;
+import me.patothebest.gamecore.quests.ActiveQuest;
+import me.patothebest.gamecore.quests.Quest;
+import me.patothebest.gamecore.quests.QuestType;
 import me.patothebest.gamecore.scoreboard.CustomScoreboard;
 import me.patothebest.gamecore.scoreboard.ScoreboardType;
 import me.patothebest.gamecore.stats.Statistic;
@@ -22,6 +25,7 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -580,6 +584,21 @@ public interface IPlayer extends SerializableObject, ObservablePlayer {
      * @param amount the amount of keys
      */
     void setKeys(TreasureType treasureType, int amount);
+
+    /**
+     * Gets an active quest by the quest object
+     *
+     * @param quest the core quest
+     * @return the ActiveQuest
+     */
+    @Nullable
+    ActiveQuest getActiveQuest(Quest quest);
+
+    void activateQuest(ActiveQuest quest);
+
+    void removeQuest(ActiveQuest quest);
+
+    Set<ActiveQuest> getActiveQuests(QuestType questType);
 
     /**
      * Gets the player's experience

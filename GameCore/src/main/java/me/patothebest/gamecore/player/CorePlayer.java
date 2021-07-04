@@ -16,13 +16,10 @@ import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.lang.Locale;
-import me.patothebest.gamecore.player.modifiers.ExperienceModifier;
-import me.patothebest.gamecore.player.modifiers.GeneralModifier;
-import me.patothebest.gamecore.player.modifiers.KitModifier;
-import me.patothebest.gamecore.player.modifiers.PointsModifier;
-import me.patothebest.gamecore.player.modifiers.ShopModifier;
-import me.patothebest.gamecore.player.modifiers.TreasureModifier;
+import me.patothebest.gamecore.player.modifiers.*;
 import me.patothebest.gamecore.quests.ActiveQuest;
+import me.patothebest.gamecore.quests.Quest;
+import me.patothebest.gamecore.quests.QuestType;
 import me.patothebest.gamecore.scoreboard.CoreScoreboardType;
 import me.patothebest.gamecore.scoreboard.CustomScoreboard;
 import me.patothebest.gamecore.scoreboard.ScoreboardFile;
@@ -40,11 +37,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
@@ -114,7 +107,8 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
     /**
      * Map of all the current quests
      */
-    private final Map<String, ActiveQuest> quests = new HashMap<>();
+    private final Map<Quest, ActiveQuest> quests = new HashMap<>();
+    private final Map<QuestType, Set<ActiveQuest>> questsTypeLookup = new HashMap<>();
 
     /**
      * Scoreboard to show on prepare, used in case storage is being reloaded
@@ -637,13 +631,32 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
         notifyObservers(TreasureModifier.MODIFY, treasureType);
     }
 
-    public @Nullable ActiveQuest getQuest(String name) {
-        return quests.get(name);
+    public @Nullable ActiveQuest getActiveQuest(Quest quest) {
+        return quests.get(quest);
     }
 
+    @Override
     public void activateQuest(ActiveQuest quest) {
-        this.quests.put(quest.getQuest().getName(), quest);
+        ActiveQuest oldQues = quests.remove(quest.getQuest());
+        if (oldQues != null) {
+            removeQuest(quest);
+        }
 
+        this.quests.put(quest.getQuest(), quest);
+        this.questsTypeLookup.computeIfAbsent(quest.getQuest().getQuestType(), k -> new HashSet<>());
+        this.questsTypeLookup.get(quest.getQuest().getQuestType()).add(quest);
+        notifyObservers(QuestModifier.START_QUEST, quest);
+    }
+
+    @Override
+    public void removeQuest(ActiveQuest quest) {
+        this.quests.remove(quest.getQuest());
+        this.questsTypeLookup.get(quest.getQuest().getQuestType()).remove(quest);
+    }
+
+    @Override
+    public Set<ActiveQuest> getActiveQuests(QuestType questType) {
+        return questsTypeLookup.getOrDefault(questType, Collections.emptySet());
     }
 
     @Override
@@ -659,6 +672,9 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
 
     @Override
     public void addExperience(long experience) {
+        if (experience == 0) {
+            return;
+        }
         this.experience += experience;
         notifyObservers(ExperienceModifier.ADD_EXPERIENCE, experience);
 
@@ -678,6 +694,10 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
 
     @Override
     public boolean giveMoney(double amount) {
+        if (amount == 0) {
+            return false;
+        }
+
         if (economyProvider.get() == null) {
             return false;
         }

@@ -44,6 +44,7 @@ import me.patothebest.gamecore.player.PlayerSkinCache;
 import me.patothebest.gamecore.pluginhooks.PluginHooksModule;
 import me.patothebest.gamecore.points.PointsModule;
 import me.patothebest.gamecore.privatearenas.PrivateArenasModule;
+import me.patothebest.gamecore.quests.QuestsModule;
 import me.patothebest.gamecore.scheduler.PluginScheduler;
 import me.patothebest.gamecore.scoreboard.ScoreboardFile;
 import me.patothebest.gamecore.scoreboard.ScoreboardManager;
@@ -90,6 +91,7 @@ public class CoreModule<T extends CorePlugin> extends AbstractBukkitModule<T> {
         install(new RandomArenaModeModule(plugin));
         install(new PrivateArenasModule(plugin));
         install(new ExperienceModule(plugin));
+        install(new QuestsModule(plugin));
 
 //        registerModule(LeakListener.class);
 

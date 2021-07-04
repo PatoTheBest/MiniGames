@@ -24,6 +24,7 @@ import me.patothebest.thetowers.language.LocaleManager;
 import me.patothebest.thetowers.listener.VaultHandler;
 import me.patothebest.thetowers.placeholder.TheTowersPlaceholderModule;
 import me.patothebest.thetowers.player.TheTowersPlayer;
+import me.patothebest.thetowers.quests.TheTowersQuestModule;
 import me.patothebest.thetowers.stats.TheTowersStatsModule;
 
 public class TheTowersModule extends AbstractBukkitModule<TheTowersRemastered> {
@@ -41,6 +42,7 @@ public class TheTowersModule extends AbstractBukkitModule<TheTowersRemastered> {
         install(new ArenaModule(plugin));
         install(new TheTowersStatsModule(plugin));
         install(new TheTowersPlaceholderModule(plugin));
+        install(new TheTowersQuestModule(plugin));
 
         bind(CoreConfig.class).to(Config.class).in(Singleton.class);
         plugin.registerModule(Config.class); // for having the ability to reload config

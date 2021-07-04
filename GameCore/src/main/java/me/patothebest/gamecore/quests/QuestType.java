@@ -1,7 +1,7 @@
 package me.patothebest.gamecore.quests;
 
-public enum QuestType {
+import me.patothebest.gamecore.util.NameableObject;
+import org.bukkit.event.Listener;
 
-    KILL_PLAYERS,
-
+public interface QuestType extends NameableObject, Listener {
 }
