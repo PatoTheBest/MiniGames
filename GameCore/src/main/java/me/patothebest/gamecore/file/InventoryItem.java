@@ -3,7 +3,6 @@ package me.patothebest.gamecore.file;
 import me.patothebest.gamecore.itemstack.ItemStackBuilder;
 import me.patothebest.gamecore.util.Utils;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -61,7 +60,7 @@ public class InventoryItem implements ConfigurationSerializable {
     // GETTERS
     // -------------------------------------------- //
 
-    public ItemStack getItemStack(Player player) {
+    public ItemStack getItemStack() {
         return itemStack;
     }
 

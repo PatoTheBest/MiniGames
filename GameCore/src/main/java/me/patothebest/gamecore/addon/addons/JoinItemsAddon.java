@@ -64,6 +64,10 @@ public class JoinItemsAddon extends Addon {
             return;
         }
 
+        if (!inventoryItem.getItemStack().isSimilar(event.getPlayer().getItemInHand())) {
+            return;
+        }
+
         if (inventoryItem.getCommand() == null) {
             return;
         }
@@ -102,6 +106,10 @@ public class JoinItemsAddon extends Addon {
             return;
         }
 
+        if (!inventoryItem.getItemStack().isSimilar(event.getWhoClicked().getInventory().getItem(clickedSlot))) {
+            return;
+        }
+
         if (inventoryItem.getCommand() == null) {
             return;
         }
@@ -114,13 +122,13 @@ public class JoinItemsAddon extends Addon {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        inventoryItems.forEach((key, value) -> player.getInventory().setItem(key, value.getItemStack(player)));
+        inventoryItems.forEach((key, value) -> player.getInventory().setItem(key, value.getItemStack()));
     }
 
     @EventHandler
     public void onLeave(ArenaLeaveEvent event) {
         Player player = event.getPlayer();
-        inventoryItems.forEach((key, value) -> player.getInventory().setItem(key, value.getItemStack(player)));
+        inventoryItems.forEach((key, value) -> player.getInventory().setItem(key, value.getItemStack()));
     }
 
     @Override
