@@ -50,7 +50,7 @@ public class KitLayoutUI extends GUIPage {
             ItemStack item = inventoryItemsCopy[i];
 
             if (item != null) {
-                inventoryItemsCopy[i] = new ItemStackBuilder(item).lore(hideTag(String.valueOf(i)));
+                inventoryItemsCopy[i] = new ItemStackBuilder(item).lore(hideTag(String.valueOf(i))).amount(1);
             }
         }
 

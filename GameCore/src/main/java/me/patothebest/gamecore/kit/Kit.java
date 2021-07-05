@@ -188,13 +188,14 @@ public class Kit implements ConfigurationSerializable, GroupPermissible, Nameabl
         int[] layout = player.getLayout(this) == null ? DEFAULT_LAYOUT : player.getLayout(this).getRemap();
 
         for (int i = 0; i < inventoryItems.length; ++i) {
-            ItemStack item = inventoryItems[i] != null ? inventoryItems[i].clone() : null;
+            int slot = i >= 36 ? i : layout[i];
+            ItemStack item = inventoryItems[slot] != null ? inventoryItems[slot].clone() : null;
 
             if (item != null && item.getType() != org.bukkit.Material.AIR) {
                 if (i >= 36) {
                     inventoryItemsCopy[i] = new ItemStackBuilder(item).lore(ChatColor.YELLOW + "Kit " + kitName);
                 } else {
-                    inventoryItemsCopy[layout[i]] = new ItemStackBuilder(item).lore(ChatColor.YELLOW + "Kit " + kitName);
+                    inventoryItemsCopy[i] = new ItemStackBuilder(item).lore(ChatColor.YELLOW + "Kit " + kitName);
                 }
             }
         }
