@@ -10,12 +10,12 @@ import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.permission.GroupPermissible;
 import me.patothebest.gamecore.permission.PermissionGroup;
 import me.patothebest.gamecore.permission.PermissionGroupManager;
-import me.patothebest.gamecore.storage.Storage;
-import me.patothebest.gamecore.util.ThrowableRunnable;
-import me.patothebest.gamecore.util.Utils;
 import me.patothebest.gamecore.player.IPlayer;
+import me.patothebest.gamecore.storage.Storage;
 import me.patothebest.gamecore.util.NameableObject;
 import me.patothebest.gamecore.util.ThrowableConsumer;
+import me.patothebest.gamecore.util.ThrowableRunnable;
+import me.patothebest.gamecore.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
@@ -305,6 +305,9 @@ public class Kit implements ConfigurationSerializable, GroupPermissible, Nameabl
     }
 
     public ItemStackBuilder finalDisplayItem(IPlayer player, boolean extraLore, boolean showChooseDefaultKit) {
+        return finalDisplayItem(player, extraLore, showChooseDefaultKit, true);
+    }
+    public ItemStackBuilder finalDisplayItem(IPlayer player, boolean extraLore, boolean showChooseDefaultKit, boolean addClickMessages) {
         if (displayItem == null) {
             return new ItemStackBuilder(Material.REDSTONE_BLOCK).name(ChatColor.RED + "ERROR KIT" + kitName);
         }
@@ -319,43 +322,51 @@ public class Kit implements ConfigurationSerializable, GroupPermissible, Nameabl
 
             if (permissionGroup.hasPermission(player)) {
                 if (player.getKit() == this) {
-                    if (!isFree() && oneTimeKit) {
+                    if (!isFree() && oneTimeKit && !player.isPermanentKit(this)) {
                         itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_KIT_USES.replace(player, player.getKitUses().getOrDefault(this, 0)));
                     }
 
-                    itemStackBuilder.blankLine();
                     itemStackBuilder.glowing(true);
 
-                    if (!isFree() && oneTimeKit) {
-                        itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK.getMessage(player));
-                    }
+                    if (addClickMessages) {
+                        itemStackBuilder.blankLine();
+                        if (!isFree() && oneTimeKit && !player.isPermanentKit(this)) {
+                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS.getMessage(player));
+                        }
 
-                    itemStackBuilder.addLore(CoreLang.GUI_SHOP_SELECTED.getMessage(player));
-                } else if (isFree()) {
-                    itemStackBuilder.blankLine();
-                    if(showChooseDefaultKit) {
-                        itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_DEFAULT.getMessage(player));
-                    } else {
-                        itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_SELECT.getMessage(player));
+                        itemStackBuilder.addLore(CoreLang.GUI_SHOP_SELECTED.getMessage(player));
                     }
-                } else if (oneTimeKit) {
+                } else if (isFree()) {
+                    if (addClickMessages) {
+                        itemStackBuilder.blankLine();
+                        if(showChooseDefaultKit) {
+                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_DEFAULT.getMessage(player));
+                        } else {
+                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_SELECT.getMessage(player));
+                        }
+                    }
+                } else if (oneTimeKit && !player.isPermanentKit(this)) {
                     if (player.canUseKit(this)) {
                         itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_KIT_USES.replace(player, player.getKitUses().get(this)));
-                        itemStackBuilder.blankLine();
-                        itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK.getMessage(player));
+                        if (addClickMessages) {
+                            itemStackBuilder.blankLine();
+                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS.getMessage(player));
 
-                        if (showChooseDefaultKit) {
-                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_LEFT_CLICK.getMessage(player));
-                        } else {
-                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_LEFT_CLICK_SELECT.getMessage(player));
+                            if (showChooseDefaultKit) {
+                                itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_LEFT_CLICK.getMessage(player));
+                            } else {
+                                itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_LEFT_CLICK_SELECT.getMessage(player));
+                            }
                         }
                     } else {
                         itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_KIT_USES.replace(player, 0));
-                        itemStackBuilder.blankLine();
-                        itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_BUY.getMessage(player));
+                        if (addClickMessages) {
+                            itemStackBuilder.blankLine();
+                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_BUY.getMessage(player));
+                        }
                     }
 
-                } else {
+                } else if (addClickMessages){
                     itemStackBuilder.blankLine();
 
                     if (player.canUseKit(this)) {

@@ -425,12 +425,15 @@ public enum CoreLang implements ILang {
     GUI_KIT_SHOP_ERROR_OCCURRED("&cAn error has occurred while purchasing this kit."),
     GUI_KIT_SHOP_LEFT_CLICK("&aLeft-click to select as your default kit"),
     GUI_KIT_SHOP_LEFT_CLICK_SELECT("&aLeft-click to select"),
-    GUI_KIT_SHOP_RIGHT_CLICK("&aRight-click to buy kit uses"),
+    GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS("&aRight-click to show more options"),
     GUI_KIT_SHOP_CLICK_DEFAULT("&aClick to select as your default kit"),
     GUI_KIT_SHOP_CLICK_SELECT("&aClick to select"),
     GUI_KIT_SHOP_CLICK_BUY("&aClick to buy kit uses"),
     GUI_KIT_SHOP_CLICK_BUY_PERMANENT("&aClick to buy"),
     GUI_KIT_SHOP_KIT_USES("&7Kit uses: &a%uses%", "uses"),
+    GUI_KIT_SHOP_OPTIONS_TITLE("&aOptions for %kit%", "kit"),
+    GUI_KIT_OPTIONS_LAYOUT("&6Click to change the kit layout"),
+    GUI_KIT_OPTIONS_PREVIEW("&6Click to preview kit"),
 
     // Shop commands
     SHOP_COMMANDS(CommentType.SUBHEADER_SPACED, "Shop commands"),

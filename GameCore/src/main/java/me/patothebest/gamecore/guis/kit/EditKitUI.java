@@ -2,23 +2,23 @@ package me.patothebest.gamecore.guis.kit;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import me.patothebest.gamecore.gui.inventory.button.SimpleButton;
-import me.patothebest.gamecore.guis.grouppermissible.PermissionGroupUIFactory;
-import me.patothebest.gamecore.itemstack.ItemStackBuilder;
-import me.patothebest.gamecore.itemstack.Material;
-import me.patothebest.gamecore.itemstack.PotionBuilder;
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.gui.anvil.AnvilSlot;
 import me.patothebest.gamecore.gui.inventory.GUIPage;
 import me.patothebest.gamecore.gui.inventory.button.AnvilButton;
 import me.patothebest.gamecore.gui.inventory.button.AnvilButtonAction;
 import me.patothebest.gamecore.gui.inventory.button.BackButton;
+import me.patothebest.gamecore.gui.inventory.button.SimpleButton;
 import me.patothebest.gamecore.gui.inventory.descriptioneditor.DescriptionEdition;
 import me.patothebest.gamecore.gui.inventory.descriptioneditor.DescriptionEditorMainPage;
 import me.patothebest.gamecore.gui.inventory.itemeditor.ItemMainPage;
 import me.patothebest.gamecore.gui.inventory.itemeditor.UpdateAction;
+import me.patothebest.gamecore.guis.grouppermissible.PermissionGroupUIFactory;
+import me.patothebest.gamecore.itemstack.ItemStackBuilder;
+import me.patothebest.gamecore.itemstack.Material;
+import me.patothebest.gamecore.itemstack.PotionBuilder;
 import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitManager;
+import me.patothebest.gamecore.lang.CoreLang;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -75,7 +75,9 @@ public class EditKitUI extends GUIPage {
                 new EditKitUI(plugin, kitUIFactory, permissionGroupUIFactory, kitManager, player, kit);
             }
         }).slot(AnvilSlot.INPUT_LEFT, new ItemStackBuilder().material(Material.NAME_TAG).name(kit.getKitName())), 4);
-        addButton(new SimpleButton(preview).action(() -> kitUIFactory.createKitPreview(player, kit)), 6);
+        addButton(new SimpleButton(preview).action(() -> kitUIFactory.createKitPreview(player, kit, true, () -> {
+            new EditKitUI(plugin, kitUIFactory, permissionGroupUIFactory, kitManager, player, kit);
+        })), 6);
 
         addButton(new SimpleButton(priceItem).action(() -> kitUIFactory.createEditPriceUI(player, kit)), 12);
         addButton(new SimpleButton(permission).action(() -> permissionGroupUIFactory.create(player, kit, () -> new EditKitUI(plugin, kitUIFactory, permissionGroupUIFactory, kitManager, player, kit))), 14);

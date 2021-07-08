@@ -227,7 +227,7 @@ public abstract class GUIPage implements Listener {
             player.sendMessage(ChatColor.RED + t.getMessage());
         }
         if (timing.end(50)) {
-            timing.setTiming("Menu '" + name + "' click (" + getClass().getSimpleName() + ") Button ("  + guiButton.getItem().toString() + ")" + "for " + getPlayer().getName());
+            timing.setTiming("Menu '" + name + "' click (" + getClass().getSimpleName() + ") Button ("  + (guiButton.getItem() == null ? "null item" : guiButton.getItem().toString()) + ")" + "for " + getPlayer().getName());
             timing.print();
         }
     }
