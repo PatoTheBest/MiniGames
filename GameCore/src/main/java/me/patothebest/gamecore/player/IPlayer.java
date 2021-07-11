@@ -1,17 +1,20 @@
 package me.patothebest.gamecore.player;
 
 import me.patothebest.gamecore.arena.AbstractArena;
+import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.cosmetics.shop.ShopItem;
 import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.lang.Locale;
 import me.patothebest.gamecore.lang.interfaces.ILang;
+import me.patothebest.gamecore.quests.ActiveQuest;
+import me.patothebest.gamecore.quests.Quest;
+import me.patothebest.gamecore.quests.QuestType;
 import me.patothebest.gamecore.scoreboard.CustomScoreboard;
 import me.patothebest.gamecore.scoreboard.ScoreboardType;
-import me.patothebest.gamecore.treasure.type.TreasureType;
-import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.stats.Statistic;
 import me.patothebest.gamecore.stats.TrackedStatistic;
+import me.patothebest.gamecore.treasure.type.TreasureType;
 import me.patothebest.gamecore.util.Callback;
 import me.patothebest.gamecore.util.ObservablePlayer;
 import me.patothebest.gamecore.util.SerializableObject;
@@ -22,6 +25,7 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -580,6 +584,49 @@ public interface IPlayer extends SerializableObject, ObservablePlayer {
      * @param amount the amount of keys
      */
     void setKeys(TreasureType treasureType, int amount);
+
+    /**
+     * Gets an active quest by the quest object
+     *
+     * @param quest the core quest
+     * @return the ActiveQuest
+     */
+    @Nullable
+    ActiveQuest getActiveQuest(Quest quest);
+
+    void activateQuest(ActiveQuest quest);
+
+    void removeQuest(ActiveQuest quest);
+
+    Set<ActiveQuest> getActiveQuests(QuestType questType);
+
+    /**
+     * Gets the player's experience
+     *
+     * @return the player's experience
+     */
+    long getExperience();
+
+    /**
+     * Sets the player's experience
+     *
+     * @param experience the experience to set
+     */
+    void setExperience(long experience);
+
+    /**
+     * Adds experience to the current player's experience
+     *
+     * @param experience the experience to add
+     */
+    void addExperience(long experience);
+
+    /**
+     * Removes experience from the current player's experience
+     *
+     * @param experience the experience to remove
+     */
+    void removeExperience(long experience);
 
     /**
      * Gets the money the player has

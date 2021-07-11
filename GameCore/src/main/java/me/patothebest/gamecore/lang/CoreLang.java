@@ -1,9 +1,9 @@
 package me.patothebest.gamecore.lang;
 
-import me.patothebest.gamecore.lang.interfaces.IComment;
-import me.patothebest.gamecore.lang.interfaces.ILang;
 import me.patothebest.gamecore.PluginConfig;
 import me.patothebest.gamecore.chat.ChatColorEscaper;
+import me.patothebest.gamecore.lang.interfaces.IComment;
+import me.patothebest.gamecore.lang.interfaces.ILang;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
@@ -37,7 +37,20 @@ public enum CoreLang implements ILang {
     MONEY_GIVEN("&6+%amount% coins", "amount"),
     SPECTATOR("Spectator"),
     LOADING("Loading..."),
+    DATABASE_REQUIREMENT("This requires a running database!"),
     LINE_SEPARATOR("&a&m" + StringUtils.repeat(" ", 80)),
+    TIME_MONTHS("months"),
+    TIME_MONTH("month"),
+    TIME_WEEKS("weeks"),
+    TIME_WEEK("week"),
+    TIME_DAYS("days"),
+    TIME_DAY("day"),
+    TIME_HOURS("hours"),
+    TIME_HOUR("hour"),
+    TIME_MINUTES("minutes"),
+    TIME_MINUTE("minute"),
+    TIME_SECONDS("seconds"),
+    TIME_SECOND("second"),
 
 
     // -----------------------------------
@@ -412,12 +425,15 @@ public enum CoreLang implements ILang {
     GUI_KIT_SHOP_ERROR_OCCURRED("&cAn error has occurred while purchasing this kit."),
     GUI_KIT_SHOP_LEFT_CLICK("&aLeft-click to select as your default kit"),
     GUI_KIT_SHOP_LEFT_CLICK_SELECT("&aLeft-click to select"),
-    GUI_KIT_SHOP_RIGHT_CLICK("&aRight-click to buy kit uses"),
+    GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS("&aRight-click to show more options"),
     GUI_KIT_SHOP_CLICK_DEFAULT("&aClick to select as your default kit"),
     GUI_KIT_SHOP_CLICK_SELECT("&aClick to select"),
     GUI_KIT_SHOP_CLICK_BUY("&aClick to buy kit uses"),
     GUI_KIT_SHOP_CLICK_BUY_PERMANENT("&aClick to buy"),
     GUI_KIT_SHOP_KIT_USES("&7Kit uses: &a%uses%", "uses"),
+    GUI_KIT_SHOP_OPTIONS_TITLE("&aOptions for %kit%", "kit"),
+    GUI_KIT_OPTIONS_LAYOUT("&6Click to change the kit layout"),
+    GUI_KIT_OPTIONS_PREVIEW("&6Click to preview kit"),
 
     // Shop commands
     SHOP_COMMANDS(CommentType.SUBHEADER_SPACED, "Shop commands"),
@@ -509,6 +525,48 @@ public enum CoreLang implements ILang {
     LEADERBOARD_ATTACHMENTS_ADDED("&aAttachment added!"),
     LEADERBOARD_ATTACHMENTS_COULD_NOT_ADD("&cCould not find a suitable place for this attachment."),
 
+
+    // -------------------------------------------- //
+    // EXPERIENCE AND LEVELS
+    // -------------------------------------------- //
+
+
+    EXPERIENCE_SYSTEM(CommentType.SUBHEADER_SPACED, "Experience/Levels"),
+    EXPERIENCE_COMMAND_DESC("Command for experience"),
+    EXPERIENCE_POPULATE_DESC("Create and populate experience table from stats."),
+    EXPERIENCE_POPULATE_TABLE_EXISTS("Table already exists! Please drop the table before continuing"),
+    EXPERIENCE_POPULATE_DONE("&aDone populating!"),
+    EXPERIENCE_POPULATE_CONFIRM("&cYou are about to populate the database with experience. Please confirm the following settings from the config are correct then run &6/%base_command% experience populate -c"),
+    EXPERIENCE_POPULATE_CONFIG("&e&l%element%: &b%value%", "element", "value"),
+    EXPERIENCE_EARNED("&b+%amount% experience", "amount"),
+    EXPERIENCE_LEVEL_UP("&b&lLEVEL UP!"),
+    EXPERIENCE_LEVEL_UP_INFO("&eYou have leveled up from &b%oldlevel% &eto &b%newlevel%", "oldlevel", "newlevel"),
+    EXPERIENCE_ADD_DESC("Adds experience to a player"),
+    EXPERIENCE_SET("&6%player%'s &7experience has been set to &6%amount% &7(&6level %level%&7)", "player", "amount", "level"),
+    EXPERIENCE_SET_DESC("Sets experience to a player"),
+    EXPERIENCE_ADD("&6%amount% &7experience has been added to &6%player%. &7They now have &6%total% &7experience (&6level %level%&7)", "player", "amount", "total", "level"),
+    EXPERIENCE_REMOVED_DESC("Removes experience to a player"),
+    EXPERIENCE_REMOVE("&6%amount% &7experience has been removed from &6%player%. &7They now have &6%total% &7experience (&6level %level%&7)", "player", "amount", "total", "level"),
+
+    // -----------------------------------
+    // Quests Messages
+    // -----------------------------------
+
+    QUESTS_HEADER(CommentType.SUBHEADER_SPACED, "Quests"),
+    QUEST_COMPLETED("&aQuest %quest% completed!", "quest"),
+    QUESTS_COMMAND("Opens the quest menu"),
+    GUI_QUEST_TITLE("&7Choose a quest"),
+    GUI_QUEST_ITEM_NAME("&aQuest %quest%", "quest"),
+    GUI_QUEST_STARTED("&aStarted Quest: &6%quest%", "quest"),
+    GUI_QUEST_STATUS_START("&aClick to start quest!"),
+    GUI_QUEST_STATUS_STARTED("&aStarted"),
+    GUI_QUEST_STATUS_PROGRESS("&bProgress &7(&6%amount%&7/&6%goal%&7)", "amount", "goal"),
+    GUI_QUEST_STATUS_DEADLINE("&7Deadline: &6%time%", "time"),
+    GUI_QUEST_STATUS_COMPLETED("&aYou have completed this quest!"),
+    GUI_QUEST_STATUS_COOLDOWN("&cThis quest is on cooldown!"),
+    GUI_QUEST_STATUS_COOLDOWN_2("&cYou can start it again in %time%", "time"),
+    GUI_QUEST_STATUS_EXP("&b+%amount% experience", "amount"),
+    GUI_QUEST_STATUS_COINS("&6+%amount% coins", "amount"),
 
     // -----------------------------------
     // GUI messages

@@ -50,7 +50,17 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
                 continue;
             }
 
-            if (!arena.getArea().contains(player.getLocation())) {
+            Location loc = player.getLocation();
+            Location lowerNE = arena.getArea().getLowerNE();
+            Location upperSW = arena.getArea().getUpperSW();
+            double lX = lowerNE.getBlockX();
+            double lY = lowerNE.getBlockY();
+            double lZ = lowerNE.getBlockZ();
+
+            double uX = upperSW.getBlockX();
+            double uY = upperSW.getBlockY() + 5;
+            double uZ = upperSW.getBlockZ();
+            if (loc.getX() < lX || loc.getX() > uX || loc.getZ() < lZ || loc.getZ() > uZ || loc.getY() < lY || loc.getY() > uY) {
                 if(arena.getSpectators().contains(player)) {
                     player.teleport(arena.getSpectatorLocation());
                     players.remove(player);
@@ -112,11 +122,11 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
         Location lowerNE = arena.getArea().getLowerNE();
         Location upperSW = arena.getArea().getUpperSW();
         double lX = lowerNE.getBlockX() + 2.5;
-        double lY = lowerNE.getBlockY() + 2;
+        //double lY = lowerNE.getBlockY() + 2;
         double lZ = lowerNE.getBlockZ() + 2.5;
 
         double uX = upperSW.getBlockX() - 1.5;
-        double uY = upperSW.getBlockY() - 2;
+        //double uY = upperSW.getBlockY() - 2;
         double uZ = upperSW.getBlockZ() - 1.5;
 
         if (x < lX) {
@@ -127,11 +137,11 @@ public class NoBorderTrespassingFeature extends AbstractRunnableFeature {
             FastParticle.spawnParticle(player, ParticleType.BARRIER, uX + 3, y + 1, z, 1);
         }
 
-        if (y < lY) {
+        /*if (y < lY) {
             FastParticle.spawnParticle(player, ParticleType.BARRIER, x, lY - 2.5, z, 1);
         } else if (y > uY) {
             FastParticle.spawnParticle(player, ParticleType.BARRIER, x, uY + 4, z, 1);
-        }
+        }*/
 
         if (z < lZ) {
             FastParticle.spawnParticle(player, ParticleType.BARRIER, x, y, lZ - 3, 1);

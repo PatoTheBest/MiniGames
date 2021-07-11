@@ -1,5 +1,6 @@
 package me.patothebest.gamecore.player;
 
+import me.patothebest.gamecore.util.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -57,22 +58,6 @@ public class PlayerInventory {
     }
 
     public void clearPlayer() {
-        player.setAllowFlight(false);
-        player.setFlying(false);
-        player.setMaxHealth(20.0);
-        player.setHealth(20.0);
-        player.setFoodLevel(20);
-        player.getInventory().setArmorContents(null);
-        player.getInventory().clear();
-        player.updateInventory();
-        player.setLevel(0);
-        player.setExp(0.0f);
-        player.setGameMode(GameMode.SURVIVAL);
-//        player.setVelocity(new org.bukkit.util.Vector(0, 0, 0));
-        player.setFallDistance(0);
-
-        for (final PotionEffect effect : player.getActivePotionEffects()) {
-            player.removePotionEffect(effect.getType());
-        }
+        Utils.clearPlayer(player);
     }
 }

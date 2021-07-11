@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.event.arena.ArenaLoadEvent;
 import me.patothebest.gamecore.logger.InjectLogger;
+import me.patothebest.gamecore.logger.Logger;
 import me.patothebest.gamecore.modules.ActivableModule;
 import me.patothebest.gamecore.modules.ModuleName;
 import me.patothebest.gamecore.modules.ReloadableModule;
@@ -23,7 +24,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.function.Predicate;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -82,6 +82,13 @@ public class ArenaManager implements ActivableModule, ReloadableModule {
     // PUBLIC METHODS
     // -------------------------------------------- //
 
+
+    @Override
+    public void onPreEnable() {
+        arenaGroups.forEach((groupName, arenaGroup) -> {
+            logger.config("Registering group {0}", groupName);
+        });
+    }
 
     @Override
     public void onEnable() {

@@ -40,6 +40,10 @@ public class EventRegistry implements Module {
         return event;
     }
 
+    public void callSyncEvent(Event event) {
+        pluginScheduler.ensureSync(() -> plugin.getServer().getPluginManager().callEvent(event));
+    }
+
     public void callAsyncEvent(Event event) {
         pluginScheduler.ensureAsync(() -> plugin.getServer().getPluginManager().callEvent(event));
     }

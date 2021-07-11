@@ -56,6 +56,7 @@ public class Arena extends AbstractArena {
         super(name, worldName, injector.get());
         needsSpectatorLocation = false;
         needsArenaArea = false;
+        arenaGroup = ArenaGroup.DEFAULT_GROUP;
     }
 
     @SuppressWarnings("unchecked")

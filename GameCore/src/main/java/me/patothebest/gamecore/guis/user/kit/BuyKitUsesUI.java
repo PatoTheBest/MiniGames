@@ -1,18 +1,17 @@
 package me.patothebest.gamecore.guis.user.kit;
 
 import com.google.inject.assistedinject.Assisted;
-import me.patothebest.gamecore.gui.inventory.button.SimpleButton;
-import me.patothebest.gamecore.itemstack.Material;
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.gui.inventory.GUIPage;
 import me.patothebest.gamecore.gui.inventory.button.IncrementingButton;
 import me.patothebest.gamecore.gui.inventory.button.IncrementingButtonAction;
 import me.patothebest.gamecore.gui.inventory.button.PlaceHolder;
-import me.patothebest.gamecore.guis.UserGUIFactory;
+import me.patothebest.gamecore.gui.inventory.button.SimpleButton;
 import me.patothebest.gamecore.itemstack.ItemStackBuilder;
+import me.patothebest.gamecore.itemstack.Material;
 import me.patothebest.gamecore.itemstack.StainedGlassPane;
 import me.patothebest.gamecore.kit.Kit;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.player.IPlayer;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -24,22 +23,20 @@ import javax.inject.Provider;
 public class BuyKitUsesUI extends GUIPage {
 
     private final Kit kit;
+    private final Runnable onBack;
     private final IPlayer iPlayer;
     private final Provider<Economy> economy;
-    private final UserGUIFactory userGUIFactory;
-    private final boolean setKit;
     private int kitUses = 1;
 
     private final static int[] GRAY_STAINED_PANES = new int[]{3, 5, 28, 29, 30, 32, 33, 34, 37, 39, 41, 43, 46, 47, 48, 50, 51, 52};
 
     @Inject
-    private BuyKitUsesUI(CorePlugin plugin, Provider<Economy> economy, UserGUIFactory userGUIFactory, @Assisted IPlayer iPlayer, @Assisted Kit kit, @Assisted boolean setKit) {
+    private BuyKitUsesUI(CorePlugin plugin, Provider<Economy> economy, @Assisted Runnable onBack, @Assisted IPlayer iPlayer, @Assisted Kit kit) {
         super(plugin, iPlayer.getPlayer(), CoreLang.GUI_CHANGE_AMOUNT_TITLE.getMessage(iPlayer), 54);
+        this.onBack = onBack;
         this.iPlayer = iPlayer;
         this.kit = kit;
         this.economy = economy;
-        this.userGUIFactory = userGUIFactory;
-        this.setKit = setKit;
         build();
     }
 
@@ -67,7 +64,7 @@ public class BuyKitUsesUI extends GUIPage {
 
         addButton(new SimpleButton(new ItemStackBuilder(Material.EMERALD).name(ChatColor.GREEN + (economy.get() != null ? economy.get().currencyNamePlural() : "")).lore(ChatColor.GRAY.toString() + (kit.getCost() * kitUses) + (economy.get() != null ? " " + economy.get().currencyNamePlural() : "") + " will be deducted from your account")), 4);
         addButton(new PlaceHolder(kit.finalDisplayItem(iPlayer, true).amount(kitUses)), 22);
-        addButton(new SimpleButton(new ItemStackBuilder().createCancelItem()).action(() -> userGUIFactory.openKitShop(player)), 38);
+        addButton(new SimpleButton(new ItemStackBuilder().createCancelItem()).action(onBack::run), 38);
 
         if (iPlayer.getMoney() >= kit.getCost() * kitUses) {
             addButton(new SimpleButton(new ItemStackBuilder().createConfirmItem()).action(() -> {
@@ -86,11 +83,9 @@ public class BuyKitUsesUI extends GUIPage {
                     player.sendMessage(CoreLang.GUI_USER_CHOOSE_YOU_PURCHASED_KIT_USES.replace(player, kitUses, kit.getKitName()));
                 }
 
-                if (setKit) {
-                    iPlayer.setKit(kit);
-                }
-
-                userGUIFactory.openKitShop(player);
+                iPlayer.setKit(kit);
+                CoreLang.GUI_KIT_SHOP_YOU_CHOSE_KIT.replaceAndSend(player, kit.getKitName());
+                onBack.run();
             }), 42);
         } else {
             addPlaceholder(new ItemStackBuilder().material(Material.BARRIER).name(iPlayer, CoreLang.GUI_KIT_SHOP_NOT_ENOUGH_MONEY), 42);

@@ -5,9 +5,12 @@ import com.google.common.cache.CacheBuilder;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.combat.CombatDeathEvent;
+import me.patothebest.gamecore.combat.DeathCause;
 import me.patothebest.gamecore.feature.AbstractFeature;
 import me.patothebest.gamecore.itemstack.Material;
+import me.patothebest.gamecore.kit.KitManager;
 import me.patothebest.gamecore.player.PlayerManager;
+import me.patothebest.gamecore.util.Utils;
 import me.patothebest.thetowers.arena.Arena;
 import me.patothebest.thetowers.arena.GameTeam;
 import me.patothebest.thetowers.file.Config;
@@ -18,6 +21,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.util.Vector;
 
 import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
@@ -27,11 +31,13 @@ public class TheTowersFeature extends AbstractFeature {
     private final Cache<String, Byte> pointCooldown = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.SECONDS).build();
     private final CorePlugin plugin;
     private final PlayerManager playerManager;
+    private final KitManager kitManager;
     private final Config config;
 
-    @Inject private TheTowersFeature(CorePlugin plugin, PlayerManager playerManager, Config config) {
+    @Inject private TheTowersFeature(CorePlugin plugin, PlayerManager playerManager, KitManager kitManager, Config config) {
         this.plugin = plugin;
         this.playerManager = playerManager;
+        this.kitManager = kitManager;
         this.config = config;
     }
 
@@ -59,6 +65,31 @@ public class TheTowersFeature extends AbstractFeature {
         }
 
         event.getDrops().removeIf(item -> item.getType() == Material.LEATHER_HELMET.parseMaterial() || item.getType() == Material.LEATHER_CHESTPLATE.parseMaterial() || item.getType() == Material.LEATHER_LEGGINGS.parseMaterial() || item.getType() == Material.LEATHER_BOOTS.parseMaterial());
+
+        Player player = event.getPlayer();
+        player.setHealth(20);
+        player.setFallDistance(0);
+        player.setVelocity(new Vector(0, 0, 0));
+
+        if(event.getPlayer().getLocation().getY() < 1 ||
+                !arena.getArea().contains(event.getPlayer().getLocation()) ||
+                event.getDeathCause() == DeathCause.OUT_OF_WORLD) {
+            event.getDrops().clear();
+        }
+
+        AbstractGameTeam gameTeam = arena.getTeam(event.getPlayer());
+
+        if (gameTeam == null) { // can be null if the player disconnects
+            return;
+        }
+
+        player.teleport(gameTeam.getSpawn());
+        Utils.clearPlayer(player);
+
+        kitManager.applyKit(event.getPlayer(), gameTeam);
+        kitManager.applyPotionEffects(event.getPlayer());
+
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

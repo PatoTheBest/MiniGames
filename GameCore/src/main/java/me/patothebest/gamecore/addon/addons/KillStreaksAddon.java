@@ -57,7 +57,7 @@ public class KillStreaksAddon extends Addon {
             }
             int streakAmount = Integer.parseInt(streak);
             killStreaks.put(streakAmount,
-                    new KillStreak(streaks.getString(streak + ".message"), streaks.getInt(streak + ".money")));
+                    new KillStreak(streaks.getString(streak + ".message"), streaks.getInt(streak + ".money"), streaks.getInt(streak + ".game-experience", 0)));
             smallestStreak = Math.min(streakAmount, smallestStreak);
         }
     }
@@ -112,6 +112,9 @@ public class KillStreaksAddon extends Addon {
         if (killstreak.money > 0) {
             killerPlayer.giveMoney(killstreak.money);
         }
+        if (killstreak.experience > 0) {
+            killerPlayer.addExperience(killstreak.experience);
+        }
         String message = ChatColor.translateAlternateColorCodes('&', killstreak.message.replace("%player_name%", killerColor + killerPlayer.getName()));
         currentArena.sendMessageToArena(locale -> message);
     }
@@ -134,10 +137,12 @@ public class KillStreaksAddon extends Addon {
     private static class KillStreak {
         private final String message;
         private final int money;
+        private final int experience;
 
-        private KillStreak(String message, int money) {
+        private KillStreak(String message, int money, int experience) {
             this.message = message;
             this.money = money;
+            this.experience = experience;
         }
     }
 }

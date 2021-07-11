@@ -61,6 +61,12 @@ public enum Lang implements ILang {
     ARENA_MUST_BE_SOLO(true, "&cArena must be solo arena"),
     ARENA_MUST_BE_TEAM(true, "&cArena must be team arena"),
 
+    PHASE_NONE("None"),
+    PHASE_REFILL("Refill"),
+    PHASE_DOOM("Doom"),
+    PHASE_BORDER_SHRINK("Border Shrink"),
+    PHASE_END("End"),
+
 ;
 
     private String defaultMessage;

@@ -6,28 +6,35 @@ import com.google.inject.Provider;
 import com.google.inject.assistedinject.Assisted;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.arena.AbstractArena;
+import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.cosmetics.shop.ShopItem;
+import me.patothebest.gamecore.event.EventRegistry;
 import me.patothebest.gamecore.event.player.PlayerDeSelectItemEvent;
+import me.patothebest.gamecore.event.player.PlayerExperienceUpdateEvent;
+import me.patothebest.gamecore.event.player.PlayerJoinPrepareEvent;
+import me.patothebest.gamecore.event.player.PlayerLoginPrepareEvent;
+import me.patothebest.gamecore.event.player.PlayerSelectItemEvent;
 import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.lang.Locale;
+import me.patothebest.gamecore.player.modifiers.ExperienceModifier;
 import me.patothebest.gamecore.player.modifiers.GeneralModifier;
 import me.patothebest.gamecore.player.modifiers.KitModifier;
 import me.patothebest.gamecore.player.modifiers.PointsModifier;
+import me.patothebest.gamecore.player.modifiers.QuestModifier;
 import me.patothebest.gamecore.player.modifiers.ShopModifier;
 import me.patothebest.gamecore.player.modifiers.TreasureModifier;
+import me.patothebest.gamecore.quests.ActiveQuest;
+import me.patothebest.gamecore.quests.Quest;
+import me.patothebest.gamecore.quests.QuestType;
 import me.patothebest.gamecore.scoreboard.CoreScoreboardType;
 import me.patothebest.gamecore.scoreboard.CustomScoreboard;
 import me.patothebest.gamecore.scoreboard.ScoreboardFile;
 import me.patothebest.gamecore.scoreboard.ScoreboardType;
-import me.patothebest.gamecore.treasure.type.TreasureType;
-import me.patothebest.gamecore.arena.AbstractGameTeam;
-import me.patothebest.gamecore.event.player.PlayerJoinPrepareEvent;
-import me.patothebest.gamecore.event.player.PlayerLoginPrepareEvent;
-import me.patothebest.gamecore.event.player.PlayerSelectItemEvent;
 import me.patothebest.gamecore.stats.Statistic;
 import me.patothebest.gamecore.stats.TrackedStatistic;
+import me.patothebest.gamecore.treasure.type.TreasureType;
 import me.patothebest.gamecore.util.Callback;
 import me.patothebest.gamecore.util.ObservablePlayerImpl;
 import me.patothebest.gamecore.util.Sounds;
@@ -37,10 +44,13 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
@@ -53,6 +63,7 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
     // Guice inject
     @Inject private Provider<Economy> economyProvider;
     @Inject private CorePlugin plugin;
+    @Inject private EventRegistry eventRegistry;
 
     private PlayerIdentity playerIdentity;
     private PlayerInventory playerInventory;
@@ -76,6 +87,11 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
      */
     private final Map<Class<? extends ShopItem>, Map<ShopItem, Integer>> ownedItems = new HashMap<>();
     private final Map<Class<? extends ShopItem>, ShopItem> selectedShopItems = new HashMap<>();
+
+    /**
+     * The experience from our internal system
+     */
+    private long experience;
 
     private int points;
 
@@ -102,6 +118,12 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
      * not, it will be loaded into memory
      */
     private final Map<TreasureType, Integer> treasureKeys = new HashMap<>();
+
+    /**
+     * Map of all the current quests
+     */
+    private final Map<Quest, ActiveQuest> quests = new HashMap<>();
+    private final Map<QuestType, Set<ActiveQuest>> questsTypeLookup = new HashMap<>();
 
     /**
      * Scoreboard to show on prepare, used in case storage is being reloaded
@@ -624,6 +646,68 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
         notifyObservers(TreasureModifier.MODIFY, treasureType);
     }
 
+    public @Nullable ActiveQuest getActiveQuest(Quest quest) {
+        return quests.get(quest);
+    }
+
+    @Override
+    public void activateQuest(ActiveQuest activeQuest) {
+        ActiveQuest oldQues = quests.remove(activeQuest.getQuest());
+        if (oldQues != null) {
+            removeQuest(activeQuest);
+        }
+
+        this.quests.put(activeQuest.getQuest(), activeQuest);
+        this.questsTypeLookup.computeIfAbsent(activeQuest.getQuest().getQuestType(), k -> new HashSet<>());
+        this.questsTypeLookup.get(activeQuest.getQuest().getQuestType()).add(activeQuest);
+        notifyObservers(QuestModifier.START_QUEST, activeQuest);
+    }
+
+    @Override
+    public void removeQuest(ActiveQuest quest) {
+        this.quests.remove(quest.getQuest());
+        this.questsTypeLookup.get(quest.getQuest().getQuestType()).remove(quest);
+    }
+
+    @Override
+    public Set<ActiveQuest> getActiveQuests(QuestType questType) {
+        return questsTypeLookup.getOrDefault(questType, Collections.emptySet());
+    }
+
+    @Override
+    public long getExperience() {
+        return experience;
+    }
+
+    @Override
+    public void setExperience(long experience) {
+        long oldExp = this.experience;
+        this.experience = experience;
+        notifyObservers(ExperienceModifier.SET_EXPERIENCE, experience);
+        eventRegistry.callSyncEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SET, oldExp, this.experience));
+    }
+
+    @Override
+    public void addExperience(long experience) {
+        if (experience == 0) {
+            return;
+        }
+        long oldExp = this.experience;
+        this.experience = oldExp + experience;
+        notifyObservers(ExperienceModifier.ADD_EXPERIENCE, experience);
+
+        CoreLang.EXPERIENCE_EARNED.replaceAndSend(player, experience);
+        eventRegistry.callSyncEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.ADD, oldExp, this.experience));
+    }
+
+    @Override
+    public void removeExperience(long experience) {
+        long oldExp = this.experience;
+        this.experience = oldExp - experience;
+        notifyObservers(ExperienceModifier.REMOVE_EXPERIENCE, experience);
+        eventRegistry.callSyncEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SUBTRACT, oldExp, this.experience));
+    }
+
     @Override
     public double getMoney() {
         return economyProvider.get() != null ? economyProvider.get().getBalance(player) : 0;
@@ -631,6 +715,10 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
 
     @Override
     public boolean giveMoney(double amount) {
+        if (amount == 0) {
+            return false;
+        }
+
         if (economyProvider.get() == null) {
             return false;
         }

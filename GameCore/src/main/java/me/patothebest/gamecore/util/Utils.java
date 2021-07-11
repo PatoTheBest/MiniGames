@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -68,8 +70,10 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 import java.util.SplittableRandom;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -77,6 +81,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -102,6 +108,19 @@ public class Utils {
     private static Constructor<?> gameProfileConstructor;
     private static Constructor<?> propertyConstructor;
     private static Logger logger = Logger.getLogger("Minecraft"); // will be replaced
+
+    private static final Pattern DATE_VALIDATION = Pattern.compile("^(?:\\d+[dhmsw])+$");
+    private static final Pattern DATE_PART = Pattern.compile("(\\d+)([dhmsw])");
+
+    private static final NavigableMap<Long, String> SUFFIXES = new TreeMap<>();
+    static {
+        SUFFIXES.put(1_000L, "k");
+        SUFFIXES.put(1_000_000L, "M");
+        SUFFIXES.put(1_000_000_000L, "G");
+        SUFFIXES.put(1_000_000_000_000L, "T");
+        SUFFIXES.put(1_000_000_000_000_000L, "P");
+        SUFFIXES.put(1_000_000_000_000_000_000L, "E");
+    }
 
     public static void setLogger(Logger logger) {
         Utils.logger = logger;
@@ -1800,23 +1819,37 @@ public class Utils {
      * @param players the players to send the progress bar to
      */
     public static void displayProgress(String prefix, double amount, String suffix, Player... players) {
-        int bars = 24;
-        StringBuilder progressBar = new StringBuilder(ChatColor.GREEN + "");
-        boolean colorChange = false;
-        for (int i = 0; i < bars; i++) {
-            if (!colorChange && (float) i / (float) bars >= amount) {
-                progressBar.append(ChatColor.WHITE);
-                colorChange = true;
-            }
-
-            progressBar.append("#");
-        }
+        String progressBar = makeProgress(amount, 24, '#', ChatColor.GREEN, ChatColor.WHITE);
 
         for (Player player : players) {
             ActionBar.sendActionBar(player, (prefix == null ? "" : prefix + ChatColor.RESET + " ") + progressBar + (suffix == null ? "" : ChatColor.RESET + " " + suffix));
         }
     }
 
+    /**
+     * Generates a progress bar
+     *
+     * @param completion the percentage completed (0-1)
+     * @param bars the amount of bars to display
+     * @param barChar the char to use as the bar
+     * @param completeColor the color of the completed portion
+     * @param incompleteColor the color of the incompleted protion
+     * @return the generated progress bar
+     */
+    public static String makeProgress(double completion, double bars, char barChar, ChatColor completeColor, ChatColor incompleteColor) {
+        StringBuilder progressBar = new StringBuilder(completeColor.toString());
+        boolean colorChange = false;
+        for (int i = 0; i < bars; i++) {
+            if (!colorChange && i / bars >= completion) {
+                progressBar.append(incompleteColor);
+                colorChange = true;
+            }
+
+            progressBar.append(barChar);
+        }
+
+        return progressBar.toString();
+    }
     /**
      * Formats a decimal to one decimal places
      * 2.34567 will become 2.3
@@ -2487,5 +2520,131 @@ public class Utils {
 
     public static SplittableRandom getRandom() {
         return RANDOM;
+    }
+
+    /**
+     * Resets a player completely.
+     * Health, food level, inventory, gamemode survival
+     *
+     * @param player the player to clear
+     */
+    public static void clearPlayer(Player player) {
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        player.setMaxHealth(20.0);
+        player.setHealth(20.0);
+        player.setFoodLevel(20);
+        player.getInventory().setArmorContents(null);
+        player.getInventory().clear();
+        player.updateInventory();
+        player.setLevel(0);
+        player.setExp(0.0f);
+        player.setGameMode(GameMode.SURVIVAL);
+//        player.setVelocity(new org.bukkit.util.Vector(0, 0, 0));
+        player.setFallDistance(0);
+
+        for (final PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+    }
+
+    /**
+     * Converts a configuration date string to millis
+     * The format of the string is <time><unit>
+     * Ex:
+     * 1d = 1 day
+     * 1h = 1 hour
+     * 1m1s = 1 minute and 1 second
+     *
+     * @param date the date string
+     * @return the date string converted to millis or -1 if no match
+     */
+    public static long dateStringToMillis(String date) {
+        if (!DATE_VALIDATION.matcher(date).matches()) {
+            return -1;
+        }
+
+        long millis = 0;
+        Matcher matcher = DATE_PART.matcher(date);
+        while (matcher.find()) {
+            long number = Long.parseLong(matcher.group(1));
+            String unit = matcher.group(2);
+
+            if (unit.equalsIgnoreCase("s")) {
+                millis += number * 1_000;
+            } else if (unit.equalsIgnoreCase("m")) {
+                millis += number * 60_000;
+            } else if (unit.equalsIgnoreCase("h")) {
+                millis += number * 3_600_000;
+            } else if (unit.equalsIgnoreCase("d")) {
+                millis += number * 84_400_000;
+            } else if (unit.equalsIgnoreCase("w")) {
+                millis += number * 590_800_000;
+            } else {
+                throw new IllegalStateException("Got unknown unit " + unit);
+            }
+        }
+
+        return millis;
+    }
+
+    /**
+     * Formats a big value to a small value
+     * 1,000 = 1K
+     * 1,000,000 = 1M
+     * etc
+     *
+     * @param value the value to format
+     * @return the formatted value
+     */
+    public static String formatLong(long value) {
+        //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
+        if (value == Long.MIN_VALUE) return formatLong(Long.MIN_VALUE + 1);
+        if (value < 0) return "-" + formatLong(-value);
+        if (value < 1000) return Long.toString(value); //deal with easy case
+
+        Map.Entry<Long, String> e = SUFFIXES.floorEntry(value);
+        Long divideBy = e.getKey();
+        String suffix = e.getValue();
+
+        long truncated = value / (divideBy / 10); //the number part of the output times 10
+        @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
+        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+    }
+
+    /**
+     * Formats a millis time into a typed time
+     * eg. 3 hours 4 minutes 3 seconds
+     *
+     * @param player the player to get the translations from
+     * @param time the time in millis
+     * @return the formatted time
+     */
+    public static String createTime(Player player, long time) {
+        time /= 1000;
+        long seconds = time % 60;
+        long minutes = time / 60 % 60;
+        long hours = time / 3600 % 24;
+        long days = time / 86_400 % 7;
+        long weeks = time / 604_800;
+        StringBuilder timeStr = new StringBuilder();
+        if (weeks > 0) {
+            timeStr.append(" ").append(weeks).append(" ").append((weeks == 1 ? CoreLang.TIME_WEEK : CoreLang.TIME_WEEKS).getMessage(player));
+        }
+        if (days > 0) {
+            timeStr.append(" ").append(days).append(" ").append((days == 1 ? CoreLang.TIME_DAYS : CoreLang.TIME_DAYS).getMessage(player));
+        }
+        if (hours > 0) {
+            timeStr.append(" ").append(hours).append(" ").append((hours == 1 ? CoreLang.TIME_HOUR : CoreLang.TIME_HOURS).getMessage(player));
+        }
+        if (minutes > 0) {
+            timeStr.append(" ").append(minutes).append(" ").append((minutes == 1 ? CoreLang.TIME_MINUTE : CoreLang.TIME_MINUTES).getMessage(player));
+        }
+        if (seconds > 0) {
+            timeStr.append(" ").append(seconds).append(" ").append((seconds == 1 ? CoreLang.TIME_SECOND : CoreLang.TIME_SECONDS).getMessage(player));
+        }
+
+        return timeStr.substring(1);
     }
 }

@@ -16,6 +16,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -164,9 +165,7 @@ public abstract class GUIPage implements Listener {
         return !buttons.containsKey(slot);
     }
 
-    protected void onInventoryCloseOverride() {
-
-    }
+    protected void onInventoryCloseOverride() { }
 
     @EventHandler
     public void onPlayerCloseInventory(InventoryCloseEvent event) {
@@ -181,16 +180,29 @@ public abstract class GUIPage implements Listener {
             return;
         }
 
-        if (this.player.getName().equalsIgnoreCase(player.getName())) {
+        if (this.player == player) {
             destroy();
             destroyInternal();
         }
     }
 
     @EventHandler
+    public void onDropItem(PlayerDropItemEvent event) {
+        if (event.getPlayer() != this.getPlayer()) {
+            return;
+        }
+
+        if (!this.player.getOpenInventory().getTitle().equalsIgnoreCase(name)) {
+            return;
+        }
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (!this.player.getName().equalsIgnoreCase(player.getName())) {
+        if (this.player != player) {
             return;
         }
 
@@ -215,7 +227,7 @@ public abstract class GUIPage implements Listener {
             player.sendMessage(ChatColor.RED + t.getMessage());
         }
         if (timing.end(50)) {
-            timing.setTiming("Menu '" + name + "' click (" + getClass().getSimpleName() + ") Button ("  + guiButton.getItem().toString() + ")" + "for " + getPlayer().getName());
+            timing.setTiming("Menu '" + name + "' click (" + getClass().getSimpleName() + ") Button ("  + (guiButton.getItem() == null ? "null item" : guiButton.getItem().toString()) + ")" + "for " + getPlayer().getName());
             timing.print();
         }
     }

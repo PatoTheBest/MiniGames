@@ -9,9 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
+
 public interface ILang {
 
-    default String getMessage(CommandSender commandSender) {
+    default String getMessage(@Nullable CommandSender commandSender) {
         if (commandSender instanceof Player) {
             return getMessage(PlayerManager.get().getPlayer((Player) commandSender));
         }
@@ -65,7 +67,7 @@ public interface ILang {
         player.sendMessage(replace(player.getLocale(), args));
     }
 
-    default String replace(CommandSender commandSender, Object... args) {
+    default String replace(@Nullable CommandSender commandSender, Object... args) {
         if (commandSender instanceof Player) {
             return replace(PlayerManager.get().getPlayer((Player) commandSender), args);
         }

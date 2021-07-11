@@ -9,51 +9,52 @@ import me.patothebest.gamecore.arena.option.ArenaOption;
 import me.patothebest.gamecore.arena.option.options.EnvironmentOption;
 import me.patothebest.gamecore.arena.option.options.TNTExplosionOption;
 import me.patothebest.gamecore.arena.option.options.TimeOfDayOption;
+import me.patothebest.gamecore.combat.CombatManager;
+import me.patothebest.gamecore.event.EventRegistry;
 import me.patothebest.gamecore.event.arena.ArenaDisableEvent;
+import me.patothebest.gamecore.event.arena.ArenaPhaseChangeEvent;
+import me.patothebest.gamecore.event.arena.ArenaPrePhaseChangeEvent;
+import me.patothebest.gamecore.event.arena.ArenaPreRegenEvent;
+import me.patothebest.gamecore.event.arena.ArenaUnLoadEvent;
 import me.patothebest.gamecore.event.player.ArenaLeaveEvent;
+import me.patothebest.gamecore.event.player.ArenaLeaveMidGameEvent;
 import me.patothebest.gamecore.event.player.ArenaPreJoinEvent;
 import me.patothebest.gamecore.event.player.ArenaPreLeaveEvent;
+import me.patothebest.gamecore.event.player.GameJoinEvent;
+import me.patothebest.gamecore.event.player.PlayerLooseEvent;
+import me.patothebest.gamecore.event.player.PlayerStateChangeEvent;
 import me.patothebest.gamecore.event.player.SpectateEvent;
 import me.patothebest.gamecore.feature.Feature;
 import me.patothebest.gamecore.file.CoreConfig;
+import me.patothebest.gamecore.ghost.GhostFactory;
 import me.patothebest.gamecore.kit.KitManager;
 import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.permission.GroupPermissible;
 import me.patothebest.gamecore.permission.PermissionGroup;
 import me.patothebest.gamecore.permission.PermissionGroupManager;
-import me.patothebest.gamecore.phase.phases.GamePhase;
-import me.patothebest.gamecore.scheduler.PluginScheduler;
-import me.patothebest.gamecore.util.PlayerList;
-import me.patothebest.gamecore.util.Utils;
-import me.patothebest.gamecore.vector.ArenaLocation;
-import me.patothebest.gamecore.vector.Cuboid;
-import me.patothebest.gamecore.world.WorldHandler;
-import me.patothebest.gamecore.combat.CombatManager;
-import me.patothebest.gamecore.event.EventRegistry;
-import me.patothebest.gamecore.event.arena.ArenaPhaseChangeEvent;
-import me.patothebest.gamecore.event.arena.ArenaPrePhaseChangeEvent;
-import me.patothebest.gamecore.event.arena.ArenaPreRegenEvent;
-import me.patothebest.gamecore.event.arena.ArenaUnLoadEvent;
-import me.patothebest.gamecore.event.player.ArenaLeaveMidGameEvent;
-import me.patothebest.gamecore.event.player.GameJoinEvent;
-import me.patothebest.gamecore.event.player.PlayerLooseEvent;
-import me.patothebest.gamecore.event.player.PlayerStateChangeEvent;
-import me.patothebest.gamecore.ghost.GhostFactory;
 import me.patothebest.gamecore.phase.Phase;
 import me.patothebest.gamecore.phase.phases.EndPhase;
+import me.patothebest.gamecore.phase.phases.GamePhase;
 import me.patothebest.gamecore.phase.phases.LobbyPhase;
 import me.patothebest.gamecore.phase.phases.NullPhase;
 import me.patothebest.gamecore.player.IPlayer;
 import me.patothebest.gamecore.player.PlayerManager;
+import me.patothebest.gamecore.scheduler.PluginScheduler;
 import me.patothebest.gamecore.sign.SignManager;
 import me.patothebest.gamecore.stats.StatsManager;
 import me.patothebest.gamecore.title.TitleBuilder;
 import me.patothebest.gamecore.util.DoubleCallback;
 import me.patothebest.gamecore.util.MessageCallback;
 import me.patothebest.gamecore.util.NameableObject;
+import me.patothebest.gamecore.util.PlayerList;
 import me.patothebest.gamecore.util.ServerVersion;
 import me.patothebest.gamecore.util.Sounds;
+import me.patothebest.gamecore.util.Utils;
+import me.patothebest.gamecore.vector.ArenaLocation;
+import me.patothebest.gamecore.vector.Cuboid;
 import me.patothebest.gamecore.world.ArenaWorld;
+import me.patothebest.gamecore.world.DefaultWorldHandler;
+import me.patothebest.gamecore.world.WorldHandler;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -65,6 +66,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -219,20 +221,38 @@ public abstract class AbstractArena implements GroupPermissible, ConfigurationSe
 
         if (enabled) {
             // unzip, load, and prepare the world
-            if(!world.decompressWorld()) {
-                arenaManager.getArenas().remove(name);
-                throw new RuntimeException("Could not unzip world for arena " + name + "!");
-            }
-
             if (!map.containsKey("server-version") || !map.get("server-version").equals(ServerVersion.getVersion())) {
                 arenaManager.getLogger().log(Level.INFO, "Detected arena was saved with an older server version.");
                 arenaManager.getLogger().log(Level.INFO, "Starting arena upgrade...");
+
                 ArenaWorld conversion = new ArenaWorld(this, worldName + "-temp");
-                conversion.loadWorld(true);
+                WorldHandler defaultWorldHandler = new DefaultWorldHandler();
+
+                // load world zip into temp world directory
+                if (!defaultWorldHandler.decompressWorld(this, world.getWorldZipFile(), conversion.getTempWorld())) {
+                    arenaManager.getArenas().remove(name);
+                    throw new RuntimeException("Could not unzip world for arena " + name + "!");
+                }
+
+                // convert
+                conversion.loadWorld(true, defaultWorldHandler);
                 conversion.unloadWorld(true);
-                conversion.getWorldZipFile().delete();
+
+                // backup old world
+                String zipName = conversion.getWorldZipFile().getPath();
+                zipName = zipName.substring(0, zipName.lastIndexOf('.')); // strip file ext
+                zipName = zipName + "_backup_" + Utils.getCurrentTimeStamp("yyyy-MM-dd_HH-mm-ss") + ".zip";
+                conversion.getWorldZipFile().renameTo(new File(zipName));
+
+                // zip new world and delete old world
                 Utils.zipIt(conversion.getTempWorld(), conversion.getWorldZipFile());
+                Utils.deleteFolder(conversion.getTempWorld());
                 arenaManager.getLogger().log(Level.INFO, "Done upgrading");
+            }
+
+            if(!world.decompressWorld()) {
+                arenaManager.getArenas().remove(name);
+                throw new RuntimeException("Could not unzip world for arena " + name + "!");
             }
 
             world.loadWorld(false);
@@ -897,7 +917,9 @@ public abstract class AbstractArena implements GroupPermissible, ConfigurationSe
             arenaOption.serialize(objectMap);
         }
 
-        objectMap.put("arenagroup", arenaGroup.getName());
+        if (arenaGroup != null) {
+            objectMap.put("arenagroup", arenaGroup.getName());
+        }
 
         return objectMap;
     }

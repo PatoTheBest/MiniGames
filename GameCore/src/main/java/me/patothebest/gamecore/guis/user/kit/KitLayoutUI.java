@@ -2,15 +2,15 @@ package me.patothebest.gamecore.guis.user.kit;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import me.patothebest.gamecore.gui.inventory.button.SimpleButton;
-import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.gui.inventory.GUIPage;
 import me.patothebest.gamecore.gui.inventory.button.NullButton;
+import me.patothebest.gamecore.gui.inventory.button.SimpleButton;
 import me.patothebest.gamecore.itemstack.ItemStackBuilder;
 import me.patothebest.gamecore.itemstack.Material;
 import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.player.IPlayer;
 import me.patothebest.gamecore.scheduler.PluginScheduler;
 import org.bukkit.ChatColor;
@@ -27,13 +27,15 @@ public class KitLayoutUI extends GUIPage {
     private ItemStack[] playerInvItems;
     private final PluginScheduler pluginScheduler;
     private final IPlayer player;
+    private final Runnable onBack;
     private final Kit kit;
 
-    @Inject private KitLayoutUI(CorePlugin plugin, @Assisted IPlayer player, PluginScheduler pluginScheduler, @Assisted Kit kit) {
+    @Inject private KitLayoutUI(CorePlugin plugin, @Assisted IPlayer player, PluginScheduler pluginScheduler, @Assisted Kit kit, @Assisted Runnable onBack) {
         super(plugin, player.getPlayer(), CoreLang.GUI_USER_EDIT_KIT_LAYOUT_TITLE.replace(player, kit.getKitName()), 27);
         this.pluginScheduler = pluginScheduler;
         this.kit = kit;
         this.player = player;
+        this.onBack = onBack;
         this.blockInventoryMovement = false;
         build();
     }
@@ -42,13 +44,14 @@ public class KitLayoutUI extends GUIPage {
     protected void buildPage() {
         playerInvItems = getPlayer().getInventory().getContents();
         getPlayer().getInventory().clear();
-        ItemStack[] inventoryItemsCopy = kit.getInventoryItems().clone();
+        ItemStack[] inventoryItemsCopy = new ItemStack[36];
+        System.arraycopy(kit.getInventoryItems().clone(), 0, inventoryItemsCopy, 0, 36);
 
         for (int i = 0; i < inventoryItemsCopy.length; ++i) {
             ItemStack item = inventoryItemsCopy[i];
 
             if (item != null) {
-                inventoryItemsCopy[i] = new ItemStackBuilder(item).lore(hideTag(String.valueOf(i)));
+                inventoryItemsCopy[i] = new ItemStackBuilder(item).lore(hideTag(String.valueOf(i))).amount(1);
             }
         }
 
@@ -88,11 +91,11 @@ public class KitLayoutUI extends GUIPage {
                     }
                     KitLayout kitLayout = new KitLayout(slotsRemapped);
                     player.modifyKitLayout(kit, kitLayout);
-                    getPlayer().closeInventory();
+                    onBack.run();
                     CoreLang.GUI_USER_EDIT_KIT_LAYOUT_SAVED.replaceAndSend(player, kit.getKitName());
-        }), 15);
+        }), 14);
 
-        addButton(new SimpleButton(new ItemStackBuilder().createCancelItem()).action(super.player::closeInventory), 13);
+        addButton(new SimpleButton(new ItemStackBuilder().createCancelItem()).action(onBack::run), 12);
 
         for(int i = 0; i < 27; i++) {
             if (!isFree(i)) {
@@ -110,6 +113,7 @@ public class KitLayoutUI extends GUIPage {
 
     @Override
     public void destroy() {
+        getPlayer().setItemOnCursor(null);
         getPlayer().getInventory().clear();
         getPlayer().getInventory().setContents(playerInvItems);
         pluginScheduler.runTaskLater(()-> getPlayer().updateInventory(), 3L);

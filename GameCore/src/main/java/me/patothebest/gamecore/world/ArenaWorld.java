@@ -77,7 +77,12 @@ public class ArenaWorld {
         return arena.getWorldHandler().get().decompressWorld(arena, worldZipFile, tempWorld);
     }
 
+
     public void loadWorld(boolean permanentWorld) {
+        loadWorld(permanentWorld, arena.getWorldHandler().get());
+    }
+
+    public void loadWorld(boolean permanentWorld, WorldHandler worldHandler) {
         // WorldCreator
         World.Environment environment = arena.getOption(EnvironmentOption.class).getEnvironment();
 
@@ -135,7 +140,7 @@ public class ArenaWorld {
         // create the world
         if (!permanentWorld) {
             try {
-                world = arena.getWorldHandler().get().loadWorld(arena, worldName, environment).get();
+                world = worldHandler.loadWorld(arena, worldName, environment).get();
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException("Could not load world " + worldName + "!", e);
             }

@@ -16,5 +16,5 @@ public interface KitUIFactory {
 
     EditPriceUI createEditPriceUI(Player player, Kit kit);
 
-    KitPreview createKitPreview(Player player, Kit kit);
+    KitPreview createKitPreview(Player player, Kit kit, boolean addReceiveItemsButton, Runnable onBack);
 }
