@@ -17,6 +17,8 @@ import me.patothebest.gamecore.logger.Logger;
 import me.patothebest.gamecore.modules.Module;
 import me.patothebest.gamecore.modules.RegisteredCommandModule;
 import me.patothebest.gamecore.permission.Permission;
+import me.patothebest.gamecore.player.IPlayer;
+import me.patothebest.gamecore.player.PlayerManager;
 import me.patothebest.gamecore.storage.StorageManager;
 import me.patothebest.gamecore.util.CommandUtils;
 import org.bukkit.command.CommandSender;
@@ -24,6 +26,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import javax.inject.Inject;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Map;
 
 public class ExperienceCommand implements Module {
@@ -31,11 +34,15 @@ public class ExperienceCommand implements Module {
     @InjectParentLogger(parent = ExperienceManager.class) private Logger logger;
     private final StorageManager storageManager;
     private final CoreConfig config;
+    private final PlayerManager playerManager;
+    private final ExperienceManager experienceManager;
 
     @Inject
-    private ExperienceCommand(StorageManager storageManager, CoreConfig config) {
+    private ExperienceCommand(StorageManager storageManager, CoreConfig config, PlayerManager playerManager, ExperienceManager experienceManager) {
         this.storageManager = storageManager;
         this.config = config;
+        this.playerManager = playerManager;
+        this.experienceManager = experienceManager;
     }
 
     @ChildOf(BaseCommand.class)
@@ -101,5 +108,81 @@ public class ExperienceCommand implements Module {
         }, true);
     }
 
+    @Command(
+            aliases = {"add", "give"},
+            min = 2,
+            max = 2,
+            langDescription = @LangDescription(
+                    element = "EXPERIENCE_ADD_DESC",
+                    langClass = CoreLang.class
+            )
+    )
+    @CommandPermissions(permission = Permission.ADMIN)
+    public List<String> addExp(CommandContext args, CommandSender sender) throws CommandException {
+        if (args.getSuggestionContext() != null) {
+            if (args.getSuggestionContext().getIndex() == 0) {
+                return CommandUtils.completePlayers(args.getString(0));
+            }
+            return null;
+        }
 
+        IPlayer player = CommandUtils.getPlayer(args, playerManager, 0);
+        long amount = args.getInteger(1);
+        player.addExperience(amount);
+        int newLevel = experienceManager.getExperienceCalculator().expToLevelFloor(player.getExperience());
+        CoreLang.EXPERIENCE_ADD.replaceAndSend(sender, player.getName(), amount, player.getExperience(), newLevel);
+        return null;
+    }
+
+    @Command(
+            aliases = {"set"},
+            min = 2,
+            max = 2,
+            langDescription = @LangDescription(
+                    element = "EXPERIENCE_SET_DESC",
+                    langClass = CoreLang.class
+            )
+    )
+    @CommandPermissions(permission = Permission.ADMIN)
+    public List<String> setExp(CommandContext args, CommandSender sender) throws CommandException {
+        if (args.getSuggestionContext() != null) {
+            if (args.getSuggestionContext().getIndex() == 0) {
+                return CommandUtils.completePlayers(args.getString(0));
+            }
+            return null;
+        }
+
+        IPlayer player = CommandUtils.getPlayer(args, playerManager, 0);
+        long amount = args.getInteger(1);
+        player.setExperience(amount);
+        int newLevel = experienceManager.getExperienceCalculator().expToLevelFloor(player.getExperience());
+        CoreLang.EXPERIENCE_SET.replaceAndSend(sender, player.getName(), amount, newLevel);
+        return null;
+    }
+
+    @Command(
+            aliases = {"remove", "subtract"},
+            min = 2,
+            max = 2,
+            langDescription = @LangDescription(
+                    element = "EXPERIENCE_REMOVE_DESC",
+                    langClass = CoreLang.class
+            )
+    )
+    @CommandPermissions(permission = Permission.ADMIN)
+    public List<String> removeExp(CommandContext args, CommandSender sender) throws CommandException {
+        if (args.getSuggestionContext() != null) {
+            if (args.getSuggestionContext().getIndex() == 0) {
+                return CommandUtils.completePlayers(args.getString(0));
+            }
+            return null;
+        }
+
+        IPlayer player = CommandUtils.getPlayer(args, playerManager, 0);
+        long amount = args.getInteger(1);
+        player.removeExperience(amount);
+        int newLevel = experienceManager.getExperienceCalculator().expToLevelFloor(player.getExperience());
+        CoreLang.EXPERIENCE_REMOVE.replaceAndSend(sender, player.getName(), amount, player.getExperience(), newLevel);
+        return null;
+    }
 }

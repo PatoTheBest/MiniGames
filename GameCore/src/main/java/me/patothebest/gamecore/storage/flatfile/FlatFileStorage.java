@@ -102,6 +102,7 @@ public final class FlatFileStorage implements IFlatFileStorage {
         }
 
         playerfiles.remove(player.getName());
+        player.deleteObservers();
     }
 
     @Override

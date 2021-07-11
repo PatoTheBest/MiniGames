@@ -9,6 +9,7 @@ import me.patothebest.gamecore.arena.AbstractArena;
 import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.cosmetics.shop.ShopItem;
 import me.patothebest.gamecore.event.player.PlayerDeSelectItemEvent;
+import me.patothebest.gamecore.event.player.PlayerExperienceUpdateEvent;
 import me.patothebest.gamecore.event.player.PlayerJoinPrepareEvent;
 import me.patothebest.gamecore.event.player.PlayerLoginPrepareEvent;
 import me.patothebest.gamecore.event.player.PlayerSelectItemEvent;
@@ -16,7 +17,13 @@ import me.patothebest.gamecore.kit.Kit;
 import me.patothebest.gamecore.kit.KitLayout;
 import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.lang.Locale;
-import me.patothebest.gamecore.player.modifiers.*;
+import me.patothebest.gamecore.player.modifiers.ExperienceModifier;
+import me.patothebest.gamecore.player.modifiers.GeneralModifier;
+import me.patothebest.gamecore.player.modifiers.KitModifier;
+import me.patothebest.gamecore.player.modifiers.PointsModifier;
+import me.patothebest.gamecore.player.modifiers.QuestModifier;
+import me.patothebest.gamecore.player.modifiers.ShopModifier;
+import me.patothebest.gamecore.player.modifiers.TreasureModifier;
 import me.patothebest.gamecore.quests.ActiveQuest;
 import me.patothebest.gamecore.quests.Quest;
 import me.patothebest.gamecore.quests.QuestType;
@@ -37,7 +44,13 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
@@ -666,8 +679,10 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
 
     @Override
     public void setExperience(long experience) {
+        long oldExp = this.experience;
         this.experience = experience;
         notifyObservers(ExperienceModifier.SET_EXPERIENCE, experience);
+        plugin.getServer().getPluginManager().callEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SET, oldExp, this.experience));
     }
 
     @Override
@@ -675,16 +690,20 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
         if (experience == 0) {
             return;
         }
-        this.experience += experience;
+        long oldExp = this.experience;
+        this.experience = oldExp + experience;
         notifyObservers(ExperienceModifier.ADD_EXPERIENCE, experience);
 
         CoreLang.EXPERIENCE_EARNED.replaceAndSend(player, experience);
+        plugin.getServer().getPluginManager().callEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.ADD, oldExp, this.experience));
     }
 
     @Override
     public void removeExperience(long experience) {
-        this.experience -= experience;
+        long oldExp = this.experience;
+        this.experience = oldExp - experience;
         notifyObservers(ExperienceModifier.REMOVE_EXPERIENCE, experience);
+        plugin.getServer().getPluginManager().callEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SUBTRACT, oldExp, this.experience));
     }
 
     @Override

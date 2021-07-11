@@ -539,6 +539,14 @@ public enum CoreLang implements ILang {
     EXPERIENCE_POPULATE_CONFIRM("&cYou are about to populate the database with experience. Please confirm the following settings from the config are correct then run &6/%base_command% experience populate -c"),
     EXPERIENCE_POPULATE_CONFIG("&e&l%element%: &b%value%", "element", "value"),
     EXPERIENCE_EARNED("&b+%amount% experience", "amount"),
+    EXPERIENCE_LEVEL_UP("&b&lLEVEL UP!"),
+    EXPERIENCE_LEVEL_UP_INFO("&eYou have leveled up from &b%oldlevel% &eto &b%newlevel%", "oldlevel", "newlevel"),
+    EXPERIENCE_ADD_DESC("Adds experience to a player"),
+    EXPERIENCE_SET("&6%player%'s &7experience has been set to &6%amount% &7(&6level %level%&7)", "player", "amount", "level"),
+    EXPERIENCE_SET_DESC("Sets experience to a player"),
+    EXPERIENCE_ADD("&6%amount% &7experience has been added to &6%player%. &7They now have &6%total% &7experience (&6level %level%&7)", "player", "amount", "total", "level"),
+    EXPERIENCE_REMOVED_DESC("Removes experience to a player"),
+    EXPERIENCE_REMOVE("&6%amount% &7experience has been removed from &6%player%. &7They now have &6%total% &7experience (&6level %level%&7)", "player", "amount", "total", "level"),
 
     // -----------------------------------
     // Quests Messages

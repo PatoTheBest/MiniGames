@@ -1,7 +1,9 @@
 package me.patothebest.gamecore.experience;
 
 import com.google.inject.Inject;
+import me.patothebest.gamecore.event.player.PlayerExperienceUpdateEvent;
 import me.patothebest.gamecore.file.CoreConfig;
+import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.logger.InjectLogger;
 import me.patothebest.gamecore.logger.Logger;
 import me.patothebest.gamecore.modules.ActivableModule;
@@ -10,6 +12,8 @@ import me.patothebest.gamecore.modules.ModuleName;
 import me.patothebest.gamecore.modules.ReloadableModule;
 import me.patothebest.gamecore.stats.StatsUpdateEvent;
 import me.patothebest.gamecore.storage.StorageManager;
+import me.patothebest.gamecore.util.Sounds;
+import me.patothebest.gamecore.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -92,6 +96,27 @@ public class ExperienceManager implements ActivableModule, ListenerModule, Reloa
         }
 
         event.getPlayer().addExperience(expToAdd);
+    }
+
+    @EventHandler
+    public void onExpUpdate(PlayerExperienceUpdateEvent event) {
+        if (event.getUpdateType() != PlayerExperienceUpdateEvent.UpdateType.ADD) {
+            return;
+        }
+
+        int nextLevel = experienceCalculator.expToLevelFloor(event.getOldExperience() + 1);
+        if (experienceCalculator.levelToExp(nextLevel) > event.getNewExperience()) {
+            return;
+        }
+        int realNextLevel = experienceCalculator.expToLevelFloor(event.getNewExperience());
+
+        Sounds.ENTITY_PLAYER_LEVELUP.play(event.getPlayer().getPlayer());
+        CoreLang.LINE_SEPARATOR.sendMessage(event.getPlayer());
+        event.getPlayer().sendMessage("");
+        Utils.sendCenteredMessage(event.getPlayer().getPlayer(), CoreLang.EXPERIENCE_LEVEL_UP.getMessage(event.getPlayer()));
+        Utils.sendCenteredMessage(event.getPlayer().getPlayer(), CoreLang.EXPERIENCE_LEVEL_UP_INFO.replace(event.getPlayer(), nextLevel - 1, realNextLevel));
+        event.getPlayer().sendMessage("");
+        CoreLang.LINE_SEPARATOR.sendMessage(event.getPlayer());
     }
 
     public String getColor(int level) {
