@@ -8,6 +8,7 @@ import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.arena.AbstractArena;
 import me.patothebest.gamecore.arena.AbstractGameTeam;
 import me.patothebest.gamecore.cosmetics.shop.ShopItem;
+import me.patothebest.gamecore.event.EventRegistry;
 import me.patothebest.gamecore.event.player.PlayerDeSelectItemEvent;
 import me.patothebest.gamecore.event.player.PlayerExperienceUpdateEvent;
 import me.patothebest.gamecore.event.player.PlayerJoinPrepareEvent;
@@ -62,6 +63,7 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
     // Guice inject
     @Inject private Provider<Economy> economyProvider;
     @Inject private CorePlugin plugin;
+    @Inject private EventRegistry eventRegistry;
 
     private PlayerIdentity playerIdentity;
     private PlayerInventory playerInventory;
@@ -682,7 +684,7 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
         long oldExp = this.experience;
         this.experience = experience;
         notifyObservers(ExperienceModifier.SET_EXPERIENCE, experience);
-        plugin.getServer().getPluginManager().callEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SET, oldExp, this.experience));
+        eventRegistry.callSyncEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SET, oldExp, this.experience));
     }
 
     @Override
@@ -695,7 +697,7 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
         notifyObservers(ExperienceModifier.ADD_EXPERIENCE, experience);
 
         CoreLang.EXPERIENCE_EARNED.replaceAndSend(player, experience);
-        plugin.getServer().getPluginManager().callEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.ADD, oldExp, this.experience));
+        eventRegistry.callSyncEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.ADD, oldExp, this.experience));
     }
 
     @Override
@@ -703,7 +705,7 @@ public class CorePlayer extends ObservablePlayerImpl implements IPlayer {
         long oldExp = this.experience;
         this.experience = oldExp - experience;
         notifyObservers(ExperienceModifier.REMOVE_EXPERIENCE, experience);
-        plugin.getServer().getPluginManager().callEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SUBTRACT, oldExp, this.experience));
+        eventRegistry.callSyncEvent(new PlayerExperienceUpdateEvent(this, PlayerExperienceUpdateEvent.UpdateType.SUBTRACT, oldExp, this.experience));
     }
 
     @Override

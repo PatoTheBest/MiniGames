@@ -104,7 +104,7 @@ public class ExperienceManager implements ActivableModule, ListenerModule, Reloa
             return;
         }
 
-        int nextLevel = experienceCalculator.expToLevelFloor(event.getOldExperience() + 1);
+        int nextLevel = experienceCalculator.expToLevelFloor(event.getOldExperience()) + 1;
         if (experienceCalculator.levelToExp(nextLevel) > event.getNewExperience()) {
             return;
         }
