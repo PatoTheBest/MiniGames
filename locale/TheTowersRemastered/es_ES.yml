@@ -1,5 +1,5 @@
 ---
-command-description: "Command for TheTowers commands"
+command-description: "Comando para los comandos de TheTowers"
 page: "(Pagina %page% de %pages%)"
 protected-areas: "Subcomando para zonas protegidas"
 new-dropper: "Crear un spawner de items en tu localizacion"
@@ -16,8 +16,8 @@ disable-arena-first: "%%red%%Para modificar una arena debe desactivarla primero 
 enable-arena-first: "%%red%%Para usar este comando tienes que habilitar la arena antes"
 wrong-itemstack-format: "%%red%%No se pudo analizar el elemento. Por favor use el formato material: ID,cantidad,data  (35:14,32 = 32 lana roja)"
 protected-area-show: "%%green%%¡Se ha mostrado la zona protegida!"
-protected-area-hide: "%%green%%Protected area has been hidden!"
-protected-area-list-header: "%%blue%%Protected Areas of %arena%"
+protected-area-hide: "%%green%%¡Se ha ocultado la zona protegida!"
+protected-area-list-header: "%%blue%%Áreas protegidas de %arena%"
 version: "Mostrar la informacion del .jar (java)"
 debug: "Comando Debug"
 reload: "Recarga el plugin entero"
