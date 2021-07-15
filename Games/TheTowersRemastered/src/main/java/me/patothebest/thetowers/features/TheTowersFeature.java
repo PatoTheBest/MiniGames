@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.Vector;
@@ -111,6 +112,19 @@ public class TheTowersFeature extends AbstractFeature {
                 e.setCancelled(true);
             }
         }
+    }
+
+    @EventHandler
+    public void onChickenSpawn(CreatureSpawnEvent event) {
+        if (event.getSpawnReason() != CreatureSpawnEvent.SpawnReason.EGG) {
+            return;
+        }
+
+        if (!isPlayingInArena(event)) {
+            return;
+        }
+
+        event.setCancelled(true);
     }
 
     @EventHandler
