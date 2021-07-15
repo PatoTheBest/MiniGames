@@ -3,7 +3,11 @@ package me.patothebest.gamecore.feature.features.other;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import me.patothebest.gamecore.CorePlugin;
+import me.patothebest.gamecore.arena.AbstractArena;
+import me.patothebest.gamecore.arena.AbstractGameTeam;
+import me.patothebest.gamecore.combat.CombatDeathEvent;
 import me.patothebest.gamecore.event.player.ArenaLeaveEvent;
+import me.patothebest.gamecore.feature.AbstractFeature;
 import me.patothebest.gamecore.feature.features.protection.NoTeamDamageFeature;
 import me.patothebest.gamecore.file.CoreConfig;
 import me.patothebest.gamecore.itemstack.ItemStackBuilder;
@@ -12,13 +16,9 @@ import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.nms.NMS;
 import me.patothebest.gamecore.permission.PermissionGroup;
 import me.patothebest.gamecore.permission.PermissionGroupManager;
-import me.patothebest.gamecore.util.Utils;
-import me.patothebest.gamecore.arena.AbstractArena;
-import me.patothebest.gamecore.arena.AbstractGameTeam;
-import me.patothebest.gamecore.combat.CombatDeathEvent;
-import me.patothebest.gamecore.feature.AbstractFeature;
 import me.patothebest.gamecore.player.IPlayer;
 import me.patothebest.gamecore.player.PlayerManager;
+import me.patothebest.gamecore.util.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
@@ -26,6 +26,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -151,6 +152,10 @@ public class PetsFeature extends AbstractFeature {
             } else {
                 player.setItemInHand(new ItemStackBuilder(Material.AIR));
             }
+        }
+
+        if (entity instanceof Slime) {
+            ((Slime) entity).setSize(1);
         }
 
         event.setCancelled(true);
