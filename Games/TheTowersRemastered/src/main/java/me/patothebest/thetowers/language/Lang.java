@@ -36,7 +36,7 @@ public enum Lang implements ILang {
     PROTECT_AREA(false, "Protects an area on the arena"),
     REMOVE_PROTECTED_AREA(false, "Remove a protected area from the arena"),
     OPEN_GUI(false, "Opens the graphical user interface"),
-    SHOW_PROTECTED_AREA(false, "Shoes a protected area"),
+    SHOW_PROTECTED_AREA(false, "Shows a protected area"),
     HIDE_PROTECTED_AREA(false, "Hides a protected area"),
 
     // Errors in command arguments
@@ -44,8 +44,8 @@ public enum Lang implements ILang {
     TEAM_COLOR_ALREADY_EXISTS("&cTeam color already exists!"),
     TEAM_COLOR_DOES_NOT_EXIST("&cTeam color doesn't exists!"),
     DISABLE_ARENA_FIRST("&cTo modify an arena you must disable it first using /tt setup disablearena <arena>"),
-    ENABLE_ARENA_FIRST("&cTu use this command you need to enable the arena first"),
-    WRONG_ITEMSTACK_FORMAT("&cThe item could not be parsed. \nPlease use the format material:data,amount (wool:14,32 = 32 red wool"),
+    ENABLE_ARENA_FIRST("&cTo use this command you need to enable the arena first"),
+    WRONG_ITEMSTACK_FORMAT("&cThe item could not be parsed. \nPlease use the format material:data,amount (wool:14,32 = 32 red wool)"),
 
     // Successful messages
     SETUP_SUCCESSFUL_EXECUTION(Comments.SUCCESSFUL_EXECUTION),
