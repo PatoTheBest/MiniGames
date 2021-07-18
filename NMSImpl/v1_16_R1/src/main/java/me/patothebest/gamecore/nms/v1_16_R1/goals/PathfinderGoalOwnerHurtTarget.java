@@ -6,6 +6,8 @@ import net.minecraft.server.v1_16_R1.PathfinderGoalTarget;
 import net.minecraft.server.v1_16_R1.PathfinderTargetCondition;
 import org.bukkit.event.entity.EntityTargetEvent;
 
+import java.util.EnumSet;
+
 public class PathfinderGoalOwnerHurtTarget extends PathfinderGoalTarget {
 
     private final EntityLiving owner;
@@ -15,7 +17,7 @@ public class PathfinderGoalOwnerHurtTarget extends PathfinderGoalTarget {
     public PathfinderGoalOwnerHurtTarget(EntityLiving owner, EntityCreature entityCreature) {
         super(entityCreature, false);
         this.owner = owner;
-        this.a(1);
+        this.a(EnumSet.of(Type.TARGET));
     }
 
     @Override

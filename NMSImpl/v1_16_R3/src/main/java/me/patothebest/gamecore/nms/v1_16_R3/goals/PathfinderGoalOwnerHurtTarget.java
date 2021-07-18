@@ -1,9 +1,9 @@
-package me.patothebest.gamecore.nms.v1_14_R1.goals;
+package me.patothebest.gamecore.nms.v1_16_R3.goals;
 
-import net.minecraft.server.v1_14_R1.EntityCreature;
-import net.minecraft.server.v1_14_R1.EntityLiving;
-import net.minecraft.server.v1_14_R1.PathfinderGoalTarget;
-import net.minecraft.server.v1_14_R1.PathfinderTargetCondition;
+import net.minecraft.server.v1_16_R3.EntityCreature;
+import net.minecraft.server.v1_16_R3.EntityLiving;
+import net.minecraft.server.v1_16_R3.PathfinderGoalTarget;
+import net.minecraft.server.v1_16_R3.PathfinderTargetCondition;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 import java.util.EnumSet;
@@ -23,14 +23,14 @@ public class PathfinderGoalOwnerHurtTarget extends PathfinderGoalTarget {
     @Override
     public boolean a() {
         this.target = owner.getLastDamager();
-        int i = owner.cv();
+        int i = owner.dc();
         return i != this.number && this.a(this.target, PathfinderTargetCondition.a);
     }
 
     @Override
     public void c() {
         this.e.setGoalTarget(this.target, EntityTargetEvent.TargetReason.OWNER_ATTACKED_TARGET, true);
-        this.number = owner.cv();
+        this.number = owner.dc();
         super.c();
     }
 }

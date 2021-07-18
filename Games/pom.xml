@@ -121,6 +121,12 @@
             <version>${gamecore.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>me.patothebest.nmsimpl</groupId>
+            <artifactId>v1_16_R3</artifactId>
+            <version>${gamecore.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
