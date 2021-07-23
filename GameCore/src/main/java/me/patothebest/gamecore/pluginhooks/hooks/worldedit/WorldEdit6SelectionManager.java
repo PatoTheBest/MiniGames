@@ -15,7 +15,8 @@ public class WorldEdit6SelectionManager implements SelectionManager {
 
     private final WorldEditPlugin worldEdit;
 
-    public WorldEdit6SelectionManager(WorldEditPlugin worldEdit) {
+    public WorldEdit6SelectionManager(WorldEditPlugin worldEdit) throws ClassNotFoundException {
+        Class.forName("com.sk89q.worldedit.Vector");
         this.worldEdit = worldEdit;
     }
 

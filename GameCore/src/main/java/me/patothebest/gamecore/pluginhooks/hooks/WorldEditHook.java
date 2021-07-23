@@ -3,11 +3,11 @@ package me.patothebest.gamecore.pluginhooks.hooks;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.patothebest.gamecore.CorePlugin;
 import me.patothebest.gamecore.lang.CoreLang;
-import me.patothebest.gamecore.pluginhooks.hooks.worldedit.WorldEdit6SelectionManager;
-import me.patothebest.gamecore.pluginhooks.hooks.worldedit.WorldEdit7SelectionManager;
 import me.patothebest.gamecore.logger.InjectParentLogger;
 import me.patothebest.gamecore.pluginhooks.PluginHook;
 import me.patothebest.gamecore.pluginhooks.PluginHookManager;
+import me.patothebest.gamecore.pluginhooks.hooks.worldedit.WorldEdit6SelectionManager;
+import me.patothebest.gamecore.pluginhooks.hooks.worldedit.WorldEdit7SelectionManager;
 import me.patothebest.gamecore.selection.SelectionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -31,10 +31,10 @@ public class WorldEditHook extends PluginHook {
         SelectionManager selectionManager;
         try {
             selectionManager = new WorldEdit6SelectionManager(worldEdit);
-            logger.info("Detected WorldEdit version 7!");
+            logger.info("Detected WorldEdit version 6!");
         } catch (Throwable t) {
             selectionManager = new WorldEdit7SelectionManager(worldEdit);
-            logger.info("Detected WorldEdit version 6!");
+            logger.info("Detected WorldEdit version 7!");
         }
         plugin.setSelectionManager(selectionManager);
     }
