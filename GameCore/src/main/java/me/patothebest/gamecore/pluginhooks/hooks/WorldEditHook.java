@@ -28,13 +28,21 @@ public class WorldEditHook extends PluginHook {
     public void onHook(ConfigurationSection pluginHookSection) {
         WorldEditPlugin worldEdit = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
         CoreLang.SELECT_AN_AREA.transferMessage(CoreLang.SELECT_AN_AREA_WORLDEDIT);
-        SelectionManager selectionManager;
+        SelectionManager selectionManager = null;
+
         try {
             selectionManager = new WorldEdit6SelectionManager(worldEdit);
             logger.info("Detected WorldEdit version 6!");
-        } catch (Throwable t) {
-            selectionManager = new WorldEdit7SelectionManager(worldEdit);
-            logger.info("Detected WorldEdit version 7!");
+        } catch (Throwable ignored) {}
+
+        if (selectionManager == null) {
+            try {
+                selectionManager = new WorldEdit7SelectionManager(worldEdit);
+                logger.info("Detected WorldEdit version 7!");
+            } catch (Throwable throwable) {
+                logger.severe("Could not hook into WorldEdit! (Supported WE versions 6.x and 7.x)");
+                throwable.printStackTrace();
+            }
         }
         plugin.setSelectionManager(selectionManager);
     }
