@@ -11,7 +11,7 @@ quests:
     display-name: '1 Daily win'
     duration: 1d
     cooldown: 1d
-    type: WIN_GAME
+    type: WIN_GAMES
     goal: 1
     xp-reward: 250
     money-reward: 25
@@ -27,7 +27,7 @@ quests:
     display-name: '1 Weekly wins'
     duration: 1w
     cooldown: 1w
-    type: WINS
+    type: WIN_GAMES
     goal: 10
     xp-reward: 2000
     money-reward: 200
