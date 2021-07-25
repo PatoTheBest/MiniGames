@@ -339,6 +339,7 @@ public class Kit implements ConfigurationSerializable, GroupPermissible, Nameabl
                 } else if (isFree()) {
                     if (addClickMessages) {
                         itemStackBuilder.blankLine();
+                        itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS.getMessage(player));
                         if(showChooseDefaultKit) {
                             itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_DEFAULT.getMessage(player));
                         } else {
@@ -362,12 +363,14 @@ public class Kit implements ConfigurationSerializable, GroupPermissible, Nameabl
                         itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_KIT_USES.replace(player, 0));
                         if (addClickMessages) {
                             itemStackBuilder.blankLine();
+                            itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS.getMessage(player));
                             itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_CLICK_BUY.getMessage(player));
                         }
                     }
 
                 } else if (addClickMessages){
                     itemStackBuilder.blankLine();
+                    itemStackBuilder.addLore(CoreLang.GUI_KIT_SHOP_RIGHT_CLICK_OPTIONS.getMessage(player));
 
                     if (player.canUseKit(this)) {
                         if(showChooseDefaultKit) {
