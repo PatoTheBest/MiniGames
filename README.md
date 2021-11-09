@@ -3,7 +3,7 @@
 A framework used to develop minigames
 
 ## Features
-* Compatible with 1.8-1.16
+* Compatible with 1.8-1.16.1
 * Uses Guice
 * Walk particles cosmetics
 * Projectile particles cosmetics
