@@ -20,6 +20,7 @@ import me.patothebest.gamecore.command.CommandsManager;
 import me.patothebest.gamecore.command.impl.CommandManager;
 import me.patothebest.gamecore.commands.ConfirmCommand;
 import me.patothebest.gamecore.commands.DebugCommand;
+import me.patothebest.gamecore.commands.ForceArenaCommand;
 import me.patothebest.gamecore.commands.admin.AdminArenaCommands;
 import me.patothebest.gamecore.commands.admin.GeneralAdminCommand;
 import me.patothebest.gamecore.commands.admin.RenameCommand;
@@ -100,6 +101,7 @@ public class CoreModule<T extends CorePlugin> extends AbstractBukkitModule<T> {
         registerModule(KitManager.class);
         registerModule(DebugCommand.class);
         registerModule(ConfirmCommand.class);
+        registerModule(ForceArenaCommand.class);
         registerModule(ScoreboardFile.class);
         registerModule(ScoreboardManager.class);
         registerModule(BlockRestorer.class);

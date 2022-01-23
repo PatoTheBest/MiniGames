@@ -135,7 +135,7 @@ public class WaitingPhase<Arena extends AbstractArena & SpawneableArena> extends
             player.getInventory().setItem(8, new ItemStackBuilder().material(Material.MAGMA_CREAM).name(player, CoreLang.LOBBY_LEAVE));
 
             // if the player has the admin permission
-            if(player.hasPermission(Permission.ADMIN.getBukkitPermission())) {
+            if(player.hasPermission(Permission.ADMIN.getBukkitPermission()) || player.hasPermission(Permission.FORCE_START.getBukkitPermission())) {
                 // give the admin the admin item
                 player.getInventory().setItem(7, new ItemStackBuilder().material(Material.COMPARATOR).name(player, CoreLang.LOBBY_ADMIN_MENU));
             }

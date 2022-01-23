@@ -71,7 +71,7 @@ public class LobbyPhase extends AbstractPhase<CorePlugin, AbstractArena> {
             player.getInventory().setItem(8, new ItemStackBuilder().material(Material.MAGMA_CREAM).name(player, CoreLang.LOBBY_LEAVE));
 
             if (!arena.isPrivateArena()) {
-                if(player.hasPermission(Permission.ADMIN.getBukkitPermission())) {
+                if(player.hasPermission(Permission.FORCE_START.getBukkitPermission()) || player.hasPermission(Permission.ADMIN.getBukkitPermission())) {
                     player.getInventory().setItem(7, new ItemStackBuilder().material(Material.COMPARATOR).name(player, CoreLang.LOBBY_ADMIN_MENU));
                 }
             } else {

@@ -12,6 +12,7 @@ public enum Permission {
     CHOOSE_TIME("choose.time"),
     CHOOSE_ARENA("choose.arena"),
     CHAT_COLORS("chat.colors"),
+    FORCE_START("forcestart"),
     SETUP("setup", "Setup"),
     KIT("kitadmin", "KitAdmin"),
     ADMIN("admin", "Admin");
