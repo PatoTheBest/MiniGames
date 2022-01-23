@@ -13,6 +13,7 @@ import me.patothebest.gamecore.quests.ActiveQuest;
 import me.patothebest.gamecore.quests.QuestManager;
 import me.patothebest.gamecore.quests.QuestsStatus;
 import me.patothebest.gamecore.util.Utils;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -56,6 +57,10 @@ public class QuestsGUI extends GUIPage {
             item.blankLine()
                     .addLore(CoreLang.GUI_QUEST_STATUS_EXP.replace(player, quest.getXpReward()))
                     .addLore(CoreLang.GUI_QUEST_STATUS_COINS.replace(player, quest.getMoneyReward()));
+
+            for (String loreLine : quest.getExtraLore()) {
+                item.addLore(ChatColor.translateAlternateColorCodes('&', loreLine));
+            }
 
             addButton(new SimpleButton(item).action(() -> {
                 if (activeQuest == null || activeQuest.hasExpired()) {

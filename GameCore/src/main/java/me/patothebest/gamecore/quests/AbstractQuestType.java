@@ -5,6 +5,7 @@ import me.patothebest.gamecore.event.EventRegistry;
 import me.patothebest.gamecore.lang.CoreLang;
 import me.patothebest.gamecore.player.CorePlayer;
 import me.patothebest.gamecore.player.PlayerManager;
+import org.bukkit.Bukkit;
 
 import java.util.Set;
 
@@ -25,6 +26,11 @@ public abstract class AbstractQuestType implements QuestType {
                     player.sendMessage("");
                     player.addExperience(activeQuest.getQuest().getXpReward());
                     player.giveMoney(activeQuest.getQuest().getMoneyReward());
+
+                    for (String command : activeQuest.getQuest().getCommandReward()) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
+                    }
+
                     activeQuest.setCompleted();
                     player.sendMessage("");
                     CoreLang.LINE_SEPARATOR.sendMessage(player);

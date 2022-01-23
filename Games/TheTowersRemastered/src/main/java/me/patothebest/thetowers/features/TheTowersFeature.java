@@ -14,14 +14,11 @@ import me.patothebest.gamecore.util.Utils;
 import me.patothebest.thetowers.arena.Arena;
 import me.patothebest.thetowers.arena.GameTeam;
 import me.patothebest.thetowers.file.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.Vector;
 
 import javax.inject.Inject;
@@ -87,21 +84,11 @@ public class TheTowersFeature extends AbstractFeature {
         player.teleport(gameTeam.getSpawn());
         Utils.clearPlayer(player);
 
-        kitManager.applyKit(event.getPlayer(), gameTeam);
-        kitManager.applyPotionEffects(event.getPlayer());
+        kitManager.applyKit(player, gameTeam);
+        kitManager.applyPotionEffects(player);
+        player.addPotionEffects(config.getPotionEffects());
 
         event.setCancelled(true);
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onRespawn(PlayerRespawnEvent event) {
-        if (!isPlayingInArena(event)) {
-            return;
-        }
-
-        event.setRespawnLocation(arena.getTeam(event.getPlayer()).getSpawn());
-
-        Bukkit.getScheduler().runTaskLater(plugin, () -> event.getPlayer().addPotionEffects(config.getPotionEffects()), 1L);
     }
 
     @EventHandler
